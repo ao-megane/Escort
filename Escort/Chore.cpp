@@ -32,6 +32,10 @@ int Square::Set(Dot a, Dot b) {
 	LU = a;
 	RD = b;
 }
+int Square::Set(Dot a, int w, int h) {
+	LU.Set(a.Get_x() - w / 2, a.Get_y() - h / 2);
+	RD.Set(a.Get_x() + w / 2, a.Get_y() + h / 2);
+}
 
 int Square::Get_up() {
 	return LU.Get_y();

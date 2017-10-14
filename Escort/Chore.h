@@ -33,6 +33,7 @@ public:
 	Square();
 	~Square();
 	int Set(Dot a, Dot b);
+	int Set(Dot a, int w, int h);
 	int Get_up();
 	int Get_left();
 	Dot Get_LU();
