@@ -1,7 +1,7 @@
 #ifndef PRINCESS_H
 #define PRINCESS_H
 
-#include"Chore.h"
+//#include"Chore.h"
 
 class Princess
 {
@@ -14,16 +14,16 @@ public:
 
 private:
 	int HP;
-	Dot center;
-	Square week;
+	/*Dot center;
+	Square week;*/
 };
-
-Princess::Princess()
-{
-}
-
-Princess::~Princess()
-{
-}
+//
+//Princess::Princess()
+//{
+//}
+//
+//Princess::~Princess()
+//{
+//}
 
 #endif // !PRINCESS_H

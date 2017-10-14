@@ -2,7 +2,7 @@
 #include"Input.h"
 #include"Player.h"
 #include"Princess.h"
-#include"Chore.h"
+//#include"Chore.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow){
 
@@ -24,9 +24,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	int level_flag = 0;
 	int count = 0;
 	int keep_count = 0;
-	Player player;
+	//Player player;
 	InputInitialize(key);
-	player.Initialize();
+	//player.Initialize();
 	//Princess.Initialize();
 	//EnemyMngInitialize();
 	//ChoreInitialize();
@@ -98,6 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 		//}
 
 		count++;
+		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 	}
 
 

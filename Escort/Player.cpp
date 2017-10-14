@@ -3,9 +3,9 @@
 
 //const int P_normal_1 = 
 
-int Player::Initialize() {
+int Player::Initialize() {/*
 	center.Set(0);
-	weekArea.Set(center, center);
+	weekArea.Set(center, center);*/
 	attack = 0;
 	Image = 0;
 	acceptFlag = 0;
@@ -13,9 +13,9 @@ int Player::Initialize() {
 	return 0;
 }
 
-int Player::Set() {
+int Player::Set() {/*
 	center.Set(300, 1000);
-
+*/
 
 	return 0;
 }
