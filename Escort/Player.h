@@ -1,13 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include"Chore.h"
 
-class Player
-{
+class Player{
+
 public:
 	Player();
 	~Player();
-	int Initialize();
+	int Initialize();	//ゲーム開始時（画像ハンドル周辺）
+	int Set();			//プレイ開始時（座標周辺）
 	int Updata(int count);
 	int End();
 

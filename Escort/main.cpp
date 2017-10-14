@@ -1,9 +1,8 @@
-#include "DxLib.h"
-#include"Chore.h"
+#include"DxLib.h"
 #include"Input.h"
 #include"Player.h"
 #include"Princess.h"
-
+#include"Chore.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow){
 
@@ -11,7 +10,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	//SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.8);
+	//SetWindowSizeExtendRate(0.8);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
@@ -19,14 +18,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 
 	XINPUT_STATE input;
 
-	int Key[10] = { 0 };
+	int key[10] = { 0 };
 
 	int flag = 0;
 	int level_flag = 0;
 	int count = 0;
 	int keep_count = 0;
-	InputInitialize();
-	Player.Initialize();
+	Player player;
+	InputInitialize(key);
+	player.Initialize();
 	//Princess.Initialize();
 	//EnemyMngInitialize();
 	//ChoreInitialize();
@@ -35,7 +35,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, Key);
+		InputUpdata(input, key);
+		PrintInput(key);
 
 		//switch (flag){
 		//case 0://OP
