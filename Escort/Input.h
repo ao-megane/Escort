@@ -2,6 +2,8 @@
 #define INPUT
 #include"DxLib.h"
 
+void InputInitialize(int key[]);
+
 void InputUpdata(XINPUT_STATE input, int Key[]);
 
 void PrintInput(int Key[]);
