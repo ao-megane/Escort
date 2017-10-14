@@ -2,7 +2,7 @@
 #include"Input.h"
 #include"Player.h"
 #include"Princess.h"
-//#include"Chore.h"
+#include"Chore.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow){
 

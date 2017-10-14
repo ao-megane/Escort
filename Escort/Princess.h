@@ -1,21 +1,21 @@
 #ifndef PRINCESS_H
 #define PRINCESS_H
 
-//#include"Chore.h"
+#include"Chore.h"
 
 class Princess
 {
-public:
+public:/*
 	Princess();
-	~Princess();
+	~Princess();*/
 	int Initialize();
 	int Updata();
 	int End();
 
 private:
 	int HP;
-	/*Dot center;
-	Square week;*/
+	Dot center;
+	Square week;
 };
 //
 //Princess::Princess()

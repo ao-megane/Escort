@@ -1,11 +1,10 @@
 #ifndef CHORE_H
 #define CHORE_H
 
-class Dot
-{
-public:
+class Dot{
+public:/*
 	Dot();
-	~Dot();
+	~Dot();*/
 	int Set(int x);
 	int Set(int x,int y);			//ç∂è„ÅAâEâ∫
 	//Dot Get(); //ìnÇπÇƒÇÈÇ‚ÇÒÇØ
@@ -26,20 +25,19 @@ private:
 	int x;
 	int y;
 };
+//
+//Dot::Dot()
+//{
+//}
+//
+//Dot::~Dot()
+//{
+//}
 
-Dot::Dot()
-{
-}
-
-Dot::~Dot()
-{
-}
-
-class Square
-{
-public:
+class Square{
+public:/*
 	Square();
-	~Square();
+	~Square();*/
 	int Set(Dot a, Dot b);
 	int Set(Dot a, int w, int h);
 	int Get_up();
@@ -62,13 +60,13 @@ private:
 	Dot LU;
 	Dot RD;
 };
-
-Square::Square()
-{
-}
-
-Square::~Square()
-{
-}
+//
+//Square::Square()
+//{
+//}
+//
+//Square::~Square()
+//{
+//}
 
 #endif // !CHORE_H
