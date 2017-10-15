@@ -10,7 +10,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	//SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	//SetWindowSizeExtendRate(0.8);
+	SetWindowSizeExtendRate(0.8);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
@@ -24,18 +24,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	int level_flag = 0;
 	int count = 0;
 	int keep_count = 0;
-	//Player player;
+	Player player;
 	InputInitialize(key);
-	//player.Initialize();
+	player.Initialize();
 	//Princess.Initialize();
 	//EnemyMngInitialize();
 	//ChoreInitialize();
 	//InputFile("koryosai2017.txt");
 
+	player.Set();
+
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
+
+		//LoadGraphScreen(500, 500, "images/P_run/1.png", true);
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		InputUpdata(input, key);
+		player.Updata(count,key);
+
+		player.Draw();
 		PrintInput(key);
 
 		//switch (flag){
