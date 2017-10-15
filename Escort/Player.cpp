@@ -30,7 +30,7 @@ int Player::Initialize() {
 
 int Player::Set() {
 	center.Set(500, 1000);
-	
+	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	return 0;
 }
 
@@ -142,6 +142,7 @@ int Player::Updata(int count,int Key[]) {
 		break;
 	}
 
+	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	return 0;
 }
 
@@ -151,6 +152,10 @@ int Player::Draw() {
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		GREEN, false);
+	DrawBox(
+		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
+		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+		BLUE, false);
 
 	DrawModiGraph(
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
