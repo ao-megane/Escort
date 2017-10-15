@@ -29,7 +29,7 @@ int Player::Initialize() {
 }
 
 int Player::Set() {
-	center.Set(500, 500);
+	center.Set(500, 1000);
 	
 	return 0;
 }
@@ -150,14 +150,14 @@ int Player::Draw() {
 	DrawBox(
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-		GRAY, true);
+		GREEN, false);
 
 	DrawModiGraph(
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-		Image,false);
+		Image,true);
 	//DrawFormatString(0, 0, WHITE, "Drawing : %d",center.Get_x());
 
 	

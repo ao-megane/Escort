@@ -34,6 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//InputFile("koryosai2017.txt");
 
 	player.Set();
+	SetBack(stageFlag);
 
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
@@ -41,7 +42,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		InputUpdata(input, key);
 		//InputUpdata(key);
 		player.Updata(count,key);
+		UpdataBack(count);
 
+		DrawBack();
 		player.Draw();
 		PrintInput(key);
 
