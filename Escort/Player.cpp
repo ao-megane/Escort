@@ -34,6 +34,18 @@ int Player::Set() {
 	return 0;
 }
 
+int Player::SetStand() {
+	stateFlag = 0;
+	Image = P_run_2;
+	return 0;
+}
+
+int Player::UpdataStand(int count) {
+	center.Set(center.Get_x() - 1);
+	return 0;
+}
+
+
 int Player::SetRun() {
 	stateFlag = 1;
 	Image = P_run_1;
@@ -42,7 +54,7 @@ int Player::SetRun() {
 }
 int Player::UpdataRun(int count) {
 	center.Set(center.Get_x() + 0);
-	DrawFormatString(300, 200, WHITE, "count:%d", count);
+	//DrawFormatString(300, 200, WHITE, "count:%d", count);
 	if (count % 60 <= 10) {
 		Image = P_run_1;
 	}else if (count % 60 <= 20) {
@@ -63,17 +75,36 @@ int Player::UpdataRun(int count) {
 	return 0;
 }
 
-int Player::SetStand() {
-	stateFlag = 0;
-	Image = P_run_2;
+int Player::SetDash() {
+	stateFlag = 2;
+	Image = P_run_1;
 
 	return 0;
 }
-
-int Player::UpdataStand(int count) {
-	center.Set(center.Get_x() - 2);
+int Player::UpdataDash(int count) {
+	center.Set(center.Get_x() + 1);
+	//DrawFormatString(300, 200, WHITE, "count:%d", count);
+	if (count % 30 <= 5) {
+		Image = P_run_1;
+	}
+	else if (count % 30 <= 10) {
+		Image = P_run_2;
+	}
+	else if (count % 30 <= 15) {
+		Image = P_run_3;
+	}
+	else if (count % 30 <= 20) {
+		Image = P_run_4;
+	}
+	else if (count % 30 <= 25) {
+		Image = P_run_5;
+	}
+	else if (count % 30 <= 30) {
+		Image = P_run_6;
+	}
 	return 0;
 }
+
 
 int Player::Updata(int count,int Key[]) {
 	//UpdataRun(count);
@@ -84,38 +115,33 @@ int Player::Updata(int count,int Key[]) {
 		else if (B) {
 
 		}
-		else if (RIGHT == 1) {
-			bodyClock = count;
+		else if (THUMB_X > 80) {
+			if (stateFlag != 2)bodyClock = count;
+			SetDash();
+		}
+		else if (THUMB_X > 0) {
+			if(stateFlag != 1)bodyClock = count;
 			SetRun();
-			//UpdataRun(count - bodyClock);
-		}
-		else if (RIGHT > 1) {
-			UpdataRun(count - bodyClock);
-		}
-		else  if(bodyClock != 0){
-			UpdataStand(count);
 		}
 		else {
-			bodyClock = count;
+			if (stateFlag != 0)bodyClock = count;
+			SetStand();
 		}
-
 	}
-	else {//入力非受付時の処理
-		switch (stateFlag)
-		{
-		case 0:
-			break;
-		case 1://ダッシュ
-			//UpdataRun(count);
-			break;
-		default:
-			break;
-		}
-
+	switch (stateFlag)
+	{
+	case 0:
+		UpdataStand(count - bodyClock);
+		break;
+	case 1:
+		UpdataRun(count - bodyClock);
+		break;
+	case 2:
+		UpdataDash(count - bodyClock);
+	default:
+		break;
 	}
 
-
-	
 	return 0;
 }
 

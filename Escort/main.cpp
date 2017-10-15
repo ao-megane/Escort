@@ -4,7 +4,7 @@
 #include"Princess.h"
 #include"Chore.h"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow){
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	SetGraphMode(2160, 1440, 32);
 	//SetFontSize(40);
@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	player.Initialize();
 	//Princess.Initialize();
 	//EnemyMngInitialize();
-	//ChoreInitialize();
+	ChoreInitialize();
 	//InputFile("koryosai2017.txt");
 
 	player.Set();
@@ -37,8 +37,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		//InputUpdata(input, key);
-		InputUpdata(key);
+		InputUpdata(input, key);
+		//InputUpdata(key);
 		player.Updata(count,key);
 
 		player.Draw();

@@ -7,7 +7,7 @@ int Dot::Set(int a, int b) {
 }
 int Dot::Set(int a) {
 	x = a;
-	y = a;
+	//y = a;
 	return 0;
 }
 
@@ -44,3 +44,7 @@ Dot Square::Get_LU() {
 Dot Square::Get_RD() {
 	return RD;
 }
+
+/*******************************************/
+
+int 
