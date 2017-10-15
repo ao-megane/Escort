@@ -32,4 +32,7 @@ const int DISP_HEIGHT = 1440;
 const int P_WIDTH = 200;
 const int P_HEIGHT = 400;
 
+const int PRI_WIDTH = 200;
+const int PRI_HEIGHT = 400;
+
 #endif // !VALUE_H

@@ -9,11 +9,17 @@ public:/*
 	Princess();
 	~Princess();*/
 	int Initialize();
-	int Updata();
+	int Set();
+	int SetRun();
+	int UpdataRun(int count);
+	int Updata(int count);
+	int Draw();
 	int End();
 
 private:
 	int HP;
+	int Image;
+	int stateFlag;	//”íƒ_ƒ’†‚Æ‚©‚É–³“G‚É‚·‚éƒtƒ‰ƒO
 	Dot center;
 	Square week;
 };
@@ -25,5 +31,15 @@ private:
 //Princess::~Princess()
 //{
 //}
+
+int PrincessInitialize();
+
+int SetPrincess();
+
+int UpdataPrincess(int count);
+
+int DrawPrincess();
+
+int EndPrincess();
 
 #endif // !PRINCESS_H

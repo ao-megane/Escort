@@ -28,12 +28,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Player player;
 	InputInitialize(key);
 	player.Initialize();
-	//Princess.Initialize();
+	PrincessInitialize();
 	//EnemyMngInitialize();
 	ChoreInitialize();
 	//InputFile("koryosai2017.txt");
 
 	player.Set();
+	SetPrincess();
 	SetBack(stageFlag);
 
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
@@ -46,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		DrawBack();
 		player.Draw();
-		PrintInput(key);
+		//PrintInput(key);
 
 		//switch (flag){
 		//case 0://OP
@@ -111,10 +112,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 	}
 
-
 	//UpdataFile("koryosai2017.txt");
 	DxLib_End();
 
-	// ソフトの終了
 	return 0;
 }
