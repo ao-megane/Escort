@@ -6,6 +6,8 @@ void InputInitialize(int key[]);
 
 void InputUpdata(XINPUT_STATE input, int Key[]);
 
+void InputUpdata(int Key[]);
+
 void PrintInput(int Key[]);
 
 

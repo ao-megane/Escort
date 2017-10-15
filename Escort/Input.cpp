@@ -30,6 +30,14 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 
 }
 
+void InputUpdata(int Key[]) {
+
+	if (CheckHitKey(KEY_INPUT_UP));
+	if (CheckHitKey(KEY_INPUT_RIGHT)) RIGHT++; else RIGHT = 0;
+
+
+}
+
 void PrintInput(int Key[]) {
 
 	DrawFormatString(0, 0, WHITE, "A:%d", A);

@@ -23,16 +23,13 @@ int Player::Initialize() {
 	weekArea.Set(center, center);
 	attack = 0;
 	Image = P_run_1;
-	acceptFlag = 0;
-
-
+	acceptFlag = 1;
 
 	return 0;
 }
 
 int Player::Set() {
 	center.Set(500, 500);
-	//DrawFormatString(0, 0, WHITE, "Setted");
 	
 	return 0;
 }
@@ -63,13 +60,23 @@ int Player::UpdataRun(int count) {
 	else if (count % 60 <= 60) {
 		Image = P_run_6;
 	}
+	return 0;
+}
 
+int Player::SetStand() {
+	stateFlag = 0;
+	Image = P_run_2;
 
 	return 0;
 }
 
+int Player::UpdataStand(int count) {
+	center.Set(center.Get_x() - 2);
+	return 0;
+}
+
 int Player::Updata(int count,int Key[]) {
-	UpdataRun(count);
+	//UpdataRun(count);
 	if (acceptFlag) {//入力受付時の処理
 		if (A) {
 
@@ -77,8 +84,19 @@ int Player::Updata(int count,int Key[]) {
 		else if (B) {
 
 		}
-		else if (RIGHT) {
-			UpdataRun(count);
+		else if (RIGHT == 1) {
+			bodyClock = count;
+			SetRun();
+			//UpdataRun(count - bodyClock);
+		}
+		else if (RIGHT > 1) {
+			UpdataRun(count - bodyClock);
+		}
+		else  if(bodyClock != 0){
+			UpdataStand(count);
+		}
+		else {
+			bodyClock = count;
 		}
 
 	}
@@ -88,7 +106,7 @@ int Player::Updata(int count,int Key[]) {
 		case 0:
 			break;
 		case 1://ダッシュ
-			UpdataRun(count);
+			//UpdataRun(count);
 			break;
 		default:
 			break;
