@@ -21,7 +21,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int key[10] = { 0 };
 
 	int flag = 0;
-	int level_flag = 0;
+	int levelFlag = 0;
+	int stageFlag = 1; //0 1 2
 	int count = 0;
 	int keep_count = 0;
 	Player player;

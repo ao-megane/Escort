@@ -26,6 +26,9 @@ const int ORANGE = GetColor(243, 152, 0);
 const int Trig = 200; //R2L2のカウントを始めるしきい値
 const int ThumbTrig = 16383; //thumbの無視する範囲 ～32767
 
+const int DISP_WIDTH = 2160;
+const int DISP_HEIGHT = 1440;
+
 const int P_WIDTH = 200;
 const int P_HEIGHT = 400;
 
