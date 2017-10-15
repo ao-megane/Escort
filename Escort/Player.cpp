@@ -12,12 +12,12 @@ int P_run_6;
 
 int Player::Initialize() {
 
-	P_run_1 = LoadGraph("images/P_run/1.png");
-	P_run_2 = LoadGraph("images/P_run/2.png");
-	P_run_3 = LoadGraph("images/P_run/3.png");
-	P_run_4 = LoadGraph("images/P_run/4.png");
-	P_run_5 = LoadGraph("images/P_run/5.png");
-	P_run_6 = LoadGraph("images/P_run/6.png");
+	P_run_1 = LoadGraph("images/Player/run/1.png");
+	P_run_2 = LoadGraph("images/Player/run/2.png");
+	P_run_3 = LoadGraph("images/Player/run/3.png");
+	P_run_4 = LoadGraph("images/Player/run/4.png");
+	P_run_5 = LoadGraph("images/Player/run/5.png");
+	P_run_6 = LoadGraph("images/Player/run/6.png");
 
 	center.Set(0);
 	weekArea.Set(center, center);

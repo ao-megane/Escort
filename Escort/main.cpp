@@ -36,8 +36,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
-		//LoadGraphScreen(500, 500, "images/P_run/1.png", true);
-
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		InputUpdata(input, key);
 		player.Updata(count,key);
