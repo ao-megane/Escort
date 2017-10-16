@@ -16,6 +16,16 @@ public:/*
 	int UpdataDash(int count);
 	int SetStand();
 	int UpdataStand(int count);
+	int SetGuard();
+	int UpdataGuard(int count);
+	int SetJump();
+	int UpdataJump(int count);
+	int SetAttack_w();
+	int UpdataAttack_w(int count);
+	int SetAttack_s();
+	int UpdataAttack_s(int count);
+	int SetAttack_l();
+	int UpdataAttack_l(int count);
 	int Updata(int count,int key[]);
 	int Draw();
 	int End();
@@ -33,6 +43,11 @@ private:
 	0 stand
 	1 run
 	2 dash
+	3 guard
+	4 jump
+	5 attack_strong
+	6 attack_week
+	7 attack_long
 	*/
 	int bodyClock;		//アニメーション用体内時計
 };
