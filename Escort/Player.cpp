@@ -30,6 +30,7 @@ int Player::Initialize() {
 	attack = 0;
 	Image = P_run_1;
 	acceptFlag = 1;
+	stateFlag = 0;
 
 	return 0;
 }
@@ -106,23 +107,23 @@ int Player::Updata(int count,int Key[]) {
 	if (acceptFlag) {//“ü—ÍŽó•tŽž‚Ìˆ—
 		if (A) {//‰“‹——£UŒ‚
 			if (stateFlag != 7)bodyClock = count;
-			SetAttack_l();
+			//SetAttack_l();
 		}
 		else if (B) {//’áˆÐ—ÍL”ÍˆÍUŒ‚
 			if (stateFlag != 6)bodyClock = count;
-			SetAttack_w();
+			//SetAttack_w();
 		}
 		else if (Y) {//‚ˆÐ—Í¬”ÍˆÍUŒ‚
 			if (stateFlag != 5)bodyClock = count;
-			SetAttack_s();
+			//SetAttack_s();
 		}
 		else if (THUMB_Y > 80) {//ƒWƒƒƒ“ƒv
 			if (stateFlag != 4)bodyClock = count;
-			SetJump();
+			//SetJump();
 		}
-		else if (THUMB_Y < 80) {//ƒK[ƒh
+		else if (THUMB_Y < -80) {//ƒK[ƒh
 			if (stateFlag != 3)bodyClock = count;
-			SetGuard();
+			//SetGuard();
 		}
 		else if (THUMB_X > 80) {//ƒ_ƒbƒVƒ…
 			if (stateFlag != 2)bodyClock = count;
@@ -150,19 +151,19 @@ int Player::Updata(int count,int Key[]) {
 		UpdataDash(count - bodyClock);
 		break;
 	case 3:
-		UpdataGuard(count - bodyClock);
+		//UpdataGuard(count - bodyClock);
 		break;
 	case 4:
-		UpdataJump(count - bodyClock);
+		//UpdataJump(count - bodyClock);
 		break;
 	case 5:
-		UpdataAttack_s(count - bodyClock);
+		//UpdataAttack_s(count - bodyClock);
 		break;
 	case 6:
-		UpdataAttack_w(count - bodyClock);
+		//UpdataAttack_w(count - bodyClock);
 		break;
 	case 7:
-		UpdataAttack_l(count - bodyClock);
+		//UpdataAttack_l(count - bodyClock);
 		break;
 	default:
 		break;
@@ -189,7 +190,7 @@ int Player::Draw() {
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		Image,true);
-	//DrawFormatString(0, 0, WHITE, "Drawing : %d",center.Get_x());
+	DrawFormatString(0, 0, RED, "P_state : %d",stateFlag);
 
 	
 

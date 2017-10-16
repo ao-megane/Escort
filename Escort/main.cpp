@@ -42,10 +42,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		//InputUpdata(input, key);
 		InputUpdata(key);
+
 		player.Updata(count,key);
+		UpdataPrincess(count);
 		UpdataBack(count);
 
 		DrawBack();
+		DrawPrincess();
 		player.Draw();
 		//PrintInput(key);
 
