@@ -7,10 +7,10 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	SetGraphMode(2160, 1440, 32);
-	//SetFontSize(40);
+	SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.8);
+	SetWindowSizeExtendRate(0.5);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
@@ -40,12 +40,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, key);
-		//InputUpdata(key);
+		//InputUpdata(input, key);
+		InputUpdata(key);
+
 		player.Updata(count,key);
+		UpdataPrincess(count);
 		UpdataBack(count);
 
 		DrawBack();
+		DrawPrincess();
 		player.Draw();
 		//PrintInput(key);
 

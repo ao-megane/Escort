@@ -17,7 +17,7 @@ int Princess::Initialize() {
 }
 
 int Princess::Set() {
-	center.Set(200, 1000);
+	center.Set(200, GROUND_HEIGHT - PRI_HEIGHT / 2);
 	week.Set(center, PRI_WIDTH, PRI_HEIGHT);
 	return 0;
 }
