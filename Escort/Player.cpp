@@ -36,7 +36,7 @@ int Player::Initialize() {
 }
 
 int Player::Set() {
-	center.Set(500, 1000);
+	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	return 0;
 }

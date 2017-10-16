@@ -2,10 +2,6 @@
 #include "Value.h"
 #include "DxLib.h"
 
-
-Box box[2];
-Fence fence[2];
-
 int Enemy::Draw() {
 
 	DrawBox(
@@ -45,7 +41,7 @@ int Box::Initialize() {
 	return 0;
 }
 int Box::Set(int count) {
-	center.Set(1000, 1000);
+	center.Set(1000, GROUND_HEIGHT - height / 2);
 	weekArea.Set(center, width, height);
 	starClock = count;
 	return 0;
@@ -66,7 +62,59 @@ int Box::Updata(int count) {
 		break;
 	}
 	weekArea.Set(center, width, height);
+	return 0;
+}
 
+
+int Fence_1;
+int Fence_breaked_1;
+int Fence::Initialize() {
+	//Box_1 = LoadGraph("images/Enemy/Box/1.png");
+	width = FENCE_WIDTH;
+	height = FENCE_HEIGHT;
+
+	center.Set(0);
+	weekArea.Set(center, center);
+	attack = 0;
+	Image = Fence_1;
+	existFlag = 0;
+	stateFlag = 0;
+
+	return 0;
+}
+int Fence::Set(int count) {
+	center.Set(1000, GROUND_HEIGHT - height / 2);
+	weekArea.Set(center, width, height);
+	starClock = count;
+	return 0;
+}
+int Fence::SetStand() {
+	Image = Fence_1;
+	return 0;
+}
+int Fence::UpdataStand() {
+	center.Set(center.Get_x() - 1);
+	return 0;
+}
+
+int Fence::Updata(int count) {
+	switch (stateFlag)
+	{
+	default:
+		break;
+	}
+	weekArea.Set(center, width, height);
+	return 0;
+}
+
+
+Box box[2];
+Fence fence[2];
+int EnemyMngInitialize() {
+	for (int i = 0; i < 2; i++) {
+		box[i].Initialize();
+		fence[i].Initialize();
+	}
 	return 0;
 }
 

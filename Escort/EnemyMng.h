@@ -9,7 +9,7 @@ public:
 	~Enemy();*/
 	//int Updata(int count);	//キャラごとに作る
 	int Draw();			//描画
-	int End();
+	//int End();
 
 protected:
 	Dot center;			//中心座標
@@ -66,7 +66,11 @@ private:
 class Fence : public Enemy
 {
 public:
-
+	int Initialize();
+	int Set(int count); //出現時処理
+	int Updata(int count);
+	int SetStand();
+	int UpdataStand();
 private:
 
 };

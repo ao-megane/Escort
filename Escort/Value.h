@@ -29,6 +29,8 @@ const int ThumbTrig = 16383; //thumbÇÃñ≥éãÇ∑ÇÈîÕàÕ Å`32767
 const int DISP_WIDTH = 2160;
 const int DISP_HEIGHT = 1440;
 
+const int GROUND_HEIGHT = 1440 - 50;
+
 const int P_WIDTH = 350;
 const int P_HEIGHT = 480;
 
@@ -37,5 +39,8 @@ const int PRI_HEIGHT = 480;
 
 const int BOX_WIDTH = 200;
 const int BOX_HEIGHT = 200;
+
+const int FENCE_WIDTH = 50;
+const int FENCE_HEIGHT = 200;
 
 #endif // !VALUE_H

@@ -7,10 +7,10 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	SetGraphMode(2160, 1440, 32);
-	//SetFontSize(40);
+	SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.8);
+	SetWindowSizeExtendRate(0.5);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
