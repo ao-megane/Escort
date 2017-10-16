@@ -52,7 +52,6 @@ int Player::UpdataStand(int count) {
 	return 0;
 }
 
-
 int Player::SetRun() {
 	stateFlag = 1;
 	Image = P_run_1;

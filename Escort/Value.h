@@ -35,4 +35,7 @@ const int P_HEIGHT = 480;
 const int PRI_WIDTH = 350;
 const int PRI_HEIGHT = 480;
 
+const int BOX_WIDTH = 200;
+const int BOX_HEIGHT = 200;
+
 #endif // !VALUE_H
