@@ -128,6 +128,7 @@ int Player::Updata(int count,int Key[]) {
 			SetStand();
 		}
 	}
+
 	switch (stateFlag)
 	{
 	case 0:
