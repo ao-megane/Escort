@@ -93,24 +93,24 @@ int Princess::Draw() {
 
 	return 0;
 }
-
-Princess girl;
-int PrincessInitialize() {
-	girl.Initialize();
-	return 0;
-}
-int SetPrincess() {
-	girl.Set();
-	return 0;
-}
-int UpdataPrincess(int count) {
-	girl.Updata(count);
-	return 0;
-}
-int DrawPrincess() {
-	girl.Draw();
-	return 0;
-}
-int EndPrincess() {
-	return 0;
-}
+//
+//Princess girl;
+//int PrincessInitialize() {
+//	girl.Initialize();
+//	return 0;
+//}
+//int SetPrincess() {
+//	girl.Set();
+//	return 0;
+//}
+//int UpdataPrincess(int count) {
+//	girl.Updata(count);
+//	return 0;
+//}
+//int DrawPrincess() {
+//	girl.Draw();
+//	return 0;
+//}
+//int EndPrincess() {
+//	return 0;
+//}

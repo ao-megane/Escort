@@ -11,6 +11,14 @@ int P_run_6;
 
 int P_walk_1;
 int P_walk_2;
+int P_walk_3;
+
+int backArm;
+int backLeg;
+int body;
+int frontArm;
+int frontLeg;
+int head;
 
 
 int Player::Initialize() {
@@ -22,14 +30,25 @@ int Player::Initialize() {
 	P_run_5 = LoadGraph("images/Player/run/5s.png");
 	P_run_6 = LoadGraph("images/Player/run/6s.png");
 
-	P_walk_1 = LoadGraph("images/Player/walk/1.png");
-	P_walk_2 = LoadGraph("images/Player/walk/3.png");
+	//P_walk_1 = LoadGraph("images/Player/walk/1.png");
+	//P_walk_2 = LoadGraph("images/Player/walk/3.png");
+	P_walk_1 = LoadGraph("images/Player/walk/a1.png");
+	P_walk_2 = LoadGraph("images/Player/walk/a2.png");
+	P_walk_3 = LoadGraph("images/Player/walk/a3.png");
+
+	backArm = LoadGraph("images/Player/characterChip/backarm.png");
+	backLeg = LoadGraph("images/Player/characterChip/backleg.png");
+	body = LoadGraph("images/Player/characterChip/body.png");
+	frontArm = LoadGraph("images/Player/characterChip/frontarm.png");
+	frontLeg = LoadGraph("images/Player/characterChip/frontleg.png");
+	head = LoadGraph("images/Player/characterChip/head.png");;
 
 	center.Set(0);
 	weekArea.Set(center, center);
 	attack = 0;
 	Image = P_run_1;
 	acceptFlag = 1;
+	isRightFlag = 1;
 	stateFlag = 0;
 
 	return 0;
@@ -52,19 +71,29 @@ int Player::UpdataStand(int count) {
 	return 0;
 }
 
-int Player::SetRun() {
+int Player::SetWalk() {
 	stateFlag = 1;
 	Image = P_run_1;
-
 	return 0;
 }
-int Player::UpdataRun(int count) {
-	center.Set(center.Get_x() + 0);
-	//DrawFormatString(300, 200, WHITE, "count:%d", count);
-	if (count % 20 <= 10) {
+int Player::UpdataWalk(int count) {
+	int speed = 1;
+	if(isRightFlag)
+		center.Set(center.Get_x() + speed - GROUND_SPEED);
+	else
+		center.Set(center.Get_x() - speed - GROUND_SPEED);
+	int sum = 40;	//一周のフレーム数
+	int num = 4;	//一周の画像数
+	if (count % sum <= sum / num * 1) {
 		Image = P_walk_1;
 	}
-	else if (count % 20 <= 20) {
+	else if (count % sum <= sum / num * 2) {
+		Image = P_walk_2;
+	}
+	else if (count % sum <= sum / num * 3) {
+		Image = P_walk_3;
+	}
+	else if (count % sum <= sum) {
 		Image = P_walk_2;
 	}
 	return 0;
@@ -77,24 +106,30 @@ int Player::SetDash() {
 	return 0;
 }
 int Player::UpdataDash(int count) {
-	center.Set(center.Get_x() + 1);
+	int speed = 2;
+	if(isRightFlag)
+		center.Set(center.Get_x() + speed - GROUND_SPEED);
+	else
+		center.Set(center.Get_x() - speed - GROUND_SPEED);
 	//DrawFormatString(300, 200, WHITE, "count:%d", count);
-	if (count % 18 <= 3) {
+	int sum = 18;
+	int num = 6;
+	if (count % sum <= sum/num * 1) {
 		Image = P_run_1;
 	}
-	else if (count % 18 <= 6) {
+	else if (count % sum <= sum / num * 2) {
 		Image = P_run_2;
 	}
-	else if (count % 18 <= 9) {
+	else if (count % sum <= sum / num * 3) {
 		Image = P_run_3;
 	}
-	else if (count % 18 <= 12) {
+	else if (count % sum <= sum / num * 4) {
 		Image = P_run_4;
 	}
-	else if (count % 18 <= 15) {
+	else if (count % sum <= sum / num * 5) {
 		Image = P_run_5;
 	}
-	else if (count % 18 <= 18) {
+	else if (count % sum <= sum) {
 		Image = P_run_6;
 	}
 	return 0;
@@ -124,13 +159,25 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 3)bodyClock = count;
 			//SetGuard();
 		}
-		else if (THUMB_X > 80) {//ダッシュ
+		else if (THUMB_X > 80) {//右ダッシュ
 			if (stateFlag != 2)bodyClock = count;
+			isRightFlag = 1;
 			SetDash();
 		}
-		else if (THUMB_X > 0) {//歩き
+		else if (THUMB_X > 0) {//右歩き
 			if(stateFlag != 1)bodyClock = count;
-			SetRun();
+			isRightFlag = 1;
+			SetWalk();
+		}
+		else if (THUMB_X < -80) {//左ダッシュ
+			if (stateFlag != 2)bodyClock = count;
+			isRightFlag = 0;
+			SetDash();
+		}
+		else if (THUMB_X < 0) {//左歩き
+			if (stateFlag != 1)bodyClock = count;
+			isRightFlag = 0;
+			SetWalk();
 		}
 		else {//立ち
 			if (stateFlag != 0)bodyClock = count;
@@ -144,7 +191,7 @@ int Player::Updata(int count,int Key[]) {
 		UpdataStand(count - bodyClock);
 		break;
 	case 1:
-		UpdataRun(count - bodyClock);
+		UpdataWalk(count - bodyClock);
 		break;
 	case 2:
 		UpdataDash(count - bodyClock);
@@ -183,12 +230,20 @@ int Player::Draw() {
 		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
 		BLUE, false);
 
-	DrawModiGraph(
-		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-		center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-		center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-		Image,true);
+	if(isRightFlag)
+		DrawModiGraph(
+			center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
+			center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
+			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+			center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+			Image,true);
+	else
+		DrawModiGraph(
+			center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
+			center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
+			center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+			Image, true);
 	DrawFormatString(0, 0, RED, "P_state : %d",stateFlag);
 
 	

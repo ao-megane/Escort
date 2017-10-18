@@ -30,6 +30,7 @@ const int DISP_WIDTH = 2160;
 const int DISP_HEIGHT = 1440;
 
 const int GROUND_HEIGHT = 1440 - 50;
+const int GROUND_SPEED = 1;
 
 const int P_WIDTH = 350;
 const int P_HEIGHT = 480;
