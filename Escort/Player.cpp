@@ -1,6 +1,7 @@
 #include"Player.h"
 #include"DxLib.h"
 #include"Value.h"
+#include<math.h>
 
 int P_run_1;
 int P_run_2;
@@ -134,6 +135,25 @@ int Player::UpdataDash(int count) {
 	return 0;
 }
 
+int Player::SetJump() {
+	stateFlag = 4;
+	//Image = 
+	acceptFlag = 0;
+	return 0;
+}
+int Player::UpdataJump(int count) {
+	double height = DISP_HEIGHT * 0.5;//jumpの高さ
+	double sum = 60.0;	//モーションにかかるフレーム数
+	int num = 5;	//絵の枚数
+	double a =  -sin((count / sum)*PI) * height;//ほしい山
+	center.Set((center.Get_x()) + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+	if (count >= sum) {
+		stateFlag = 0;
+		acceptFlag = 1;
+	}
+	return 0;
+}
+
 int Player::SetAttack_w() {
 	stateFlag = 6;
 	Image = P_run_3;
@@ -175,11 +195,11 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 5)bodyClock = count;
 			//SetAttack_s();
 		}
-		else if (THUMB_Y > 80) {//ジャンプ
+		else if (THUMB_Y <= -80) {//ジャンプ
 			if (stateFlag != 4)bodyClock = count;
-			//SetJump();
+			SetJump();
 		}
-		else if (THUMB_Y < -80) {//ガード
+		else if (THUMB_Y >= 80) {//ガード
 			if (stateFlag != 3)bodyClock = count;
 			//SetGuard();
 		}
@@ -224,7 +244,7 @@ int Player::Updata(int count,int Key[]) {
 		//UpdataGuard(count - bodyClock);
 		break;
 	case 4:
-		//UpdataJump(count - bodyClock);
+		UpdataJump(count - bodyClock);
 		break;
 	case 5:
 		//UpdataAttack_s(count - bodyClock);
