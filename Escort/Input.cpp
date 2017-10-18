@@ -37,6 +37,7 @@ void InputUpdata(int Key[]) {
 	else if (CheckHitKey(KEY_INPUT_LEFT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = -100;
 	else if (CheckHitKey(KEY_INPUT_LEFT)) THUMB_X = -55;
 	else THUMB_X = 0;
+	if (CheckHitKey(KEY_INPUT_D)) B++; else B = 0;
 
 
 }

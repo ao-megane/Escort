@@ -102,7 +102,6 @@ int Player::UpdataWalk(int count) {
 int Player::SetDash() {
 	stateFlag = 2;
 	Image = P_run_1;
-
 	return 0;
 }
 int Player::UpdataDash(int count) {
@@ -135,6 +134,31 @@ int Player::UpdataDash(int count) {
 	return 0;
 }
 
+int Player::SetAttack_w() {
+	stateFlag = 6;
+	Image = P_run_3;
+	acceptFlag = 0;
+	attack = 10;
+	Dot LU,RD;
+	if (isRightFlag) {
+		LU.Set(center.Get_x(), center.Get_y() - P_HEIGHT / 2);
+		RD.Set(center.Get_x() + P_WIDTH / 2, GROUND_HEIGHT);
+	}
+	else {
+		LU.Set(center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2);
+		RD.Set(center.Get_x(), GROUND_HEIGHT);
+	}
+	attackArea.Set(LU, RD);
+	return 0;
+}
+int Player::UpdataAttack_w(int count) {
+	if (count >= 10) {
+		stateFlag = 0;
+		acceptFlag = 1;
+	}
+	return 0;
+}
+
 
 int Player::Updata(int count,int Key[]) {
 	//UpdataRun(count);
@@ -145,7 +169,7 @@ int Player::Updata(int count,int Key[]) {
 		}
 		else if (B) {//’áˆĞ—ÍL”ÍˆÍUŒ‚
 			if (stateFlag != 6)bodyClock = count;
-			//SetAttack_w();
+			SetAttack_w();
 		}
 		else if (Y) {//‚ˆĞ—Í¬”ÍˆÍUŒ‚
 			if (stateFlag != 5)bodyClock = count;
@@ -206,7 +230,7 @@ int Player::Updata(int count,int Key[]) {
 		//UpdataAttack_s(count - bodyClock);
 		break;
 	case 6:
-		//UpdataAttack_w(count - bodyClock);
+		UpdataAttack_w(count - bodyClock);
 		break;
 	case 7:
 		//UpdataAttack_l(count - bodyClock);
@@ -217,6 +241,16 @@ int Player::Updata(int count,int Key[]) {
 
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	return 0;
+}
+
+int Player::GetStateFlag() {
+	return stateFlag;
+}
+Square Player::GetAttackArea() {
+	return attackArea;
+}
+int Player::GetAttack() {
+	return attack;
 }
 
 int Player::Draw() {
@@ -244,6 +278,13 @@ int Player::Draw() {
 			center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 			Image, true);
+
+	if(stateFlag == 6)
+		DrawBox(
+			attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
+			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
+			RED, false);
+
 	DrawFormatString(0, 0, RED, "P_state : %d",stateFlag);
 
 	

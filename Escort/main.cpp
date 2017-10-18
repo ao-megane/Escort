@@ -2,7 +2,9 @@
 #include"Input.h"
 #include"Player.h"
 #include"Princess.h"
+#include"EnemyMng.h"
 #include"Chore.h"
+#include"Value.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -26,15 +28,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int count = 0;
 	int keep_count = 0;
 	Player player;
+	Princess girl;
 	InputInitialize(key);
 	player.Initialize();
-	PrincessInitialize();
+	girl.Initialize();
 	//EnemyMngInitialize();
 	ChoreInitialize();
 	//InputFile("koryosai2017.txt");
 
 	player.Set();
-	SetPrincess();
+	girl.Set();
 	SetBack(stageFlag);
 
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
@@ -44,11 +47,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		InputUpdata(key);
 
 		player.Updata(count,key);
-		UpdataPrincess(count);
+		girl.Updata(count);
 		UpdataBack(count);
 
+		EnemyMngJudge(&player, &girl, count);
+		
 		DrawBack();
-		DrawPrincess();
+		girl.Draw();
 		player.Draw();
 		//PrintInput(key);
 
@@ -112,7 +117,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//}
 
 		count++;
+		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count / 30);
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
+		ScreenFlip();
 	}
 
 	//UpdataFile("koryosai2017.txt");
