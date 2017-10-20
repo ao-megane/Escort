@@ -19,7 +19,7 @@ public:/*
 	int SetGuard();
 	int UpdataGuard(int count);
 	int SetJump();
-	int UpdataJump(int count);
+	int UpdataJump(int count,int flag);
 	int SetAttack_w();
 	int UpdataAttack_w(int count);
 	int SetAttack_s();

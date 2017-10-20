@@ -3,12 +3,12 @@
 #include"Value.h"
 #include<math.h>
 
-int P_run_1;
-int P_run_2;
-int P_run_3;
-int P_run_4;
-int P_run_5;
-int P_run_6;
+//int P_run_1;
+//int P_run_2;
+//int P_run_3;
+//int P_run_4;
+//int P_run_5;
+//int P_run_6;
 
 int P_walk_1;
 int P_walk_2;
@@ -24,12 +24,12 @@ int head;
 
 int Player::Initialize() {
 
-	P_run_1 = LoadGraph("images/Player/run/1s.png");
+	/*P_run_1 = LoadGraph("images/Player/run/1s.png");
 	P_run_2 = LoadGraph("images/Player/run/2s.png");
 	P_run_3 = LoadGraph("images/Player/run/3s.png");
 	P_run_4 = LoadGraph("images/Player/run/4s.png");
 	P_run_5 = LoadGraph("images/Player/run/5s.png");
-	P_run_6 = LoadGraph("images/Player/run/6s.png");
+	P_run_6 = LoadGraph("images/Player/run/6s.png");*/
 
 	//P_walk_1 = LoadGraph("images/Player/walk/1.png");
 	//P_walk_2 = LoadGraph("images/Player/walk/3.png");
@@ -47,7 +47,7 @@ int Player::Initialize() {
 	center.Set(0);
 	weekArea.Set(center, center);
 	attack = 0;
-	Image = P_run_1;
+	Image = P_walk_1;
 	acceptFlag = 1;
 	isRightFlag = 1;
 	stateFlag = 0;
@@ -63,7 +63,7 @@ int Player::Set() {
 
 int Player::SetStand() {
 	stateFlag = 0;
-	Image = P_run_2;
+	Image = P_walk_1;
 	return 0;
 }
 
@@ -74,7 +74,7 @@ int Player::UpdataStand(int count) {
 
 int Player::SetWalk() {
 	stateFlag = 1;
-	Image = P_run_1;
+	Image = P_walk_1;
 	return 0;
 }
 int Player::UpdataWalk(int count) {
@@ -102,7 +102,7 @@ int Player::UpdataWalk(int count) {
 
 int Player::SetDash() {
 	stateFlag = 2;
-	Image = P_run_1;
+	Image = P_walk_1;
 	return 0;
 }
 int Player::UpdataDash(int count) {
@@ -111,52 +111,88 @@ int Player::UpdataDash(int count) {
 		center.Set(center.Get_x() + speed - GROUND_SPEED);
 	else
 		center.Set(center.Get_x() - speed - GROUND_SPEED);
-	//DrawFormatString(300, 200, WHITE, "count:%d", count);
-	int sum = 18;
-	int num = 6;
-	if (count % sum <= sum/num * 1) {
-		Image = P_run_1;
+	////DrawFormatString(300, 200, WHITE, "count:%d", count);
+	//int sum = 18;
+	//int num = 6;
+	//if (count % sum <= sum/num * 1) {
+	//	Image = P_run_1;
+	//}
+	//else if (count % sum <= sum / num * 2) {
+	//	Image = P_run_2;
+	//}
+	//else if (count % sum <= sum / num * 3) {
+	//	Image = P_run_3;
+	//}
+	//else if (count % sum <= sum / num * 4) {
+	//	Image = P_run_4;
+	//}
+	//else if (count % sum <= sum / num * 5) {
+	//	Image = P_run_5;
+	//}
+	//else if (count % sum <= sum) {
+	//	Image = P_run_6;
+	//}
+	int sum = 20;	//一周のフレーム数
+	int num = 4;	//一周の画像数
+	if (count % sum <= sum / num * 1) {
+		Image = P_walk_1;
 	}
 	else if (count % sum <= sum / num * 2) {
-		Image = P_run_2;
+		Image = P_walk_2;
 	}
 	else if (count % sum <= sum / num * 3) {
-		Image = P_run_3;
-	}
-	else if (count % sum <= sum / num * 4) {
-		Image = P_run_4;
-	}
-	else if (count % sum <= sum / num * 5) {
-		Image = P_run_5;
+		Image = P_walk_3;
 	}
 	else if (count % sum <= sum) {
-		Image = P_run_6;
+		Image = P_walk_2;
 	}
+
 	return 0;
 }
 
 int Player::SetJump() {
 	stateFlag = 4;
-	//Image = 
-	acceptFlag = 0;
+	Image = P_walk_1;
+	acceptFlag = 1;	//空中制動
 	return 0;
 }
-int Player::UpdataJump(int count) {
+int Player::UpdataJump(int count,int flag) {
 	double height = DISP_HEIGHT * 0.5;//jumpの高さ
 	double sum = 60.0;	//モーションにかかるフレーム数
 	int num = 5;	//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山
-	center.Set((center.Get_x()) + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+	switch (flag)
+	{
+	case 0://右ダッシュ
+		center.Set((center.Get_x()) - GROUND_SPEED + 2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		break;
+	case 1://右歩き
+		center.Set((center.Get_x()) - GROUND_SPEED + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		break; 
+	case 2://左ダッシュ
+		center.Set((center.Get_x()) - GROUND_SPEED - 2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		break;
+	case 3://左歩き
+		center.Set((center.Get_x()) - GROUND_SPEED - 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		break;
+	case 4://立ち
+		center.Set((center.Get_x()) - GROUND_SPEED + 0, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		break;
+	default:
+		break;
+	}
+	
 	if (count >= sum) {
 		stateFlag = 0;
 		acceptFlag = 1;
+		bodyClock = count;
 	}
 	return 0;
 }
 
 int Player::SetAttack_w() {
 	stateFlag = 6;
-	Image = P_run_3;
+	Image = P_walk_1;
 	acceptFlag = 0;
 	attack = 10;
 	Dot LU,RD;
@@ -182,6 +218,7 @@ int Player::UpdataAttack_w(int count) {
 
 int Player::Updata(int count,int Key[]) {
 	//UpdataRun(count);
+	int flag = 0;//空中制御用フラグ
 	if (acceptFlag) {//入力受付時の処理
 		if (A) {//遠距離攻撃
 			if (stateFlag != 7)bodyClock = count;
@@ -195,7 +232,7 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 5)bodyClock = count;
 			//SetAttack_s();
 		}
-		else if (THUMB_Y <= -80) {//ジャンプ
+		if (THUMB_Y <= -80) {//ジャンプ
 			if (stateFlag != 4)bodyClock = count;
 			SetJump();
 		}
@@ -203,29 +240,39 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 3)bodyClock = count;
 			//SetGuard();
 		}
-		else if (THUMB_X > 80) {//右ダッシュ
-			if (stateFlag != 2)bodyClock = count;
+		if (THUMB_X > 80) {//右ダッシュ
+			if (stateFlag != 2 && stateFlag != 4)bodyClock = count;
+			flag = 0;
 			isRightFlag = 1;
-			SetDash();
+			if(stateFlag != 4)
+				SetDash();
 		}
 		else if (THUMB_X > 0) {//右歩き
-			if(stateFlag != 1)bodyClock = count;
+			if(stateFlag != 1 && stateFlag != 4)bodyClock = count;
+			flag = 1;
 			isRightFlag = 1;
-			SetWalk();
+			if(stateFlag != 4)
+				SetWalk();
 		}
 		else if (THUMB_X < -80) {//左ダッシュ
-			if (stateFlag != 2)bodyClock = count;
+			if (stateFlag != 2 && stateFlag != 4)bodyClock = count;
+			flag = 2;
 			isRightFlag = 0;
-			SetDash();
+			if(stateFlag != 4)
+				SetDash();
 		}
 		else if (THUMB_X < 0) {//左歩き
-			if (stateFlag != 1)bodyClock = count;
+			if (stateFlag != 1 && stateFlag != 4)bodyClock = count;
+			flag = 3;
 			isRightFlag = 0;
-			SetWalk();
+			if(stateFlag != 4)
+				SetWalk();
 		}
-		else {//立ち
-			if (stateFlag != 0)bodyClock = count;
-			SetStand();
+		else if(abs(THUMB_Y) == 0 && abs(THUMB_X) == 0){//立ち
+			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
+			flag = 4;
+			if(stateFlag != 4)
+				SetStand();
 		}
 	}
 
@@ -244,7 +291,7 @@ int Player::Updata(int count,int Key[]) {
 		//UpdataGuard(count - bodyClock);
 		break;
 	case 4:
-		UpdataJump(count - bodyClock);
+		UpdataJump(count - bodyClock, flag);
 		break;
 	case 5:
 		//UpdataAttack_s(count - bodyClock);
