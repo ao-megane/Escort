@@ -1,6 +1,7 @@
 #ifndef CHORE_H
 #define CHORE_H
 #include"Obj.h"
+#include<string>
 
 //全部クラス管理でも良くね
 
@@ -49,5 +50,9 @@ int UpdataBack(int count);
 int DrawBack();
 
 int EndBack();
+
+int InputFile(std::string file);
+
+int UpdataFile(std::string file,int stageFlag,int score);//呼び出される->一人分の更新
 
 #endif // !CHORE_H

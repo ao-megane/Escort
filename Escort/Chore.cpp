@@ -1,6 +1,11 @@
 #include"Chore.h"
 #include"DxLib.h"
 #include"Value.h"
+#include<fstream>
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<list>
 
 int Back::SetColor(int a) {
 	ColorImage = a;
@@ -156,5 +161,31 @@ int UpdataBack(int count) {//countŽg‚í‚È‚­‚Ä‚à‚Å‚«‚é(?)
 
 int DrawBack() {
 	back.Draw();
+	return 0;
+}
+
+/*---------------------------------------------------------------------------*/
+
+int numOfPlayers;
+
+int InputFile(std::string file) {
+	std::ifstream File(file);
+	std::string j;
+	int i;
+	getline(File, j, '\n');
+	i = atoi(j.c_str());
+	numOfPlayers = i;
+	//remove(file);
+	//DeleteFile(file);
+	rename(file.c_str(), "koryosai2018");
+
+	return 0;
+}
+
+int UpdataFile(std::string file, int stageFlag, int score) {
+	std::ofstream fout(file, std::ios::app);
+	fout << ++numOfPlayers << "\n" << stageFlag << "\n" << score << "\n";
+	//DrawFormatString(0, 120, RED, "%d", numOfPlayers);
+
 	return 0;
 }

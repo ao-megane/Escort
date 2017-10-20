@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	girl.Initialize();
 	//EnemyMngInitialize();
 	ChoreInitialize();
-	//InputFile("koryosai2017.txt");
+	InputFile("koryosai2017.txt");
 
 	player.Set();
 	girl.Set();
@@ -119,10 +119,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count / 30);
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
+		
 		ScreenFlip();
 	}
 
-	//UpdataFile("koryosai2017.txt");
+	//UpdataFile("koryosai2017.txt", 0, 0);
+	UpdataFile("output.txt", 0, 0);
 	DxLib_End();
 
 	return 0;
