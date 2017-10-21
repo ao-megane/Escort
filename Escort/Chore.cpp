@@ -126,13 +126,39 @@ int ground_far;
 int ground_middle;
 int ground_close;
 
+
+int Clear1;
+int Clear2;
+int GameOver;
+int Loading1;
+int Result;
+int Tytle;
+
 int ChoreInitialize() {
+
+	Clear1 = LoadGraph("images/System/Clear1.png");
+	Clear2 = LoadGraph("images/System/Clear2.png");
+	GameOver = LoadGraph("images/System/GameOver.png");
+	Loading1 = LoadGraph("images/System/Loading.png");
+	Result = LoadGraph("images/System/Result.png");
+	Tytle = LoadGraph("images/System/Tytle.png");
+
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");
 	ground_far = LoadGraph("images/Back/Far.png");
 	ground_middle = LoadGraph("images/Back/Middle.png");
 	ground_close = LoadGraph("images/Back/Close.png");
 
+	return 0;
+}
+
+int DrawOP(int levelFlag) {
+	//DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, "OP");
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
+	if (levelFlag == 0)
+		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "normal");
+	else if(levelFlag == 1)
+		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "hard");
 	return 0;
 }
 
@@ -211,6 +237,19 @@ int UpdataFile(std::string file, int stageFlag, int score) {
 	fout << ++numOfPlayers << "\n" << stageFlag << "\n" << score << "\n";
 	//DrawFormatString(0, 120, RED, "%d", numOfPlayers);
 
+	return 0;
+}
+
+int DrawLoseBord() {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+	return 0;
+}
+int DrawWinBord(int levelFlag) {
+	if(levelFlag == 0)
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
+	else if (levelFlag == 1) {
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear2, true);
+	}
 	return 0;
 }
 

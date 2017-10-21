@@ -354,7 +354,7 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	DrawFormatString(0, 0, RED, "P_state : %d ,accepf : %d",stateFlag,acceptFlag);
+	DrawFormatString(0, 0, RED, "P_state : %d ,accept : %d",stateFlag,acceptFlag);
 
 	
 
