@@ -55,7 +55,8 @@ int Player::Initialize() {
 	return 0;
 }
 
-int Player::Set() {
+int Player::Set(int levelFlag) {
+	//if(levelFlag = 1)
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	return 0;
@@ -220,6 +221,7 @@ int Player::Updata(int count,int Key[]) {
 	//UpdataRun(count);
 	int flag = 0;//空中制御用フラグ
 	if (acceptFlag) {//入力受付時の処理
+		//だぶりありみたいなのはupdataでやるのが無難か
 		if (A) {//遠距離攻撃
 			if (stateFlag != 7)bodyClock = count;
 			//SetAttack_l();
@@ -232,7 +234,7 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 5)bodyClock = count;
 			//SetAttack_s();
 		}
-		if (THUMB_Y <= -80) {//ジャンプ
+		else if (THUMB_Y <= -80) {//ジャンプ
 			if (stateFlag != 4)bodyClock = count;
 			SetJump();
 		}
@@ -240,7 +242,7 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 3)bodyClock = count;
 			//SetGuard();
 		}
-		if (THUMB_X > 80) {//右ダッシュ
+		else if (THUMB_X > 80) {//右ダッシュ
 			if (stateFlag != 2 && stateFlag != 4)bodyClock = count;
 			flag = 0;
 			isRightFlag = 1;
@@ -352,7 +354,7 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	DrawFormatString(0, 0, RED, "P_state : %d",stateFlag);
+	DrawFormatString(0, 0, RED, "P_state : %d ,accepf : %d",stateFlag,acceptFlag);
 
 	
 

@@ -16,7 +16,8 @@ int Princess::Initialize() {
 	return 0;
 }
 
-int Princess::Set() {
+int Princess::Set(int levelFlag) {
+	//if(levelFlag == 0)
 	center.Set(200, GROUND_HEIGHT - PRI_HEIGHT / 2);
 	week.Set(center, PRI_WIDTH, PRI_HEIGHT);
 	return 0;
@@ -107,6 +108,9 @@ int Princess::Updata(int count) {
 
 int Princess::GetStateFlag() {
 	return stateFlag;
+}
+int Princess::GetHP() {
+	return HP;
 }
 Square Princess::GetWeekArea() {
 	return week;

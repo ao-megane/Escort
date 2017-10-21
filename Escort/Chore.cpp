@@ -167,19 +167,43 @@ int DrawBack() {
 /*---------------------------------------------------------------------------*/
 
 int numOfPlayers;
+int easyHighScore;
+int easyAvgScore;
+int hardHighScore;
+int hardAvgScore;
 
 int InputFile(std::string file) {
 	std::ifstream File(file);
 	std::string j;
 	int i;
+
 	getline(File, j, '\n');
 	i = atoi(j.c_str());
 	numOfPlayers = i;
+
+	getline(File, j, '\n');
+	i = atoi(j.c_str());
+	easyHighScore = i;
+
+	getline(File, j, '\n');
+	i = atoi(j.c_str());
+	easyAvgScore = i;
+
 	//remove(file);
 	//DeleteFile(file);
 	rename(file.c_str(), "koryosai2018");
 
 	return 0;
+}
+
+int DrawData(int stageFlag) {
+
+	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8, RED, "numofplayers:%d", numOfPlayers);
+	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8 + 40, RED, "easyHighScore:%d", easyHighScore);
+	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8 + 80, RED, "easyAvgScore:%d", easyAvgScore);
+
+	return 0;
+
 }
 
 int UpdataFile(std::string file, int stageFlag, int score) {
@@ -189,3 +213,5 @@ int UpdataFile(std::string file, int stageFlag, int score) {
 
 	return 0;
 }
+
+/*----------------------------------------------------------------------------------------------*/

@@ -5,10 +5,12 @@
 #include"EnemyMng.h"
 #include"Chore.h"
 #include"Value.h"
+//#include<Windows.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	SetGraphMode(2160, 1440, 32);
+	
 	SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
@@ -17,6 +19,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	//printfDx("try\n");
+	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
+		printfDx("AddFontResourceExé∏îs\n");
+	}
+	int nishiki = CreateFontToHandle("Nishiki-teki", 40, -1, DX_FONTTYPE_ANTIALIASING_8X8);
+	if (nishiki == -1) {
+		printfDx("CreateFontToHandleé∏îs\n");
+	}
+	//printfDx("succes\n");
 
 	XINPUT_STATE input;
 
@@ -36,17 +48,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChoreInitialize();
 	InputFile("koryosai2017.txt");
 
-	player.Set();
-	girl.Set();
+	//player.Set();
+	//girl.Set();
 	SetBack(stageFlag);
 
+	flag = 1;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
+
+		//DrawStringToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, "The brown quick fox", RED, nishiki);
+		//DrawStringToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, "123456789", RED, nishiki);
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		//InputUpdata(input, key);
 		InputUpdata(key);
 
-		player.Updata(count,key);
+		/*player.Updata(count,key);
 		girl.Updata(count);
 		UpdataBack(count);
 
@@ -55,66 +71,68 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DrawBack();
 		girl.Draw();
 		player.Draw();
+		DrawData(levelFlag);*/
 		//PrintInput(key);
 
-		//switch (flag){
-		//case 0://OP
-		//	DrawOP();
-		//	if () {
-		//		if ();
-		//		level_flag = ;
-		//	}
-		//	if () {
-		//		if ();
-		//		level_flag = ;
-		//	}
-		//	break;
-		//case 1://Loading
-		//	PlayerInitialize(level_flag);
-		//	PrincessInitialize(level_flag);
-		//	EnemyMngInitialize(level_flag);
-		//	ChoreInitialize(level_flag);
-		//	count = 0;
-		//	break;
-		//case 2://playing
-		//	PlayerUpdata(count);
-		//	EnemyMngUpdata(count);
-		//	PrincessUpdata(count);
-		//	ChoreUpdata(count);
+		switch (flag){
+		case 0://OP
+			/*DrawOP();
+			if () {
+				if ();
+				levelFlag = ;
+			}
+			if () {
+				if ();
+				levelFlag = ;
+			}*/
+			break;
+		case 1://Loading
+			player.Set(levelFlag);
+			girl.Set(levelFlag);
+			EnemyMngSet(levelFlag,stageFlag,count);
+			//ChoreSet(levelFlag);
+			SetBack(stageFlag);
+			count = 0;
+			flag = 2;
+			break;
+		case 2://playing
+			player.Updata(count,key);
+			girl.Updata(count);
+			UpdataBack(count);
+			//EnemyMngUpdata(count);
 
-		//	if (S_S_IsHit(Get_PriWeek(), Get_EnemyMng_Attack())) {
+			EnemyMngJudge(&player, &girl, count);
 
-		//	}
-		//	if (make) {
-		//		Set_ChoreLoser(level_flag,Get_ChoreLoser(level_flag)++);
-		//		flag = 3;
-		//	}
-		//	if (kati) {
-		//		Set_ChoreWiner(level_flag,Get_ChoreWiner(level_flag)++);
-		//		flag = 4;
-		//	}
+			if (girl.GetHP() <= 0) {
+				UpdataFile("output.txt", 0, 0);
+				flag = 3;
+			}
+			if (count >= 5*60*30) {
+				UpdataFile("output.txt", 0, 0);
+				flag = 4;
+			}
 
-		//	DrawBackGround(count);
-		//	EnemyMngDraw();
-		//	PrincessDraw();
-		//	PyaerDraw();
-		//	break;
-		//case 3://gameover
-		//	PrincessMotion_lose();
-		//	DrawLoseBord();
-		//	if () {
-		//		flag = 0;
-		//	}
-		//	break;
-		//case 4://gameclear
-		//	DrawWinBord(level_flag);
-		//	if () {
-		//		flag = 0;
-		//	}
-		//	break;
-		//default:
-		//	break;
-		//}
+			DrawBack();
+			//EnemyMngDraw();
+			girl.Draw();
+			player.Draw();
+			break;
+		case 3://gameover
+			/*PrincessMotion_lose();
+			DrawLoseBord();
+			if () {
+				flag = 0;
+			}*/
+			break;
+		case 4://gameclear
+			/*DrawWinBord(level_flag);
+			if () {
+				flag = 0;
+			}*/
+			break;
+		default:
+			break;
+		}
 
 		count++;
 		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count / 30);

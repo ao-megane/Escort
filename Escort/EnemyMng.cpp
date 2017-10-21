@@ -117,7 +117,7 @@ int EnemyMngInitialize() {
 	}
 	return 0;
 }
-int EnemyMngSet(int stageFlag, int count) {
+int EnemyMngSet(int levelFlag,int stageFlag, int count) {
 	return 0;
 }
 int EnemyMngUpdata(int count) {

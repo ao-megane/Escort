@@ -53,6 +53,8 @@ int EndBack();
 
 int InputFile(std::string file);
 
-int UpdataFile(std::string file,int stageFlag,int score);//呼び出される->一人分の更新
+int DrawData(int levelFlag);
+
+int UpdataFile(std::string file,int levelFlag,int score);//呼び出される->一人分の更新
 
 #endif // !CHORE_H

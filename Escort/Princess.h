@@ -9,13 +9,14 @@ public:/*
 	Princess();
 	~Princess();*/
 	int Initialize();
-	int Set();
+	int Set(int levelFlag);
 	int SetWalk();
 	int UpdataWalk(int count);
 	int SetDamage(int damage,int count);	//‚æ‚»‚©‚ç‰£‚ç‚ê‚é
 	int UpdataDamage(int count);			//ƒ‚[ƒVƒ‡ƒ“—p
 	int Updata(int count);
 	int GetStateFlag();
+	int GetHP();
 	Square GetWeekArea();
 	int Draw();
 	int End();
