@@ -32,9 +32,17 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 
 void InputUpdata(int Key[]) {
 
-	if (CheckHitKey(KEY_INPUT_UP))THUMB_X = 100; 
-	else if (CheckHitKey(KEY_INPUT_RIGHT))THUMB_X = 55;
+		 if (CheckHitKey(KEY_INPUT_RIGHT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = 100; 
+	else if (CheckHitKey(KEY_INPUT_RIGHT)) THUMB_X = 55;
+	else if (CheckHitKey(KEY_INPUT_LEFT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = -100;
+	else if (CheckHitKey(KEY_INPUT_LEFT)) THUMB_X = -55;
 	else THUMB_X = 0;
+		 if (CheckHitKey(KEY_INPUT_UP)) THUMB_Y = -80;
+	else if (CheckHitKey(KEY_INPUT_DOWN)) THUMB_Y = 80;
+	else THUMB_Y = 0;
+	if (CheckHitKey(KEY_INPUT_D)) B++; else B = 0;
+	if (CheckHitKey(KEY_INPUT_S)) A++; else A = 0;
+	if (CheckHitKey(KEY_INPUT_W)) Y++; else Y = 0;
 
 
 }

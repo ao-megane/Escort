@@ -55,7 +55,7 @@ public:/*
 	bool operator & (Square a) {	//‚ ‚½‚è”»’è‰‰Zq@true ‚Åd‚È‚Á‚Ä‚é
 	//if (a[2]<b[0] || a[0]>b[2] || a[1] > b[3] || a[3] < b[1]) return “–‚½‚Á‚Ä‚È‚¢
 		if (RD.Get_x() < a.Get_LU().Get_x() || LU.Get_x() > a.RD.Get_x() ||
-			LU.Get_y() < a.Get_RD().Get_y() || RD.Get_y() < a.LU.Get_y())
+			LU.Get_y() > a.Get_RD().Get_y() || RD.Get_y() < a.LU.Get_y())
 			return false;
 		else
 			return true;

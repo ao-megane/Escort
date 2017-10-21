@@ -117,4 +117,21 @@ int EnemyMngInitialize() {
 	}
 	return 0;
 }
+int EnemyMngSet(int levelFlag,int stageFlag, int count) {
+	return 0;
+}
+int EnemyMngUpdata(int count) {
+	return 0;
+}
+int EnemyMngJudge(Player* player, Princess* girl,int count) {
+	//DrawFormatString(0, 80, RED, "NONHIT");
+	if ((*player).GetStateFlag() == 6 && (*girl).GetStateFlag() != 1 && (*player).GetAttackArea() & (*girl).GetWeekArea()) {
+		//プレイヤーは殴るモード、姫は殴られるモードで実際に当たったら
+		//DrawFormatString(0, 80, RED, "HIT!!");
+		(*girl).SetDamage((*player).GetAttack(), count);
+		//姫にダメージ処理
+	}
+
+	return 0;
+}
 

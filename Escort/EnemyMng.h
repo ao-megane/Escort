@@ -1,6 +1,8 @@
 #ifndef ENEMYMNG_H
 #define ENEMYMNG_H
 #include"Chore.h"
+#include"Player.h"
+#include"Princess.h"
 
 class Enemy
 {
@@ -84,6 +86,9 @@ private:
 };
 
 int EnemyMngInitialize();			//画像ハンドル周り
-int EnemyMngSet(int stageFlag, int count);	//ステージ、時間ごとに配置
+int EnemyMngSet(int levelFlag,int stageFlag, int count);	//ステージ、時間ごとに配置
+int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
+int EnemyMngJudge(Player* player, Princess* girl,int count);	//判定、state、HP等の更新
+int EnemyMngDraw();
 
 #endif // !ENEMYMNG_H

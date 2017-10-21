@@ -1,6 +1,7 @@
 #ifndef CHORE_H
 #define CHORE_H
 #include"Obj.h"
+#include<string>
 
 //全部クラス管理でも良くね
 
@@ -42,6 +43,8 @@ private:
 
 int ChoreInitialize();
 
+int DrawOP(int levelFlag);
+
 int SetBack(int stageFlag);
 
 int UpdataBack(int count);
@@ -49,5 +52,15 @@ int UpdataBack(int count);
 int DrawBack();
 
 int EndBack();
+
+int InputFile(std::string file);
+
+int DrawData(int levelFlag);
+
+int UpdataFile(std::string file,int levelFlag,int score);//呼び出される->一人分の更新
+
+int DrawLoseBord();
+
+int DrawWinBord(int levelFlag);
 
 #endif // !CHORE_H
