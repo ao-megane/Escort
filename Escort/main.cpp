@@ -5,7 +5,6 @@
 #include"EnemyMng.h"
 #include"Chore.h"
 #include"Value.h"
-//#include<Windows.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
