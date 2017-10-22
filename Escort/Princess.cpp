@@ -5,6 +5,7 @@
 int run1
 int run2
 */
+int walk1;
 
 int Princess::Initialize() {
 	HP = 100;
@@ -12,6 +13,7 @@ int Princess::Initialize() {
 	run1 = LoadGraph("");
 	run1 = LoadGraph("");
 	*/
+	walk1 = LoadGraph("images/Princess/walk/1.png");
 
 	return 0;
 }
@@ -20,12 +22,13 @@ int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
 	center.Set(200, GROUND_HEIGHT - PRI_HEIGHT / 2);
 	week.Set(center, PRI_WIDTH, PRI_HEIGHT);
+	Image = walk1;
 	return 0;
 }
 
 int Princess::SetWalk() {
 	stateFlag = 0;
-	//Image = P_run_1;
+	Image = walk1;
 	return 0;
 }
 int Princess::UpdataWalk(int count) {

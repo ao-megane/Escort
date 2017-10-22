@@ -44,4 +44,7 @@ const int BOX_HEIGHT = 200;
 const int FENCE_WIDTH = 50;
 const int FENCE_HEIGHT = 200;
 
+const int SLIME_WIDTH = 200;
+const int SLIME_HEIGHT = 200;
+
 #endif // !VALUE_H

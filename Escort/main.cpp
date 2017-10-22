@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.5);
+	SetWindowSizeExtendRate(0.8);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
@@ -43,7 +43,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InputInitialize(Key);
 	player.Initialize();
 	girl.Initialize();
-	//EnemyMngInitialize();
+	EnemyMngInitialize();
 	ChoreInitialize();
 	InputFile("koryosai2017.txt");
 
@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//girl.Set();
 	SetBack(stageFlag);
 
-	flag = 0;
+	flag = 1;
 	int right = 0;
 	int left = 0;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
@@ -92,33 +92,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				flag = 1;
 			break;
 		case 1://Loading
+			count = 0;
 			player.Set(levelFlag);
 			girl.Set(levelFlag);
-			EnemyMngSet(levelFlag,stageFlag,count);
 			//ChoreSet(levelFlag);
 			SetBack(stageFlag);
-			count = 0;
 			flag = 2;
 			break;
 		case 2://playing
+			EnemyMngSet(levelFlag, stageFlag, count);
 			player.Updata(count,Key);
 			girl.Updata(count);
 			UpdataBack(count);
-			//EnemyMngUpdata(count);
+			EnemyMngUpdata(count);
 
 			EnemyMngJudge(&player, &girl, count);
 
-			if (girl.GetHP() <= 80) {
+			/*if (girl.GetHP() <= 80) {
 				UpdataFile("output.txt", 0, 0);
 				flag = 3;
 			}
 			if (count >= 0.1*60*30) {
 				UpdataFile("output.txt", 0, 0);
 				flag = 4;
-			}
+			}*/
 
 			DrawBack();
-			//EnemyMngDraw();
+			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
 			break;
