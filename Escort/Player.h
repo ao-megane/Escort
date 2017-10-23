@@ -41,7 +41,7 @@ private:
 	int attack;			//現在の攻撃力
 	int Image;			//現在の画像
 	int bodyClock;		//アニメーション用体内時計
-	int countKeeper;	//jump中攻撃モーション用キーパー
+	int IsJumping;		//jump中攻撃用flag
 	int isRightFlag;	//向いてる方向フラグ（0で左 1で右）
 	int acceptFlag;		//入力受付フラグ（1で受付）
 	int stateFlag;		//現状態フラグ

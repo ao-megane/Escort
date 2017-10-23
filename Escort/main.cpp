@@ -16,6 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowSizeExtendRate(0.5);
 	ChangeWindowMode(TRUE);
 	}
+	SetBackgroundColor(187,168,123);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -49,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//player.Set();
 	//girl.Set();
-	SetBack(stageFlag);
+	//SetBack(stageFlag);
 
 	flag = 0;
 	int right = 0;
@@ -140,7 +141,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		count++;
-		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count / 30);
+		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count);
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 		
 		ScreenFlip();

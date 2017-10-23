@@ -12,6 +12,11 @@ public:
 	//int Updata(int count);	//キャラごとに作る
 	int Draw();			//描画
 	int GetExistFlag();
+	int SetHP(int a);
+	int GetHP();
+	int GetStateFlag();
+	Square GetWeekArea();
+	Square GetAttackArea();
 	//int End();
 
 protected:
@@ -24,7 +29,7 @@ protected:
 	int width;
 	int height;
 	int bodyClock;		//アニメーション用体内時計
-	int starClock;		//出現時時間
+	int clockKeeper;	//被ダメ時のカウントキーパー
 	int existFlag;		//存在(判定)フラグ
 	int stateFlag;		//現状態フラグ
 	/*
@@ -33,7 +38,8 @@ protected:
 	2 attack
 	3 jump
 	4 happen
-	5 disappper
+	5 damage
+	6 disappper
 	*/
 };
 //
@@ -89,8 +95,11 @@ public:
 	int UpdataStand(int count);
 	int SetJump(int count);
 	int UpdataJump(int count);
+	int SetDamage(int count, int damage);
+	int UpdataDamage(int count);
+	int SetDisapper(int count);
+	int UpdataDisapper(int count);
 	int Updata(int count);
-	int UpdataStand();
 private:
 };
 
@@ -102,6 +111,10 @@ public:
 	int UpdataStand(int count);
 	//int SetJump(int count);
 	//int UpdataJump(int count);
+	int SetDisapper(int count);
+	int UpdataDisapper(int count);
+	int SetDamage(int count, int damage);
+	int UpdataDamage(int count);
 	int Updata(int count);
 	int UpdataStand();
 };

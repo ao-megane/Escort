@@ -10,7 +10,7 @@
 int Back::SetColor(int a) {
 	ColorImage = a;
 	Color[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-	Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	//Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
 	return 0;
 }
 int Back::SetKumo(int a) {
@@ -47,10 +47,10 @@ int Back::Updata(int count) {
 			Close[i] - 4;
 		}
 	}
-	if (Color[0].Get_RD().Get_x() == 0) {
+	/*if (Color[0].Get_RD().Get_x() == 0) {
 		Color[0] - (-DISP_WIDTH);
 		Color[1] - (-DISP_WIDTH);
-	}
+	}*/
 	if (Kumo[0].Get_RD().Get_x() == 0) {
 		Kumo[0] - (-DISP_WIDTH);
 		Kumo[1] - (-DISP_WIDTH);
@@ -70,22 +70,29 @@ int Back::Updata(int count) {
 	return 0;
 }
 int Back::Draw() {
-	for (int i = 0; i < 2; i++) 
+	/*for (int i = 0; i < 2; i++) 
 		DrawModiGraph(
 			Color[i].Get_LU().Get_x(), Color[i].Get_LU().Get_y(),
 			Color[i].Get_RD().Get_x(), Color[i].Get_LU().Get_y(),
 			Color[i].Get_RD().Get_x(), Color[i].Get_RD().Get_y(),
 			Color[i].Get_LU().Get_x(), Color[i].Get_RD().Get_y(),
 			ColorImage, true
-		);
-	for (int i = 0; i < 2; i++) 
+		);*/
+	/*DrawModiGraph(
+		Color[0].Get_LU().Get_x(), Color[0].Get_LU().Get_y(),
+		Color[0].Get_RD().Get_x(), Color[0].Get_LU().Get_y(),
+		Color[0].Get_RD().Get_x(), Color[0].Get_RD().Get_y(),
+		Color[0].Get_LU().Get_x(), Color[0].Get_RD().Get_y(),
+		ColorImage, true
+	);*/
+	/*for (int i = 0; i < 2; i++) 
 		DrawModiGraph(
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_RD().Get_y(),
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_RD().Get_y(),
 			KumoImage, true
-		);
+		);*/
 	for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Far[i].Get_LU().Get_x(), Far[i].Get_LU().Get_y(),
@@ -94,14 +101,14 @@ int Back::Draw() {
 			Far[i].Get_LU().Get_x(), Far[i].Get_RD().Get_y(),
 			FarImage, true
 		);
-	for (int i = 0; i < 2; i++)
+	/*for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Middle[i].Get_LU().Get_x(), Middle[i].Get_LU().Get_y(),
 			Middle[i].Get_RD().Get_x(), Middle[i].Get_LU().Get_y(),
 			Middle[i].Get_RD().Get_x(), Middle[i].Get_RD().Get_y(),
 			Middle[i].Get_LU().Get_x(), Middle[i].Get_RD().Get_y(),
 			MiddleImage, true
-		);
+		);*/
 	for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Close[i].Get_LU().Get_x(), Close[i].Get_LU().Get_y(),

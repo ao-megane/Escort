@@ -28,8 +28,8 @@ int Player::Initialize() {
 	frontLeg = LoadGraph("images/Player/characterChip/frontleg.png");
 	head = LoadGraph("images/Player/characterChip/head.png");*/
 
-	center.Set(0);
-	weekArea.Set(center, center);
+	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
+	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	attack = 0;
 	Image = P_walk_1;
 	acceptFlag = 1;
@@ -43,6 +43,7 @@ int Player::Set(int levelFlag) {
 	//if(levelFlag = 1)
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
+	IsJumping = 0;
 	return 0;
 }
 
@@ -93,32 +94,11 @@ int Player::SetDash() {
 	return 0;
 }
 int Player::UpdataDash(int count) {
-	int speed = 2;
+	int speed = 4;
 	if(isRightFlag)
 		center.Set(center.Get_x() + speed - GROUND_SPEED);
 	else
 		center.Set(center.Get_x() - speed - GROUND_SPEED);
-	////DrawFormatString(300, 200, WHITE, "count:%d", count);
-	//int sum = 18;
-	//int num = 6;
-	//if (count % sum <= sum/num * 1) {
-	//	Image = P_run_1;
-	//}
-	//else if (count % sum <= sum / num * 2) {
-	//	Image = P_run_2;
-	//}
-	//else if (count % sum <= sum / num * 3) {
-	//	Image = P_run_3;
-	//}
-	//else if (count % sum <= sum / num * 4) {
-	//	Image = P_run_4;
-	//}
-	//else if (count % sum <= sum / num * 5) {
-	//	Image = P_run_5;
-	//}
-	//else if (count % sum <= sum) {
-	//	Image = P_run_6;
-	//}
 	int sum = 20;	//一周のフレーム数
 	int num = 4;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -174,6 +154,7 @@ int Player::UpdataJump(int count,int flag) {
 		acceptFlag = 1;
 		bodyClock = count;
 	}
+	//DrawFormatString(0, 200, RED, "JUMPINGCOUNT : %d", count);
 	return 0;
 }
 
@@ -185,11 +166,11 @@ int Player::SetAttack_w() {
 	Dot LU,RD;
 	if (isRightFlag) {
 		LU.Set(center.Get_x(), center.Get_y() - P_HEIGHT / 2);
-		RD.Set(center.Get_x() + P_WIDTH / 2, GROUND_HEIGHT);
+		RD.Set(center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT/2);
 	}
 	else {
 		LU.Set(center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2);
-		RD.Set(center.Get_x(), GROUND_HEIGHT);
+		RD.Set(center.Get_x(), center.Get_y() + P_HEIGHT / 2);
 	}
 	attackArea.Set(LU, RD);
 	return 0;
@@ -198,22 +179,30 @@ int Player::UpdataAttack_w(int count) {
 	if (count >= 10) {
 		stateFlag = 0;
 		acceptFlag = 1;
+		if (IsJumping != 0) {
+			bodyClock = IsJumping;
+			IsJumping = 0;
+			stateFlag = 4;
+		}
 	}
 	return 0;
 }
 
 
 int Player::Updata(int count,int Key[]) {
-	//UpdataRun(count);
 	int flag = 4;//空中制御用フラグ
 	if (acceptFlag) {//入力受付時の処理
 		//だぶりありみたいなのはupdataでやるのが無難か
 		if (A) {//遠距離攻撃
-			if (stateFlag != 7 && stateFlag != 4)bodyClock = count;
+			if (stateFlag != 7)bodyClock = count;
 			//SetAttack_l();
 		}
 		else if (B) {//低威力広範囲攻撃
-			if (stateFlag != 6)bodyClock = count;
+			if (stateFlag == 4) {
+				IsJumping = bodyClock + 10;
+			}
+			if (stateFlag != 6)
+				bodyClock = count;
 			SetAttack_w();
 		}
 		else if (Y) {//高威力小範囲攻撃
@@ -229,11 +218,13 @@ int Player::Updata(int count,int Key[]) {
 			if (THUMB_Y <= -80) {//ジャンプ
 				if (stateFlag != 4) {
 					bodyClock = count;
+					IsJumping = count;
 					SetJump();
+					//printfDx("SETJUMP!!");
 				}
 			}
 			else if (THUMB_Y >= 80) {//ガード
-				if (stateFlag != 3)bodyClock = count;
+				if (stateFlag != 3 && stateFlag != 4)bodyClock = count;
 				//SetGuard();
 			}
 			if (THUMB_X >= 80) {//右ダッシュ
@@ -355,7 +346,7 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	DrawFormatString(0, 0, RED, "P_state : %d ,accept : %d",stateFlag,acceptFlag);
+	DrawFormatString(0, 0, RED, "P_state : %d ,accept : %d,bodyClock : %d",stateFlag,acceptFlag,bodyClock);
 
 	
 
