@@ -216,24 +216,102 @@ int Slime::Updata(int count) {
 		break;
 	}
 
-	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
+	weekArea.Set(center, SLIME_WIDTH*0.8, SLIME_HEIGHT*0.8);
+	return 0;
+}
+
+int BirdStand1;
+int Bird::Initialize() {
+	BirdStand1 = LoadGraph("images/Bird/stand/1.png");
+	existFlag = 0;
+	width = BIRD_WIDTH;
+	height = BIRD_HEIGHT;
+	return 0;
+}
+int Bird::Set(int count) {
+	center.Set(DISP_WIDTH - BIRD_WIDTH, GROUND_HEIGHT - BIRD_HEIGHT / 2 - 1000);
+	weekArea.Set(center, width, height);
+	Image = BirdStand1;
+	bodyClock = count;
+	existFlag = 1;
+	return 0;
+}
+int Bird::SetStand(int count) {
+	stateFlag = 0;
+	bodyClock = count;
+	return 0;
+}
+int Bird::UpdataStand(int count) {
+	center.Set(center.Get_x() - GROUND_SPEED, center.Get_y());
+	int sum = 40;	//ˆêü‚ÌƒtƒŒ[ƒ€”
+	int num = 4;	//ˆêü‚Ì‰æ‘œ”
+	/*if (count % sum <= sum / num * 1) {
+	Image = P_walk_1;
+	}
+	else if (count % sum <= sum / num * 2) {
+	Image = P_walk_2;
+	}
+	else if (count % sum <= sum / num * 3) {
+	Image = P_walk_3;
+	}
+	else if (count % sum <= sum) {
+	Image = P_walk_2;
+	}*/
+	return 0;
+}
+int Bird::Updata(int count) {
+	switch (stateFlag)
+	{
+	case 0:
+		UpdataStand(count - bodyClock);
+		break;
+	case 1:
+		//UpdataDash(count - bodyClock);
+		break;
+		//case 2:
+		//	UpdataAttack(count - bodyClock);
+		//	break;
+	case 3:
+		//UpdataJump(count - bodyClock);
+		break;
+		//case 4:
+		//	UpdataHappen(count - bodyClock);
+		//	break;
+		//case 5:
+		//	//UpdataAttack_s(count - bodyClock);
+		//	break;
+		//case 6:
+		//	UpdataAttack_w(count - bodyClock);
+		//	break;
+		//case 7:
+		//	//UpdataAttack_l(count - bodyClock);
+		//	break;
+	default:
+		break;
+	}
+
+	//weekArea.Set(center, BIRD_WIDTH*0.8, BIRD_HEIGHT*0.8);
+	weekArea.Set(center, 300, 300);
 	return 0;
 }
 
 Box box[2];
 Fence fence[2];
 Slime slime[2];
+Bird bird[2];
 int EnemyMngInitialize() {
 	for (int i = 0; i < 2; i++) {
-		box[i].Initialize();
-		fence[i].Initialize();
+		//box[i].Initialize();
+		//fence[i].Initialize();
 		slime[i].Initialize();
+		bird[i].Initialize();
 	}
 	return 0;
 }
 int EnemyMngSet(int levelFlag,int stageFlag, int count) {
 	if (count == 30) {
 		slime[0].Set(count);
+		bird[0].Set(count);
 	}
 	if (count % 60 == 0 && count != 0) {
 		slime[0].SetJump(count);
@@ -246,6 +324,7 @@ int EnemyMngUpdata(int count) {
 		//if (box[i].GetExistFlag()) box[i].Draw();
 		//if (fence[i].GetExistFlag()) fence[i].Draw();
 		if (slime[i].GetExistFlag()) slime[i].Updata(count);
+		if (bird[i].GetExistFlag()) bird[i].Updata(count);
 	}
 	return 0;
 }
@@ -265,6 +344,7 @@ int EnemyMngDraw() {
 		//if (box[i].GetExistFlag()) box[i].Draw();
 		//if (fence[i].GetExistFlag()) fence[i].Draw();
 		if (slime[i].GetExistFlag()) slime[i].Draw();
+		if (bird[i].GetExistFlag()) bird[i].Draw();
 	}
 	return 0;
 }

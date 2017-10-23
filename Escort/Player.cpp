@@ -3,13 +3,6 @@
 #include"Value.h"
 #include<math.h>
 
-//int P_run_1;
-//int P_run_2;
-//int P_run_3;
-//int P_run_4;
-//int P_run_5;
-//int P_run_6;
-
 int P_walk_1;
 int P_walk_2;
 int P_walk_3;
@@ -24,25 +17,16 @@ int head;
 
 int Player::Initialize() {
 
-	/*P_run_1 = LoadGraph("images/Player/run/1s.png");
-	P_run_2 = LoadGraph("images/Player/run/2s.png");
-	P_run_3 = LoadGraph("images/Player/run/3s.png");
-	P_run_4 = LoadGraph("images/Player/run/4s.png");
-	P_run_5 = LoadGraph("images/Player/run/5s.png");
-	P_run_6 = LoadGraph("images/Player/run/6s.png");*/
-
-	//P_walk_1 = LoadGraph("images/Player/walk/1.png");
-	//P_walk_2 = LoadGraph("images/Player/walk/3.png");
 	P_walk_1 = LoadGraph("images/Player/walk/a1.png");
 	P_walk_2 = LoadGraph("images/Player/walk/a2.png");
 	P_walk_3 = LoadGraph("images/Player/walk/a3.png");
 
-	backArm = LoadGraph("images/Player/characterChip/backarm.png");
+	/*backArm = LoadGraph("images/Player/characterChip/backarm.png");
 	backLeg = LoadGraph("images/Player/characterChip/backleg.png");
 	body = LoadGraph("images/Player/characterChip/body.png");
 	frontArm = LoadGraph("images/Player/characterChip/frontarm.png");
 	frontLeg = LoadGraph("images/Player/characterChip/frontleg.png");
-	head = LoadGraph("images/Player/characterChip/head.png");;
+	head = LoadGraph("images/Player/characterChip/head.png");*/
 
 	center.Set(0);
 	weekArea.Set(center, center);
@@ -225,7 +209,7 @@ int Player::Updata(int count,int Key[]) {
 	if (acceptFlag) {//“ü—Íó•t‚Ìˆ—
 		//‚¾‚Ô‚è‚ ‚è‚İ‚½‚¢‚È‚Ì‚Íupdata‚Å‚â‚é‚Ì‚ª–³“ï‚©
 		if (A) {//‰“‹——£UŒ‚
-			if (stateFlag != 7)bodyClock = count;
+			if (stateFlag != 7 && stateFlag != 4)bodyClock = count;
 			//SetAttack_l();
 		}
 		else if (B) {//’áˆĞ—ÍL”ÍˆÍUŒ‚
@@ -243,12 +227,9 @@ int Player::Updata(int count,int Key[]) {
 				SetStand();
 		} else {//UŒ‚‚Í‚È‚­‚ÄˆÚ“®‚È‚ç
 			if (THUMB_Y <= -80) {//ƒWƒƒƒ“ƒv
-				if (stateFlag == 2) 
-					printfDx("PREPARE");//‚È‚ç‚È‚¢
 				if (stateFlag != 4) {
 					bodyClock = count;
 					SetJump();
-					printfDx("setjump");
 				}
 			}
 			else if (THUMB_Y >= 80) {//ƒK[ƒh

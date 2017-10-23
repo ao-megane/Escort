@@ -13,13 +13,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetFontSize(40);
 	{
 	SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.8);
+	SetWindowSizeExtendRate(0.5);
 	ChangeWindowMode(TRUE);
 	}
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	//printfDx("try\n");
+	//DrawFormatString(0,0,RED,"LOADING!!!\n");
 	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
 		printfDx("AddFontResourceExé∏îs\n");
 	}
@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//girl.Set();
 	SetBack(stageFlag);
 
-	flag = 1;
+	flag = 0;
 	int right = 0;
 	int left = 0;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {

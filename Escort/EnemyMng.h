@@ -94,6 +94,18 @@ public:
 private:
 };
 
+class Bird : public Enemy {
+public:
+	int Initialize();
+	int Set(int count); //出現時処理
+	int SetStand(int count);
+	int UpdataStand(int count);
+	//int SetJump(int count);
+	//int UpdataJump(int count);
+	int Updata(int count);
+	int UpdataStand();
+};
+
 int EnemyMngInitialize();			//画像ハンドル周り
 int EnemyMngSet(int levelFlag,int stageFlag, int count);	//ステージ、時間ごとに配置
 int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
