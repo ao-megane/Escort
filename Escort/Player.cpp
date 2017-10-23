@@ -239,10 +239,9 @@ int Player::Updata(int count,int Key[]) {
 		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//立ち
 			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
 			flag = 4;
-			if (stateFlag != 4)
+			if (stateFlag != 4)//ジャンプ中でなければ
 				SetStand();
-			//printfDx("setstand");
-		} else {
+		} else {//攻撃はなくて移動なら
 			if (THUMB_Y <= -80) {//ジャンプ
 				if (stateFlag == 2) 
 					printfDx("PREPARE");//ならない
