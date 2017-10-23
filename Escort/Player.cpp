@@ -75,6 +75,7 @@ int Player::UpdataStand(int count) {
 
 int Player::SetWalk() {
 	stateFlag = 1;
+	acceptFlag = 1;
 	Image = P_walk_1;
 	return 0;
 }
@@ -104,6 +105,7 @@ int Player::UpdataWalk(int count) {
 int Player::SetDash() {
 	stateFlag = 2;
 	Image = P_walk_1;
+	acceptFlag = 1;
 	return 0;
 }
 int Player::UpdataDash(int count) {
@@ -158,7 +160,7 @@ int Player::SetJump() {
 	return 0;
 }
 int Player::UpdataJump(int count,int flag) {
-	double height = DISP_HEIGHT * 0.5;//jumpの高さ
+	double height = DISP_HEIGHT * 0.3;//jumpの高さ
 	double sum = 60.0;	//モーションにかかるフレーム数
 	int num = 5;	//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山
@@ -219,7 +221,7 @@ int Player::UpdataAttack_w(int count) {
 
 int Player::Updata(int count,int Key[]) {
 	//UpdataRun(count);
-	int flag = 0;//空中制御用フラグ
+	int flag = 4;//空中制御用フラグ
 	if (acceptFlag) {//入力受付時の処理
 		//だぶりありみたいなのはupdataでやるのが無難か
 		if (A) {//遠距離攻撃
@@ -234,47 +236,65 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag != 5)bodyClock = count;
 			//SetAttack_s();
 		}
-		else if (THUMB_Y <= -80) {//ジャンプ
-			if (stateFlag != 4)bodyClock = count;
-			SetJump();
-		}
-		else if (THUMB_Y >= 80) {//ガード
-			if (stateFlag != 3)bodyClock = count;
-			//SetGuard();
-		}
-		else if (THUMB_X > 80) {//右ダッシュ
-			if (stateFlag != 2 && stateFlag != 4)bodyClock = count;
-			flag = 0;
-			isRightFlag = 1;
-			if(stateFlag != 4)
-				SetDash();
-		}
-		else if (THUMB_X > 0) {//右歩き
-			if(stateFlag != 1 && stateFlag != 4)bodyClock = count;
-			flag = 1;
-			isRightFlag = 1;
-			if(stateFlag != 4)
-				SetWalk();
-		}
-		else if (THUMB_X < -80) {//左ダッシュ
-			if (stateFlag != 2 && stateFlag != 4)bodyClock = count;
-			flag = 2;
-			isRightFlag = 0;
-			if(stateFlag != 4)
-				SetDash();
-		}
-		else if (THUMB_X < 0) {//左歩き
-			if (stateFlag != 1 && stateFlag != 4)bodyClock = count;
-			flag = 3;
-			isRightFlag = 0;
-			if(stateFlag != 4)
-				SetWalk();
-		}
-		else if(abs(THUMB_Y) == 0 && abs(THUMB_X) == 0){//立ち
+		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//立ち
 			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
 			flag = 4;
-			if(stateFlag != 4)
+			if (stateFlag != 4)//ジャンプ中でなければ
 				SetStand();
+		} else {//攻撃はなくて移動なら
+			if (THUMB_Y <= -80) {//ジャンプ
+				if (stateFlag == 2) 
+					printfDx("PREPARE");//ならない
+				if (stateFlag != 4) {
+					bodyClock = count;
+					SetJump();
+					printfDx("setjump");
+				}
+			}
+			else if (THUMB_Y >= 80) {//ガード
+				if (stateFlag != 3)bodyClock = count;
+				//SetGuard();
+			}
+			if (THUMB_X >= 80) {//右ダッシュ
+				if (stateFlag != 2 && stateFlag != 4) {
+					bodyClock = count; 
+					SetDash();
+				}
+				flag = 0;
+				isRightFlag = 1;
+				/*if (stateFlag != 4)
+					SetDash();*/
+			}
+			else if (THUMB_X > 0) {//右歩き
+				if (stateFlag != 1 && stateFlag != 4) {
+					bodyClock = count;
+					SetWalk();
+				}
+				flag = 1;
+				isRightFlag = 1;
+				/*if (stateFlag != 4)
+					SetWalk();*/
+			}
+			if (THUMB_X <= -80) {//左ダッシュ
+				if (stateFlag != 2 && stateFlag != 4) {
+					bodyClock = count;
+					SetDash();
+				}
+				flag = 2;
+				isRightFlag = 0;
+				/*if (stateFlag != 4)
+					SetDash();*/
+			}
+			else if (THUMB_X < 0) {//左歩き
+				if (stateFlag != 1 && stateFlag != 4) {
+					bodyClock = count;
+					SetWalk();
+				}
+				flag = 3;
+				isRightFlag = 0;
+				/*if (stateFlag != 4)
+					SetWalk();*/
+			}
 		}
 	}
 

@@ -11,6 +11,7 @@ public:
 	~Enemy();*/
 	//int Updata(int count);	//キャラごとに作る
 	int Draw();			//描画
+	int GetExistFlag();
 	//int End();
 
 protected:
@@ -30,7 +31,9 @@ protected:
 	0 stand
 	1 run
 	2 attack
-	3 disappper
+	3 jump
+	4 happen
+	5 disappper
 	*/
 };
 //
@@ -80,9 +83,15 @@ private:
 class Slime : public Enemy
 {
 public:
-
+	int Initialize();
+	int Set(int count); //出現時処理
+	int SetStand(int count);
+	int UpdataStand(int count);
+	int SetJump(int count);
+	int UpdataJump(int count);
+	int Updata(int count);
+	int UpdataStand();
 private:
-
 };
 
 int EnemyMngInitialize();			//画像ハンドル周り
