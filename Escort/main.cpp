@@ -119,7 +119,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				flag = 4;
 			}
 
-			DrawBack();
+			//DrawBack();
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
@@ -142,7 +142,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		count++;
-		DrawFormatStringToHandle(DISP_WIDTH / 2, 40, RED, nishiki, "%5d", count);
+		DrawFormatString(DISP_WIDTH / 2, 40, RED, "%5d", count);
+		//DrawFormatStringToHandle(DISP_WIDTH / 2, 40, RED, nishiki, "%5d", count);
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 		
 		ScreenFlip();

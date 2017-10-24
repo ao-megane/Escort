@@ -167,7 +167,6 @@ int Slime::Set(int count,int isright) {
 		center.Set(SLIME_WIDTH, GROUND_HEIGHT - SLIME_HEIGHT / 2);
 		dirFlag = 0;
 	}
-	existFlag = 0;
 	width = SLIME_WIDTH;
 	height = SLIME_HEIGHT;
 	weekArea.Set(center, width, height);
@@ -176,7 +175,9 @@ int Slime::Set(int count,int isright) {
 	SetAttack(20);
 	Image = SlimeStand1;
 	bodyClock = count;
+	startClock = count;
 	existFlag = 1;
+	SetStand(count);
 	return 0;
 }
 int Slime::SetStand(int count) {
@@ -339,11 +340,11 @@ int Bird::Set(int count,int isright) {
 		dirFlag = 0;
 	}
 	weekArea.Set(center, width, height);
+	attackArea.Set(center, width, height);
 	Image = BirdStand1;
 	bodyClock = count;
 	startClock = count;
 	existFlag = 1;
-	stateFlag = 0;
 	SetHP(20);
 	SetStand(count);
 	return 0;
@@ -485,6 +486,7 @@ int EnemyMngSet(int levelFlag,int stageFlag, int count) {
 		}
 		if ((count - slime[i].GetStartClock()) % 60 == 50 && count != 0 && slime[i].GetStateFlag() == 0) {
 			if (slime[i].GetExistFlag())slime[i].SetJump(count);
+			if (i == 0) printfDx("JUMP!!\n");
 		}
 	}
 	/*if(count == 10)

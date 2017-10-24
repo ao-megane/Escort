@@ -44,6 +44,7 @@ int Player::Set(int levelFlag) {
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	IsJumping = 0;
+	SetStand();
 	return 0;
 }
 
@@ -186,7 +187,7 @@ int Player::UpdataAttack_w(int count) {
 		}
 		else {
 			SetStand();
-			printfDx("SETSTAND!\n");
+			//printfDx("SETSTAND!\n");
 		}
 	}
 	return 0;
