@@ -13,8 +13,12 @@ public:
 	int Draw();			//描画
 	int GetExistFlag();
 	int SetHP(int a);
+	int SetAttack(int a);
 	int GetHP();
+	int GetAttack();
+	int GetStartClock();
 	int GetStateFlag();
+	int GetBodyClock();
 	Square GetWeekArea();
 	Square GetAttackArea();
 	//int End();
@@ -30,8 +34,11 @@ protected:
 	int height;
 	int bodyClock;		//アニメーション用体内時計
 	int clockKeeper;	//被ダメ時のカウントキーパー
+	int startClock;		//出現時時間
 	int existFlag;		//存在(判定)フラグ
 	int stateFlag;		//現状態フラグ
+	int stateKeeper;
+	int dirFlag;		//向いてる方向フラグ（0で左 1で右）
 	/*
 	0 stand
 	1 run
@@ -51,46 +58,46 @@ protected:
 //{
 //}
 
-class Box :public Enemy
-{
-public:
-	int Initialize();
-	int Set(int count); //出現時処理
-	int Updata(int count);
-	int SetStand();
-	int UpdataStand();
-	/*Box();
-	~Box();*/
-
-private:
-
-};
-
-//Box::Box()
+//class Box :public Enemy
 //{
-//}
+//public:
+//	int Initialize();
+//	int Set(int count); //出現時処理
+//	int Updata(int count);
+//	int SetStand();
+//	int UpdataStand();
+//	/*Box();
+//	~Box();*/
 //
-//Box::~Box()
+//private:
+//
+//};
+//
+////Box::Box()
+////{
+////}
+////
+////Box::~Box()
+////{
+////}
+//
+//class Fence : public Enemy
 //{
-//}
-
-class Fence : public Enemy
-{
-public:
-	int Initialize();
-	int Set(int count); //出現時処理
-	int Updata(int count);
-	int SetStand();
-	int UpdataStand();
-private:
-
-};
+//public:
+//	int Initialize();
+//	int Set(int count); //出現時処理
+//	int Updata(int count);
+//	int SetStand();
+//	int UpdataStand();
+//private:
+//
+//};
 
 class Slime : public Enemy
 {
 public:
 	int Initialize();
-	int Set(int count); //出現時処理
+	int Set(int count,int position); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
 	int SetJump(int count);
@@ -106,11 +113,11 @@ private:
 class Bird : public Enemy {
 public:
 	int Initialize();
-	int Set(int count); //出現時処理
+	int Set(int count,int position); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
-	//int SetJump(int count);
-	//int UpdataJump(int count);
+	int SetAttack(int count);
+	int UpdataAttack(int count);
 	int SetDisapper(int count);
 	int UpdataDisapper(int count);
 	int SetDamage(int count, int damage);

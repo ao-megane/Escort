@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowSizeExtendRate(0.5);
 	ChangeWindowMode(TRUE);*/
 	}
-	SetBackgroundColor(187,168,123);
+	SetBackgroundColor(34,145,253);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -96,6 +96,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			count = 0;
 			player.Set(levelFlag);
 			girl.Set(levelFlag);
+			EnemyMngInitialize();
 			//ChoreSet(levelFlag);
 			SetBack(stageFlag);
 			flag = 2;
@@ -109,16 +110,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			EnemyMngJudge(&player, &girl, count);
 
-			/*if (girl.GetHP() <= 80) {
+			if (girl.GetHP() <= 0) {
 				UpdataFile("output.txt", 0, 0);
 				flag = 3;
 			}
-			if (count >= 0.1*60*30) {
+			if (count >= 2*60*30) {
 				UpdataFile("output.txt", 0, 0);
 				flag = 4;
-			}*/
+			}
 
-			DrawBack();
+			//DrawBack();
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
@@ -141,7 +142,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		count++;
-		DrawFormatString(DISP_WIDTH / 2, 0, RED, "%d", count);
+		DrawFormatString(DISP_WIDTH / 2, 40, RED, "%5d", count);
+		//DrawFormatStringToHandle(DISP_WIDTH / 2, 40, RED, nishiki, "%5d", count);
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 		
 		ScreenFlip();

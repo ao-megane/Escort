@@ -44,6 +44,7 @@ int Player::Set(int levelFlag) {
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	IsJumping = 0;
+	SetStand();
 	return 0;
 }
 
@@ -124,7 +125,7 @@ int Player::SetJump() {
 	return 0;
 }
 int Player::UpdataJump(int count,int flag) {
-	double height = DISP_HEIGHT * 0.3;//jumpの高さ
+	double height = DISP_HEIGHT * 0.6;//jumpの高さ
 	double sum = 60.0;	//モーションにかかるフレーム数
 	int num = 5;	//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山
@@ -182,12 +183,15 @@ int Player::UpdataAttack_w(int count) {
 		if (IsJumping != 0) {
 			bodyClock = IsJumping;
 			IsJumping = 0;
-			stateFlag = 4;
+			stateFlag = 4;//戻す
+		}
+		else {
+			SetStand();
+			//printfDx("SETSTAND!\n");
 		}
 	}
 	return 0;
 }
-
 
 int Player::Updata(int count,int Key[]) {
 	int flag = 4;//空中制御用フラグ
@@ -226,10 +230,10 @@ int Player::Updata(int count,int Key[]) {
 					//printfDx("SETJUMP!!");
 				}
 			}
-			else if (THUMB_Y >= 80) {//ガード
-				if (stateFlag != 3 && stateFlag != 4)bodyClock = count;
-				//SetGuard();
-			}
+			//else if (THUMB_Y >= 80) {//ガード
+			//	if (stateFlag != 3 && stateFlag != 4)bodyClock = count;
+			//	//SetGuard();
+			//}
 			if (THUMB_X >= 80) {//右ダッシュ
 				if (stateFlag != 2 && stateFlag != 4) {
 					bodyClock = count; 
@@ -349,7 +353,7 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	DrawFormatString(0, 0, RED, "P_state : %d ,accept : %d,bodyClock : %d",stateFlag,acceptFlag,bodyClock);
+	DrawFormatString(0, 0, RED, "P_state : %2d ,accept : %2d,bodyClock : %5d,center.y : %5d",stateFlag,acceptFlag,bodyClock,center.Get_y());
 
 	
 
