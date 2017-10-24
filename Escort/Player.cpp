@@ -201,6 +201,9 @@ int Player::Updata(int count,int Key[]) {
 			if (stateFlag == 4) {
 				IsJumping = bodyClock + 10;
 			}
+			else {
+				IsJumping = 0;
+			}
 			if (stateFlag != 6)
 				bodyClock = count;
 			SetAttack_w();

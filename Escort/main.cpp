@@ -12,9 +12,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	SetFontSize(40);
 	{
-	SetWindowSizeChangeEnableFlag(TRUE);
+	/*SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.5);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(TRUE);*/
 	}
 	SetBackgroundColor(187,168,123);
 	DxLib_Init();
@@ -61,8 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//DrawStringToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, "123456789", RED, nishiki);
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		//InputUpdata(input, Key);
-		InputUpdata(Key);
+		InputUpdata(input, Key);
+		//InputUpdata(Key);
 
 		/*player.Updata(count,key);
 		girl.Updata(count);
