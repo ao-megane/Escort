@@ -20,9 +20,11 @@ int Princess::Initialize() {
 
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
-	center.Set(200, GROUND_HEIGHT - PRI_HEIGHT / 2);
+	center.Set(DISP_WIDTH / 2, GROUND_HEIGHT - PRI_HEIGHT / 2);
 	week.Set(center, PRI_WIDTH, PRI_HEIGHT);
 	Image = walk1;
+	stateFlag = 0;
+	HP = 100;
 	return 0;
 }
 
@@ -53,9 +55,7 @@ int Princess::UpdataWalk(int count) {
 		//Image = P_run_6;
 	}
 	return 0;
-
 }
-
 
 int Princess::SetDamage(int damage,int count) {
 	stateFlag = 1;
@@ -67,7 +67,9 @@ int Princess::SetDamage(int damage,int count) {
 int Princess::UpdataDamage(int count) {
 	int speed = 1;
 	center.Set(center.Get_x() + speed - GROUND_SPEED);
-	if (count >= 60) stateFlag = 0;
+	if (count >= 60) {
+		stateFlag = 0;
+	}
 	//if (count % 60 <= 10) {
 	//	//Image = P_run_1;
 	//}
@@ -137,7 +139,10 @@ int Princess::Draw() {
 		center.Get_x() - PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
 		Image, true);
 
-	DrawFormatString(0, 40, RED, "HP:%d", HP);
+	DrawBox(40, 40, 1040, 80, BLUE, false);
+	DrawBox(40, 40, 40 + HP * 10, 80, BLUE, true);
+
+	DrawFormatString(0, 40, RED, "HP:%d,state:%d", HP, stateFlag);
 
 	return 0;
 }

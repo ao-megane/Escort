@@ -32,11 +32,11 @@ const int DISP_HEIGHT = 1440;
 const int GROUND_HEIGHT = 1440 - 50;
 const int GROUND_SPEED = 1;
 
-const int P_WIDTH = 350;
-const int P_HEIGHT = 480;
+const int P_WIDTH = 150;
+const int P_HEIGHT = 250;
 
-const int PRI_WIDTH = 350;
-const int PRI_HEIGHT = 480;
+const int PRI_WIDTH = 150;
+const int PRI_HEIGHT = 250;
 
 const int BOX_WIDTH = 200;
 const int BOX_HEIGHT = 200;
@@ -44,10 +44,10 @@ const int BOX_HEIGHT = 200;
 const int FENCE_WIDTH = 50;
 const int FENCE_HEIGHT = 200;
 
-const int SLIME_WIDTH = 200;
-const int SLIME_HEIGHT = 200;
+const int SLIME_WIDTH = 100;
+const int SLIME_HEIGHT = 100;
 
-const int BIRD_WIDTH = 300 * 2;//3:2
-const int BIRD_HEIGHT = 200 * 2;
+const int BIRD_WIDTH = 300;//3:2
+const int BIRD_HEIGHT = 200;
 
 #endif // !VALUE_H
