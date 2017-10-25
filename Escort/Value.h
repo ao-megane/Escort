@@ -32,11 +32,11 @@ const int DISP_HEIGHT = 1440;
 const int GROUND_HEIGHT = 1440 - 50;
 const int GROUND_SPEED = 1;
 
-const int P_WIDTH = 150;
-const int P_HEIGHT = 250;
+const int P_WIDTH = 180;
+const int P_HEIGHT = 300;
 
-const int PRI_WIDTH = 150;
-const int PRI_HEIGHT = 250;
+const int PRI_WIDTH = 180;
+const int PRI_HEIGHT = 300;
 
 const int BOX_WIDTH = 200;
 const int BOX_HEIGHT = 200;

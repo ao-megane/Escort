@@ -63,4 +63,6 @@ int DrawLoseBord();
 
 int DrawWinBord(int levelFlag);
 
+void FpsTimeFanction();
+
 #endif // !CHORE_H

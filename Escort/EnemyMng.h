@@ -13,7 +13,7 @@ public:
 	int Draw();			//描画
 	int GetExistFlag();
 	int SetHP(int a);
-	int SetAttack(int a);
+	int SetAttackval(int a);
 	int GetHP();
 	int GetAttack();
 	int GetStartClock();
@@ -38,7 +38,7 @@ protected:
 	int existFlag;		//存在(判定)フラグ
 	int stateFlag;		//現状態フラグ
 	int stateKeeper;
-	int dirFlag;		//向いてる方向フラグ（0で左 1で右）
+	int dirFlag;		//向いてる方向フラグ（1で右 0で左）
 	/*
 	0 stand
 	1 run
@@ -116,7 +116,7 @@ public:
 	int Set(int count,int position); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
-	int SetAttack(int count);
+	int SetAttack(int count,Dot princess);
 	int UpdataAttack(int count);
 	int SetDisapper(int count);
 	int UpdataDisapper(int count);
@@ -124,10 +124,12 @@ public:
 	int UpdataDamage(int count);
 	int Updata(int count);
 	int UpdataStand();
+	double birdAttackHigh;
+	double birdAttackWidth;
 };
 
 int EnemyMngInitialize();			//画像ハンドル周り
-int EnemyMngSet(int levelFlag,int stageFlag, int count);	//ステージ、時間ごとに配置
+int EnemyMngSet(int levelFlag,int stageFlag, int count,Dot girl);	//ステージ、時間ごとに配置
 int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
 int EnemyMngJudge(Player* player, Princess* girl,int count);	//判定、state、HP等の更新
 int EnemyMngDraw();

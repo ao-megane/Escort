@@ -121,6 +121,10 @@ Square Princess::GetWeekArea() {
 	return week;
 }
 
+Dot Princess::GetCenter() {
+	return center;
+}
+
 int Princess::Draw() {
 
 	DrawBox(

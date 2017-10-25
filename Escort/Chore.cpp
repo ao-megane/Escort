@@ -7,12 +7,12 @@
 #include<sstream>
 #include<list>
 
-//int Back::SetColor(int a) {
-//	ColorImage = a;
-//	Color[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-//	//Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
-//	return 0;
-//}
+int Back::SetColor(int a) {
+	ColorImage = a;
+	Color[0].Set(0, 0, DISP_WIDTH*2, DISP_HEIGHT);
+	//Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	return 0;
+}
 int Back::SetKumo(int a) {
 	KumoImage = a;
 	Kumo[0].Set(0, 0, DISP_WIDTH*2, DISP_HEIGHT);
@@ -51,34 +51,34 @@ int Back::Updata(int count) {
 		Color[0] - (-DISP_WIDTH);
 		Color[1] - (-DISP_WIDTH);
 	}*/
-	if (Kumo[0].Get_RD().Get_x() == DISP_WIDTH*2) {
+	if (Kumo[0].Get_RD().Get_x() == DISP_WIDTH) {
 		Kumo[0] - (-DISP_WIDTH);
-		Kumo[1] - (-DISP_WIDTH);
+		//Kumo[1] - (-DISP_WIDTH);
 	}
-	if (Far[0].Get_RD().Get_x() == DISP_WIDTH*2) {
+	if (Far[0].Get_RD().Get_x() == DISP_WIDTH) {
 		Far[0] - (-DISP_WIDTH);
-		Far[1] - (-DISP_WIDTH);
+		//Far[1] - (-DISP_WIDTH);
 	}
 	/*if (Middle[0].Get_RD().Get_x() == 0) {
 		Middle[0] - (-DISP_WIDTH);
 		Middle[1] - (-DISP_WIDTH);
 	}*/
-	if (Close[0].Get_RD().Get_x() == DISP_WIDTH*2) {
+	if (Close[0].Get_RD().Get_x() == DISP_WIDTH) {
 		Close[0] - (-DISP_WIDTH);
-		Close[1] - (-DISP_WIDTH);
+		//Close[1] - (-DISP_WIDTH);
 	}
 	return 0;
 }
 int Back::Draw() {
-	/*for (int i = 0; i < 2; i++) 
+	for (int i = 0; i < 1; i++) 
 		DrawModiGraph(
 			Color[i].Get_LU().Get_x(), Color[i].Get_LU().Get_y(),
 			Color[i].Get_RD().Get_x(), Color[i].Get_LU().Get_y(),
 			Color[i].Get_RD().Get_x(), Color[i].Get_RD().Get_y(),
 			Color[i].Get_LU().Get_x(), Color[i].Get_RD().Get_y(),
 			ColorImage, true
-		);*/
-	for (int i = 0; i < 2; i++) 
+		);
+	for (int i = 0; i < 1; i++) 
 		DrawModiGraph(
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_LU().Get_y(),
@@ -86,7 +86,7 @@ int Back::Draw() {
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_RD().Get_y(),
 			KumoImage, true
 		);
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 		DrawModiGraph(
 			Far[i].Get_LU().Get_x(), Far[i].Get_LU().Get_y(),
 			Far[i].Get_RD().Get_x(), Far[i].Get_LU().Get_y(),
@@ -102,12 +102,12 @@ int Back::Draw() {
 			Middle[i].Get_LU().Get_x(), Middle[i].Get_RD().Get_y(),
 			MiddleImage, true
 		);*/
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 		DrawModiGraph(
-			Close[i].Get_LU().Get_x(), Close[i].Get_LU().Get_y(),
-			Close[i].Get_RD().Get_x(), Close[i].Get_LU().Get_y(),
-			Close[i].Get_RD().Get_x(), Close[i].Get_RD().Get_y(),
-			Close[i].Get_LU().Get_x(), Close[i].Get_RD().Get_y(),
+			Close[i].Get_LU().Get_x(), Close[i].Get_LU().Get_y() + 450,
+			Close[i].Get_RD().Get_x(), Close[i].Get_LU().Get_y() + 450,
+			Close[i].Get_RD().Get_x(), Close[i].Get_RD().Get_y() + 0,
+			Close[i].Get_LU().Get_x(), Close[i].Get_RD().Get_y() + 0,
 			CloseImage, true
 		);
 	return 0;
@@ -126,22 +126,25 @@ int ground_far;
 int ground_middle;
 int ground_close;
 
-
 int Clear1;
-int Clear2;
+int Flower;
 int GameOver;
 int Loading1;
+int Credit;
 int Result;
 int Tytle;
+int Logo;
 
 int ChoreInitialize() {
 
 	Clear1 = LoadGraph("images/System/Clear1.png");
-	Clear2 = LoadGraph("images/System/Clear2.png");
+	Flower = LoadGraph("images/System/Flower.png");
 	GameOver = LoadGraph("images/System/GameOver.png");
 	Loading1 = LoadGraph("images/System/Loading.png");
 	Result = LoadGraph("images/System/Result.png");
+	Credit = LoadGraph("images/System/Credit.png");
 	Tytle = LoadGraph("images/System/Tytle.png");
+	Logo = LoadGraph("images/System/Logo.png");
 
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");
@@ -154,7 +157,10 @@ int ChoreInitialize() {
 
 int DrawOP(int levelFlag) {
 	//DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, "OP");
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
+	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
+	
+	DrawBack();
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Logo, true);
 	if (levelFlag == 0)
 		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "normal");
 	else if(levelFlag == 1)
@@ -168,7 +174,7 @@ int SetBack(int stage) {
 	case 0://City
 		break;
 	case 1://Ground
-		//back.SetColor(ground_color);
+		back.SetColor(ground_color);
 		back.SetKumo(ground_kumo);
 		back.SetFar(ground_far);
 		//back.SetMiddle(ground_middle);
@@ -248,9 +254,27 @@ int DrawWinBord(int levelFlag) {
 	if(levelFlag == 0)
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 	else if (levelFlag == 1) {
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear2, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 	}
 	return 0;
 }
 
 /*----------------------------------------------------------------------------------------------*/
+
+int counter = 0, FpsTime[2] = { 0, }, FpsTime_i = 0;
+double Fps = 0.0;
+char Key[256];
+void FpsTimeFanction() {
+	if (FpsTime_i == 0)
+		FpsTime[0] = GetNowCount();               //1周目の時間取得
+	if (FpsTime_i == 49) {
+		FpsTime[1] = GetNowCount();               //50周目の時間取得
+		Fps = 1000.0f / ((FpsTime[1] - FpsTime[0]) / 50.0f);//測定した値からfpsを計算
+		FpsTime_i = 0;//カウントを初期化
+	}
+	else
+		FpsTime_i++;//現在何周目かカウント
+	if (Fps != 0)
+		DrawFormatString(DISP_WIDTH-200, DISP_HEIGHT-40, WHITE, "FPS %.1f", Fps); //fpsを表示
+	return;
+}

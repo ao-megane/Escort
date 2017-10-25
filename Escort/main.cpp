@@ -12,11 +12,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	SetFontSize(40);
 	{
-	/*SetWindowSizeChangeEnableFlag(TRUE);
+	SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.5);
-	ChangeWindowMode(TRUE);*/
+	ChangeWindowMode(TRUE);
 	}
-	SetBackgroundColor(34,145,253);
+	//SetBackgroundColor(34,145,253);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//player.Set();
 	//girl.Set();
-	//SetBack(stageFlag);
+	SetBack(stageFlag);
 
 	flag = 0;
 	int right = 0;
@@ -61,8 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//DrawStringToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, "123456789", RED, nishiki);
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, Key);
-		//InputUpdata(Key);
+		//InputUpdata(input, Key);
+		InputUpdata(Key);
 
 		/*player.Updata(count,key);
 		girl.Updata(count);
@@ -78,6 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		switch (flag){
 		case 0://OP
+			UpdataBack(count);
 			DrawOP(levelFlag);
 			DrawData(levelFlag);
 			if (THUMB_X >= 80) right++; else right = 0;
@@ -103,7 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			flag = 2;
 			break;
 		case 2://playing
-			EnemyMngSet(levelFlag, stageFlag, count);
+			EnemyMngSet(levelFlag, stageFlag, count,girl.GetCenter());
 			player.Updata(count,Key);
 			girl.Updata(count);
 			UpdataBack(count);
@@ -124,6 +125,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
+			FpsTimeFanction();
 			break;
 		case 3://gameover
 			//PrincessMotion_lose();

@@ -130,7 +130,7 @@ int Player::SetJump() {
 	return 0;
 }
 int Player::UpdataJump(int count,int flag) {
-	double height = DISP_HEIGHT * 0.6;//jumpの高さ
+	double height = DISP_HEIGHT * 0.3;//jumpの高さ
 	double sum = 60.0;	//モーションにかかるフレーム数
 	int num = 5;	//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山

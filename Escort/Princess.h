@@ -18,6 +18,7 @@ public:/*
 	int GetStateFlag();
 	int GetHP();
 	Square GetWeekArea();
+	Dot GetCenter();
 	int Draw();
 	int End();
 
