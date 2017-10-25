@@ -115,7 +115,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (girl.GetHP() <= 0) {
 				//UpdataFile("output.txt", 0, 0);
 				flag = 3;
-				//SetLoser(count);
+				SetLoser(count);
 			}
 			if (count >= 1*30*30) {
 				//UpdataFile("output.txt", 0, 0);
@@ -130,6 +130,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			FpsTimeFanction();
 			break;
 		case 3://gameover
+			DrawLoseBord();
 			//PrincessMotion_lose();
 			/*if (B == 1 && LoserUpdata(count)) {
 				flag = 0;
@@ -146,10 +147,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			DrawBack();
 			girl.Draw();
 			player.Draw();
-			if (WinnerUpdata(count)) {
-				if(B == 1)
-					flag = 0;
-			}
+			WinnerUpdata(count);
+			if(B == 1)
+				flag = 0;
 			break;
 		default:
 			break;

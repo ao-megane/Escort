@@ -266,7 +266,10 @@ int SetWinner(int count) {
 	Keeper = count;
 	return 0;
 }
-
+int SetLoser(int count) {
+	Keeper = count;
+	return 0;
+}
 int WinnerUpdata(int count) {
 	DrawModiGraph(
 		DISP_WIDTH - (count - Keeper) * 3, 300,

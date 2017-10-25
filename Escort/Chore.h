@@ -63,6 +63,8 @@ int SetLoser(int count);
 
 int LoserUpdata(int count);
 
+int DrawLoseBord();
+
 int SetWinner(int count);
 
 int WinnerUpdata(int count);

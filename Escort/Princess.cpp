@@ -20,8 +20,8 @@ int Princess::Initialize() {
 
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
-	center.Set(DISP_WIDTH / 2, GROUND_HEIGHT - PRI_HEIGHT / 2);
-	week.Set(center, PRI_WIDTH, PRI_HEIGHT);
+	center.Set(DISP_WIDTH * 0.2, GROUND_HEIGHT - PRI_HEIGHT / 2);
+	week.Set(center, PRI_WIDTH * 0.7, PRI_HEIGHT * 0.7);
 	Image = walk1;
 	stateFlag = 0;
 	HP = 100;

@@ -38,6 +38,7 @@ protected:
 	int existFlag;		//存在(判定)フラグ
 	int stateFlag;		//現状態フラグ
 	int stateKeeper;
+	int strength;		//強さ
 	int dirFlag;		//向いてる方向フラグ（1で右 0で左）
 	/*
 	0 stand
@@ -97,7 +98,7 @@ class Slime : public Enemy
 {
 public:
 	int Initialize();
-	int Set(int count,int position); //出現時処理
+	int Set(int count,int position,int strength); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
 	int SetJump(int count);
@@ -113,7 +114,7 @@ private:
 class Bird : public Enemy {
 public:
 	int Initialize();
-	int Set(int count,int position); //出現時処理
+	int Set(int count,int position,int strength); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
 	int SetAttack(int count,Dot princess);
