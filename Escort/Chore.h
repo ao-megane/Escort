@@ -59,9 +59,13 @@ int DrawData(int levelFlag);
 
 int UpdataFile(std::string file,int levelFlag,int score);//呼び出される->一人分の更新
 
-int DrawLoseBord();
+int SetLoser(int count);
 
-int DrawWinBord(int levelFlag);
+int LoserUpdata(int count);
+
+int SetWinner(int count);
+
+int WinnerUpdata(int count);
 
 void FpsTimeFanction();
 

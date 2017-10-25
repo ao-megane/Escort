@@ -145,6 +145,8 @@ int ChoreInitialize() {
 	Credit = LoadGraph("images/System/Credit.png");
 	Tytle = LoadGraph("images/System/Tytle.png");
 	Logo = LoadGraph("images/System/Logo.png");
+	Flower = LoadGraph("images/System/Flower.png");
+	Credit = LoadGraph("images/System/Credit.png");
 
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");
@@ -257,6 +259,29 @@ int DrawWinBord(int levelFlag) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 	}
 	return 0;
+}
+
+int Keeper;
+int SetWinner(int count) {
+	Keeper = count;
+	return 0;
+}
+
+int WinnerUpdata(int count) {
+	DrawModiGraph(
+		DISP_WIDTH - (count - Keeper) * 3, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 3, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 3, 700 + 300,
+		DISP_WIDTH - (count - Keeper) * 3, 700 + 300,
+		Credit, true);
+	DrawModiGraph(
+		DISP_WIDTH*2 - (count - Keeper) * 3, GROUND_HEIGHT - 125,
+		DISP_WIDTH*2 + 750 - (count - Keeper) * 3, GROUND_HEIGHT - 125,
+		DISP_WIDTH*2 + 750 - (count - Keeper) * 3, GROUND_HEIGHT + 125,
+		DISP_WIDTH*2 - (count - Keeper) * 3, GROUND_HEIGHT + 125,
+		Flower, true);
+	if ((DISP_WIDTH * 2 + 750 - (count - Keeper) * 2) <= DISP_WIDTH) return 1;
+	else return 0;
 }
 
 /*----------------------------------------------------------------------------------------------*/

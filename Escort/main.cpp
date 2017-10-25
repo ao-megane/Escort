@@ -113,12 +113,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngJudge(&player, &girl, count);
 
 			if (girl.GetHP() <= 0) {
-				UpdataFile("output.txt", 0, 0);
+				//UpdataFile("output.txt", 0, 0);
 				flag = 3;
+				//SetLoser(count);
 			}
-			if (count >= 1*60*30) {
-				UpdataFile("output.txt", 0, 0);
+			if (count >= 1*30*30) {
+				//UpdataFile("output.txt", 0, 0);
 				flag = 4;
+				SetWinner(count);
 			}
 
 			DrawBack();
@@ -129,15 +131,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 3://gameover
 			//PrincessMotion_lose();
-			DrawLoseBord();
+			/*if (B == 1 && LoserUpdata(count)) {
+				flag = 0;
+			}*/
 			if (B == 1) {
 				flag = 0;
 			}
 			break;
 		case 4://gameclear
-			DrawWinBord(levelFlag);
-			if (B == 1) {
-				flag = 0;
+			player.Updata(count, Key);
+			girl.Updata(count);
+			UpdataBack(count);
+
+			DrawBack();
+			girl.Draw();
+			player.Draw();
+			if (WinnerUpdata(count)) {
+				if(B == 1)
+					flag = 0;
 			}
 			break;
 		default:
