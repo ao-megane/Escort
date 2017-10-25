@@ -43,7 +43,12 @@ int Player::Set(int levelFlag) {
 	//if(levelFlag = 1)
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
+	attack = 0;
+	Image = P_walk_1;
+	acceptFlag = 1;
 	IsJumping = 0;
+	bodyClock = 0;
+	isRightFlag = 1;
 	SetStand();
 	return 0;
 }
@@ -55,7 +60,7 @@ int Player::SetStand() {
 }
 
 int Player::UpdataStand(int count) {
-	center.Set(center.Get_x() - 1);
+	center.Set(center.Get_x() - 1, GROUND_HEIGHT - P_HEIGHT / 2);
 	return 0;
 }
 
@@ -68,9 +73,9 @@ int Player::SetWalk() {
 int Player::UpdataWalk(int count) {
 	int speed = 1;
 	if(isRightFlag)
-		center.Set(center.Get_x() + speed - GROUND_SPEED);
+		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
-		center.Set(center.Get_x() - speed - GROUND_SPEED);
+		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 40;	//一周のフレーム数
 	int num = 4;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -97,9 +102,9 @@ int Player::SetDash() {
 int Player::UpdataDash(int count) {
 	int speed = 4;
 	if(isRightFlag)
-		center.Set(center.Get_x() + speed - GROUND_SPEED);
+		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
-		center.Set(center.Get_x() - speed - GROUND_SPEED);
+		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 20;	//一周のフレーム数
 	int num = 4;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -129,6 +134,7 @@ int Player::UpdataJump(int count,int flag) {
 	double sum = 60.0;	//モーションにかかるフレーム数
 	int num = 5;	//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山
+	if (a > 0) a *= -1;
 	switch (flag)
 	{
 	case 0://右ダッシュ

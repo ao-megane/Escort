@@ -7,40 +7,40 @@
 #include<sstream>
 #include<list>
 
-int Back::SetColor(int a) {
-	ColorImage = a;
-	Color[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-	//Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
-	return 0;
-}
+//int Back::SetColor(int a) {
+//	ColorImage = a;
+//	Color[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
+//	//Color[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+//	return 0;
+//}
 int Back::SetKumo(int a) {
 	KumoImage = a;
-	Kumo[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-	Kumo[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	Kumo[0].Set(0, 0, DISP_WIDTH*2, DISP_HEIGHT);
+	Kumo[1].Set(DISP_WIDTH*2, 0, DISP_WIDTH * 4, DISP_HEIGHT);
 	return 0;
 }
 int Back::SetFar(int a) {
 	FarImage = a;
-	Far[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-	Far[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	Far[0].Set(0, 0, DISP_WIDTH*2, DISP_HEIGHT);
+	Far[1].Set(DISP_WIDTH*2, 0, DISP_WIDTH * 4, DISP_HEIGHT);
 	return 0;
-}
+}/*
 int Back::SetMiddle(int a) {
 	MiddleImage = a;
 	Middle[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
 	Middle[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
 	return 0;
-}
+}*/
 int Back::SetClose(int a) {
 	CloseImage = a;
-	Close[0].Set(0, 0, DISP_WIDTH, DISP_HEIGHT);
-	Close[1].Set(DISP_WIDTH, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	Close[0].Set(0, 0, DISP_WIDTH * 2, DISP_HEIGHT);
+	Close[1].Set(DISP_WIDTH * 2, 0, DISP_WIDTH * 4, DISP_HEIGHT);
 	return 0;
 }
 
 int Back::Updata(int count) {
 	if (count % 2 == 0) {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			Kumo[i] - 1;
 			Far[i] - 2;
 			Middle[i] - 3;
@@ -51,19 +51,19 @@ int Back::Updata(int count) {
 		Color[0] - (-DISP_WIDTH);
 		Color[1] - (-DISP_WIDTH);
 	}*/
-	if (Kumo[0].Get_RD().Get_x() == 0) {
+	if (Kumo[0].Get_RD().Get_x() == DISP_WIDTH*2) {
 		Kumo[0] - (-DISP_WIDTH);
 		Kumo[1] - (-DISP_WIDTH);
 	}
-	if (Far[0].Get_RD().Get_x() == 0) {
+	if (Far[0].Get_RD().Get_x() == DISP_WIDTH*2) {
 		Far[0] - (-DISP_WIDTH);
 		Far[1] - (-DISP_WIDTH);
 	}
-	if (Middle[0].Get_RD().Get_x() == 0) {
+	/*if (Middle[0].Get_RD().Get_x() == 0) {
 		Middle[0] - (-DISP_WIDTH);
 		Middle[1] - (-DISP_WIDTH);
-	}
-	if (Close[0].Get_RD().Get_x() == 0) {
+	}*/
+	if (Close[0].Get_RD().Get_x() == DISP_WIDTH*2) {
 		Close[0] - (-DISP_WIDTH);
 		Close[1] - (-DISP_WIDTH);
 	}
@@ -78,21 +78,14 @@ int Back::Draw() {
 			Color[i].Get_LU().Get_x(), Color[i].Get_RD().Get_y(),
 			ColorImage, true
 		);*/
-	/*DrawModiGraph(
-		Color[0].Get_LU().Get_x(), Color[0].Get_LU().Get_y(),
-		Color[0].Get_RD().Get_x(), Color[0].Get_LU().Get_y(),
-		Color[0].Get_RD().Get_x(), Color[0].Get_RD().Get_y(),
-		Color[0].Get_LU().Get_x(), Color[0].Get_RD().Get_y(),
-		ColorImage, true
-	);*/
-	/*for (int i = 0; i < 2; i++) 
+	for (int i = 0; i < 2; i++) 
 		DrawModiGraph(
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_RD().Get_y(),
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_RD().Get_y(),
 			KumoImage, true
-		);*/
+		);
 	for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Far[i].Get_LU().Get_x(), Far[i].Get_LU().Get_y(),
@@ -175,10 +168,10 @@ int SetBack(int stage) {
 	case 0://City
 		break;
 	case 1://Ground
-		back.SetColor(ground_color);
+		//back.SetColor(ground_color);
 		back.SetKumo(ground_kumo);
 		back.SetFar(ground_far);
-		back.SetMiddle(ground_middle);
+		//back.SetMiddle(ground_middle);
 		back.SetClose(ground_close);
 		break;
 	default:

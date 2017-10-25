@@ -171,7 +171,7 @@ int Slime::Set(int count,int isright) {
 	height = SLIME_HEIGHT;
 	weekArea.Set(center, width, height);
 	attackArea.Set(center, width, height);
-	SetHP(100);
+	SetHP(20);
 	SetAttack(20);
 	Image = SlimeStand1;
 	bodyClock = count;
@@ -479,14 +479,14 @@ int EnemyMngInitialize() {
 int EnemyMngSet(int levelFlag,int stageFlag, int count) {
 	for (int i = 0; i < 10; i++) {
 		if (count == 60 * (i + 1)) {
-			bird[i].Set(count, (i % 2 == 0));
+			bird[i].Set(count, (i % 5 != 0));
 		}
 		if (count == 90 * (i + 1)) {
-			slime[i].Set(count, (i % 2 == 0));
+			slime[i].Set(count, (i % 5 != 0));
 		}
 		if ((count - slime[i].GetStartClock()) % 60 == 50 && count != 0 && slime[i].GetStateFlag() == 0) {
 			if (slime[i].GetExistFlag())slime[i].SetJump(count);
-			if (i == 0) printfDx("JUMP!!\n");
+			//if (i == 0) printfDx("JUMP!!\n");
 		}
 	}
 	/*if(count == 10)
@@ -518,12 +518,14 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 		//enemy is damaged!
 		if (slime[i].GetExistFlag() &&
 			slime[i].GetStateFlag() != 5 &&
+			slime[i].GetStateFlag() != 6 &&
 			(*player).GetStateFlag() == 6 &&
 			slime[i].GetWeekArea() & (*player).GetAttackArea()) {//slime
 			slime[i].SetDamage(count, player->GetAttack());
 		}	
 		if (bird[i].GetExistFlag() &&
 			bird[i].GetStateFlag() != 5 &&
+			bird[i].GetStateFlag() != 6 &&
 			player->GetStateFlag() == 6 &&
 			bird[i].GetWeekArea() & (*player).GetAttackArea()) {//birds
 			bird[i].SetDamage(count, player->GetAttack());
