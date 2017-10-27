@@ -204,7 +204,7 @@ int Player::Updata(int count,int Key[]) {
 	if (acceptFlag) {//“ü—Íó•t‚Ìˆ—
 		//‚¾‚Ô‚è‚ ‚è‚İ‚½‚¢‚È‚Ì‚Íupdata‚Å‚â‚é‚Ì‚ª–³“ï‚©
 		if (A) {//‰“‹——£UŒ‚
-			if (stateFlag != 7)bodyClock = count;
+			//if (stateFlag != 7)bodyClock = count;
 			//SetAttack_l();
 		}
 		else if (B) {//’áˆĞ—ÍL”ÍˆÍUŒ‚
@@ -219,7 +219,7 @@ int Player::Updata(int count,int Key[]) {
 			SetAttack_w();
 		}
 		else if (Y) {//‚ˆĞ—Í¬”ÍˆÍUŒ‚
-			if (stateFlag != 5)bodyClock = count;
+			//if (stateFlag != 5)bodyClock = count;
 			//SetAttack_s();
 		}
 		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//—§‚¿

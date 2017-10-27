@@ -162,7 +162,7 @@ int DrawOP(int levelFlag) {
 	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
 	
 	DrawBack();
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Logo, true);
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
 	if (levelFlag == 0)
 		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "normal");
 	else if(levelFlag == 1)
