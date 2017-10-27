@@ -41,9 +41,13 @@ private:
 //{
 //}
 
-int ChoreInitialize();
+int SystemInitialize();
 
 int DrawOP(int levelFlag);
+
+int DrawManual();
+
+int DrawCredit();
 
 int SetBack(int stageFlag);
 
@@ -63,7 +67,7 @@ int SetLoser(int count);
 
 int LoserUpdata(int count);
 
-int DrawLoseBord();
+int DrawLoseBord(int count);
 
 int SetWinner(int count);
 

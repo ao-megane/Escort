@@ -11,6 +11,7 @@ const int BLACK = GetColor(0, 0, 0);
 const int GRAY = GetColor(127, 127, 127);
 const int WHITE = GetColor(255, 255, 255);
 const int ORANGE = GetColor(243, 152, 0);
+const int BROWN = GetColor(46, 33, 13);
 
 #define A (Key[0])
 #define B (Key[1])

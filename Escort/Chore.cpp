@@ -40,10 +40,10 @@ int Back::SetClose(int a) {
 
 int Back::Updata(int count) {
 	if (count % 2 == 0) {
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 2; i++) {
 			Kumo[i] - 1;
 			Far[i] - 2;
-			Middle[i] - 3;
+			//Middle[i] - 3;
 			Close[i] - 4;
 		}
 	}
@@ -52,25 +52,25 @@ int Back::Updata(int count) {
 		Color[1] - (-DISP_WIDTH);
 	}*/
 	if (Kumo[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Kumo[0] - (-DISP_WIDTH);
-		//Kumo[1] - (-DISP_WIDTH);
+		Kumo[0] - (-DISP_WIDTH * 1);
+		Kumo[1] - (-DISP_WIDTH * 1);
 	}
 	if (Far[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Far[0] - (-DISP_WIDTH);
-		//Far[1] - (-DISP_WIDTH);
+		Far[0] - (-DISP_WIDTH * 1);
+		Far[1] - (-DISP_WIDTH * 1);
 	}
 	/*if (Middle[0].Get_RD().Get_x() == 0) {
 		Middle[0] - (-DISP_WIDTH);
 		Middle[1] - (-DISP_WIDTH);
 	}*/
 	if (Close[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Close[0] - (-DISP_WIDTH);
-		//Close[1] - (-DISP_WIDTH);
+		Close[0] - (-DISP_WIDTH * 1);
+		Close[1] - (-DISP_WIDTH * 1);
 	}
 	return 0;
 }
 int Back::Draw() {
-	for (int i = 0; i < 1; i++) 
+	for (int i = 0; i < 2; i++) 
 		DrawModiGraph(
 			Color[i].Get_LU().Get_x(), Color[i].Get_LU().Get_y(),
 			Color[i].Get_RD().Get_x(), Color[i].Get_LU().Get_y(),
@@ -78,7 +78,7 @@ int Back::Draw() {
 			Color[i].Get_LU().Get_x(), Color[i].Get_RD().Get_y(),
 			ColorImage, true
 		);
-	for (int i = 0; i < 1; i++) 
+	for (int i = 0; i < 2; i++) 
 		DrawModiGraph(
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_LU().Get_y(),
 			Kumo[i].Get_RD().Get_x(), Kumo[i].Get_LU().Get_y(),
@@ -86,7 +86,7 @@ int Back::Draw() {
 			Kumo[i].Get_LU().Get_x(), Kumo[i].Get_RD().Get_y(),
 			KumoImage, true
 		);
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Far[i].Get_LU().Get_x(), Far[i].Get_LU().Get_y(),
 			Far[i].Get_RD().Get_x(), Far[i].Get_LU().Get_y(),
@@ -102,7 +102,7 @@ int Back::Draw() {
 			Middle[i].Get_LU().Get_x(), Middle[i].Get_RD().Get_y(),
 			MiddleImage, true
 		);*/
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 		DrawModiGraph(
 			Close[i].Get_LU().Get_x(), Close[i].Get_LU().Get_y() + 450,
 			Close[i].Get_RD().Get_x(), Close[i].Get_LU().Get_y() + 450,
@@ -133,9 +133,11 @@ int Loading1;
 int Credit;
 int Result;
 int Tytle;
+int Allow;
 int Logo;
 
-int ChoreInitialize() {
+int nishiki;
+int SystemInitialize() {
 
 	Clear1 = LoadGraph("images/System/Clear1.png");
 	Flower = LoadGraph("images/System/Flower.png");
@@ -145,6 +147,7 @@ int ChoreInitialize() {
 	Credit = LoadGraph("images/System/Credit.png");
 	Tytle = LoadGraph("images/System/Tytle.png");
 	Logo = LoadGraph("images/System/Logo.png");
+	Allow = LoadGraph("images/System/Allow.png");
 	Flower = LoadGraph("images/System/Flower.png");
 	Credit = LoadGraph("images/System/Credit.png");
 
@@ -154,19 +157,34 @@ int ChoreInitialize() {
 	ground_middle = LoadGraph("images/Back/Middle.png");
 	ground_close = LoadGraph("images/Back/Close.png");
 
+	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
+		printfDx("AddFontResourceEx失敗\n");
+	}
+	nishiki = CreateFontToHandle("Nishiki-teki", 60, -1, DX_FONTTYPE_ANTIALIASING_8X8);
+	if (nishiki == -1) {
+		printfDx("CreateFontToHandle失敗\n");
+	}
+
 	return 0;
 }
 
 int DrawOP(int levelFlag) {
-	//DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, "OP");
-	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
-	
-	DrawBack();
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
-	if (levelFlag == 0)
-		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "normal");
-	else if(levelFlag == 1)
-		DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT / 2 + 40, RED, "hard");
+	DrawModiGraph(
+		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
+		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
+		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
+		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
+		Allow, true);
+	return 0;
+}
+
+int DrawManual() {
+	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "MANUAL!");
+	return 0;
+}
+int DrawCredit() {
+	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
 	return 0;
 }
 
@@ -230,14 +248,16 @@ int InputFile(std::string file) {
 	return 0;
 }
 
-int DrawData(int stageFlag) {
+int DrawData(int levelFlag) {
+	if (levelFlag == 0) {
+		DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", numOfPlayers);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 0, 50, BROWN, nishiki, "クリア率:%5.2f", easyHighScore);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 500, 50, BROWN, nishiki, "ハイスコア:%5d", easyHighScore);
+	}
+	else if (levelFlag == 1) {
 
-	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8, RED, "numofplayers:%d", numOfPlayers);
-	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8 + 40, RED, "easyHighScore:%d", easyHighScore);
-	DrawFormatString(DISP_WIDTH / 2, DISP_HEIGHT*0.8 + 80, RED, "easyAvgScore:%d", easyAvgScore);
-
+	}
 	return 0;
-
 }
 
 int UpdataFile(std::string file, int stageFlag, int score) {
@@ -248,42 +268,63 @@ int UpdataFile(std::string file, int stageFlag, int score) {
 	return 0;
 }
 
-int DrawLoseBord() {
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+int Keeper;
+int flag;
+int DrawLoseBord(int count) {
+	if ((count - Keeper) <= 30) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 30 * 255);		//ブレンドモードを設定
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	else if (count >= 30) {
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+	}
 	return 0;
 }
-int DrawWinBord(int levelFlag) {
-	if(levelFlag == 0)
+int DrawWinBord(int count) {
+	if ((count - Keeper) <= 60) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 60.0 * 255.0);		//ブレンドモードを設定
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
-	else if (levelFlag == 1) {
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	else if (count >= 60) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 	}
 	return 0;
 }
 
-int Keeper;
 int SetWinner(int count) {
 	Keeper = count;
+	flag = 1;
 	return 0;
 }
 int SetLoser(int count) {
 	Keeper = count;
+	flag = 1;
 	return 0;
 }
 int WinnerUpdata(int count) {
 	DrawModiGraph(
-		DISP_WIDTH - (count - Keeper) * 3, 300,
-		DISP_WIDTH + 700 - (count - Keeper) * 3, 300,
-		DISP_WIDTH + 700 - (count - Keeper) * 3, 700 + 300,
-		DISP_WIDTH - (count - Keeper) * 3, 700 + 300,
+		DISP_WIDTH - (count - Keeper) * 4, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
+		DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
 		Credit, true);
 	DrawModiGraph(
-		DISP_WIDTH*2 - (count - Keeper) * 3, GROUND_HEIGHT - 125,
-		DISP_WIDTH*2 + 750 - (count - Keeper) * 3, GROUND_HEIGHT - 125,
-		DISP_WIDTH*2 + 750 - (count - Keeper) * 3, GROUND_HEIGHT + 125,
-		DISP_WIDTH*2 - (count - Keeper) * 3, GROUND_HEIGHT + 125,
+		DISP_WIDTH * 3/2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+		DISP_WIDTH * 3/2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
 		Flower, true);
-	if ((DISP_WIDTH * 2 + 750 - (count - Keeper) * 2) <= DISP_WIDTH) return 1;
+	if ((DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && flag) {
+		Keeper = count;
+		flag = 0;
+		return 1;
+	}
+	else if (!flag) {
+		DrawWinBord(count);
+		return 1;
+	}
 	else return 0;
 }
 
