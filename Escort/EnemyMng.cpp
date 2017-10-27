@@ -541,26 +541,7 @@ int EnemyMngInitialize() {
 	}
 	return 0;
 }
-int EnemyMngSet(int levelFlag, int stageFlag, int count, Dot girl) {
-	/*for (int i = 0; i < 3; i++) {
-		if (count == 60 * (i + 1)) {
-			bird[i].Set(count, (i % 5 != 0));
-		}
-		if (count == 105 * (i + 1)) {
-			slime[i].Set(count, (i % 5 != 0));
-		}
-		if ((count - slime[i].GetStartClock()) % 60 == 50 &&
-			count != 0 && slime[i].GetStateFlag() == 0) {
-			if (slime[i].GetExistFlag())slime[i].SetJump(count);
-		}
-		if ((count - bird[i].GetStartClock()) % 120 == 50 &&
-			count != 0 && bird[i].GetStateFlag() == 0) {
-			if (bird[i].GetExistFlag())bird[i].SetAttack(count,girl);
-		}
-	}*/
-	//if(count == 10)
-	//	bird[0].Set(count, 0);
-	////if ( ((count - bird[0].GetStartClock()) % 120 == 60) && (count != 0) && (bird[0].GetStateFlag() == 0)) {
+int EnemyMngSet(int levelFlag, int count, Dot girl) {
 
 	switch (count)
 	{
@@ -571,10 +552,10 @@ int EnemyMngSet(int levelFlag, int stageFlag, int count, Dot girl) {
 		slime[1].Set(count, 1, 2);
 		break;
 	case 200:
-		bird[0].Set(count, 1, 0);
+		//bird[0].Set(count, 1, 0);
 		break;
 	case 450:
-		bird[1].Set(count, 0, 2);
+		//bird[1].Set(count, 0, 2);
 		break;
 	default:
 		break;
