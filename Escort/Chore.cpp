@@ -6,6 +6,8 @@
 #include<iostream>
 #include<sstream>
 #include<list>
+#include <stdio.h>
+
 
 int Back::SetColor(int a) {
 	ColorImage = a;
@@ -51,21 +53,21 @@ int Back::Updata(int count) {
 		Color[0] - (-DISP_WIDTH);
 		Color[1] - (-DISP_WIDTH);
 	}*/
-	if (Kumo[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Kumo[0] - (-DISP_WIDTH * 1);
-		Kumo[1] - (-DISP_WIDTH * 1);
+	if (Kumo[0].Get_RD().Get_x() == 0) {
+		Kumo[0] - (-DISP_WIDTH * 2);
+		Kumo[1] - (-DISP_WIDTH * 2);
 	}
-	if (Far[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Far[0] - (-DISP_WIDTH * 1);
-		Far[1] - (-DISP_WIDTH * 1);
+	if (Far[0].Get_RD().Get_x() == 0) {
+		Far[0] - (-DISP_WIDTH * 2);
+		Far[1] - (-DISP_WIDTH * 2);
 	}
 	/*if (Middle[0].Get_RD().Get_x() == 0) {
 		Middle[0] - (-DISP_WIDTH);
 		Middle[1] - (-DISP_WIDTH);
 	}*/
-	if (Close[0].Get_RD().Get_x() == DISP_WIDTH) {
-		Close[0] - (-DISP_WIDTH * 1);
-		Close[1] - (-DISP_WIDTH * 1);
+	if (Close[0].Get_RD().Get_x() == 0) {
+		Close[0] - (-DISP_WIDTH * 2);
+		Close[1] - (-DISP_WIDTH * 2);
 	}
 	return 0;
 }
@@ -218,52 +220,77 @@ int DrawBack() {
 
 /*---------------------------------------------------------------------------*/
 
-int numOfPlayers;
-int easyHighScore;
-int easyAvgScore;
+int normalPlayers;
+int hardPlayers;
+int normalWinner;
+int hardWinner;
+int normalHighScore;
 int hardHighScore;
-int hardAvgScore;
+
+//int InputFile(std::string file) {
+//	std::ifstream File(file);
+//	std::string j;
+//	int i;
+//
+//	getline(File, j, '\n');
+//	i = atoi(j.c_str());
+//	numOfPlayers = i;
+//
+//	getline(File, j, '\n');
+//	i = atoi(j.c_str());
+//	easyHighScore = i;
+//
+//	getline(File, j, '\n');
+//	i = atoi(j.c_str());
+//	easyAvgScore = i;
+//
+//	//remove(file);
+//	//DeleteFile(file);
+//	rename(file.c_str(), "koryosai2018");
+//
+//	return 0;
+//}
 
 int InputFile(std::string file) {
-	std::ifstream File(file);
-	std::string j;
-	int i;
-
-	getline(File, j, '\n');
-	i = atoi(j.c_str());
-	numOfPlayers = i;
-
-	getline(File, j, '\n');
-	i = atoi(j.c_str());
-	easyHighScore = i;
-
-	getline(File, j, '\n');
-	i = atoi(j.c_str());
-	easyAvgScore = i;
-
-	//remove(file);
-	//DeleteFile(file);
-	rename(file.c_str(), "koryosai2018");
+	std::ifstream fin("koryosai2017.txt"); // ファイルを開く
+	normalPlayers = 0;
+	hardPlayers = 0;
+	normalWinner = 0;
+	hardWinner = 0;
+	normalHighScore = 0;
+	hardHighScore = 0;
+	if (fin.fail()) {  // if(!fin)でもよい。
+		std::cout << "入力ファイルをオープンできません" << std:: endl;
+		return 1;
+	}
+	fin >> normalPlayers >> normalWinner >> normalHighScore;
+	fin >> hardPlayers >> hardWinner >> hardHighScore;
 
 	return 0;
 }
 
 int DrawData(int levelFlag) {
 	if (levelFlag == 0) {
-		DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", numOfPlayers);
-		DrawFormatStringToHandle(DISP_WIDTH / 2 + 0, 50, BROWN, nishiki, "クリア率:%5.2f", easyHighScore);
-		DrawFormatStringToHandle(DISP_WIDTH / 2 + 500, 50, BROWN, nishiki, "ハイスコア:%5d", easyHighScore);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", normalPlayers);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 0, 50, BROWN, nishiki, "クリア率:%5.2f%%", (double)(normalWinner)/(double)(normalPlayers) * 100.0);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 500, 50, BROWN, nishiki, "ハイスコア:%5d", normalHighScore);
 	}
 	else if (levelFlag == 1) {
-
+		DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", hardPlayers);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 0, 50, BROWN, nishiki, "クリア率:%5.2f%%", (double)(hardWinner) / (double)(hardPlayers) * 100.0);
+		DrawFormatStringToHandle(DISP_WIDTH / 2 + 500, 50, BROWN, nishiki, "ハイスコア:%5d", hardHighScore);
 	}
 	return 0;
 }
 
-int UpdataFile(std::string file, int stageFlag, int score) {
-	std::ofstream fout(file, std::ios::app);
-	fout << ++numOfPlayers << "\n" << stageFlag << "\n" << score << "\n";
-	//DrawFormatString(0, 120, RED, "%d", numOfPlayers);
+int UpdataFile(std::string file, int levelFlag, int score) {
+	std::ofstream fout("koryosai2017.txt");
+	if (fout.fail()) {  // if(!fin)でもよい。
+		std::cout << "入力ファイルをオープンできません" << std::endl;
+		return 1;
+	}
+	fout << normalPlayers << "\n" << normalWinner << "\n" << normalHighScore << "\n";
+	fout << hardPlayers << "\n" << hardWinner << "\n" << hardHighScore;
 
 	return 0;
 }
@@ -293,32 +320,48 @@ int DrawWinBord(int count) {
 	return 0;
 }
 
-int SetWinner(int count) {
+int SetWinner(int levelFlag,int count) {
 	Keeper = count;
+	if (levelFlag == 0) {
+		normalPlayers++;
+		normalWinner++;
+	}
+	else if (levelFlag == 1) {
+		hardPlayers++;
+		hardWinner++;
+	}
 	flag = 1;
 	return 0;
 }
-int SetLoser(int count) {
+int SetLoser(int levelFlag,int count) {
 	Keeper = count;
+	if (levelFlag == 0) {
+		normalPlayers++;
+	}
+	else if (levelFlag == 1) {
+		hardPlayers++;
+	}
 	flag = 1;
 	return 0;
 }
 int WinnerUpdata(int count) {
-	DrawModiGraph(
-		DISP_WIDTH - (count - Keeper) * 4, 300,
-		DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
-		DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
-		DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
-		Credit, true);
-	DrawModiGraph(
-		DISP_WIDTH * 3/2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-		DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-		DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
-		DISP_WIDTH * 3/2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
-		Flower, true);
-	if ((DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && flag) {
+	if (flag == 1) {
+		DrawModiGraph(
+			DISP_WIDTH - (count - Keeper) * 4, 300,
+			DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
+			DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
+			DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
+			Credit, true);
+		DrawModiGraph(
+			DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+			DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+			DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+			DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+			Flower, true);
+	}
+	if ((DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
 		Keeper = count;
-		flag = 0;
+		flag = 2;
 		return 1;
 	}
 	else if (!flag) {

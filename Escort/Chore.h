@@ -63,13 +63,13 @@ int DrawData(int levelFlag);
 
 int UpdataFile(std::string file,int levelFlag,int score);//呼び出される->一人分の更新
 
-int SetLoser(int count);
+int SetLoser(int levelFlag,int count);
 
 int LoserUpdata(int count);
 
 int DrawLoseBord(int count);
 
-int SetWinner(int count);
+int SetWinner(int levelFlag,int count);
 
 int WinnerUpdata(int count);
 
