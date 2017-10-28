@@ -47,8 +47,27 @@ const int FENCE_HEIGHT = 200;
 
 const int SLIME_WIDTH = 100;
 const int SLIME_HEIGHT = 100;
+const int SLIME_STAND_SPEED = 2;
+const int SLIME_STAND_SUM = 40;	//一周のフレーム数
+const int SLIME_STAMD_NUM = 4;	//一周の画像数
+const int SLIME_JUMP_SPEED = 1;
+const double SLIME_JUMP_SUM = 40;	//一周のフレーム数
+const int SLIME_JUMP_NUM = 5;	//一周の画像数
+const int SLIME_JUMP_HIGH = DISP_WIDTH * 0.3;//ジャンプの高さ
+const int SLIME_DISAP_SUM = 5;
+const int SLIME_DISAP_NUM = 1;
 
 const int BIRD_WIDTH = 300;//3:2
 const int BIRD_HEIGHT = 200;
+const int BIRD_STAND_SUM = 90;
+const int BIRD_STAND_NUM = 4;
+const int BIRD_STAND_SPEED = 2;
+const double BIRD_STAND_HIGH = 10.0;
+const double BIRD_ATTACK_PRE = 15.0;
+const double BIRD_ATTACK_SUM = 60.0;
+const int BIRD_ATTACK_NUM = 4;
+const int BIRD_DAMAGE_SPEED = -GROUND_SPEED;
+const int BIRD_DISAP_SUM = 5;
+const int BIRD_DISAP_NUM = 1;
 
 #endif // !VALUE_H
