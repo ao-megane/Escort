@@ -12,15 +12,18 @@ public:/*
 	int Set(int levelFlag);
 	int SetWalk();
 	int UpdataWalk(int count);
+	int SetJump(int count);
+	int UpdataJump(int count);
 	int SetDamage(int damage,int count);	//よそから殴られる
 	int UpdataDamage(int count);			//モーション用
-	int Updata(int count);
+	int Updata(int count,int Pstate);
 	int GetStateFlag();
 	int GetHP();
 	Square GetWeekArea();
 	Dot GetCenter();
 	int Draw();
 	int End();
+	int Keeper;
 
 private:
 	int HP;
@@ -30,7 +33,7 @@ private:
 	/*
 	0 walk
 	1 被ダメ
-	2 (Jump)
+	2 Jump
 	*/
 	Dot center;
 	Square week;

@@ -24,18 +24,21 @@ int Princess::Set(int levelFlag) {
 	week.Set(center, PRI_WIDTH * 0.7, PRI_HEIGHT * 0.7);
 	Image = walk1;
 	stateFlag = 0;
-	HP = 100;
+	HP = 100; 
+	Keeper = 0;
 	return 0;
 }
 
 int Princess::SetWalk() {
 	stateFlag = 0;
 	Image = walk1;
+	Keeper = 0;
 	return 0;
 }
 int Princess::UpdataWalk(int count) {
-	int speed = GROUND_SPEED;
+	//int speed = GROUND_SPEED;
 	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
+
 	if (count % 60 <= 10) {
 		//Image = P_run_1;
 	}
@@ -57,18 +60,55 @@ int Princess::UpdataWalk(int count) {
 	return 0;
 }
 
+int Princess::SetJump(int count) {
+	stateFlag = 2;
+	Image = walk1;
+	//acceptFlag = 1;	//空中制動
+	return 0;
+}
+int Princess::UpdataJump(int count) {
+	double height = DISP_HEIGHT * 0.3;//jumpの高さ
+	double sum = 60.0;	//モーションにかかるフレーム数
+	int num = 5;	//絵の枚数
+	double a = -sin((count / sum)*PI) * height;//ほしい山
+	
+	center.Set((center.Get_x()) - GROUND_SPEED + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+
+	if (count >= sum) {
+		stateFlag = 0;
+		//acceptFlag = 1;
+		bodyClock = 0;
+	}
+	//DrawFormatString(0, 200, RED, "JUMPINGCOUNT : %d", count);
+	return 0;
+}
+
 int Princess::SetDamage(int damage,int count) {
+	if (stateFlag == 2) {
+		Keeper = count + 60;
+		bodyClock = count;
+	}
+	else {
+		Keeper = 0;
+		bodyClock = count;
+	}
 	stateFlag = 1;
 	HP -= damage;
-	bodyClock = count;
+	//printfDx("DAMAGE!");
 	//Image = P_run_1;
 	return 0;
 }
 int Princess::UpdataDamage(int count) {
-	int speed = 1;
-	center.Set(center.Get_x() + speed - GROUND_SPEED);
+	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
 	if (count >= 60) {
-		stateFlag = 0;
+		if (Keeper != 0) {
+			bodyClock = Keeper;
+			Keeper = 0;
+			stateFlag = 2;//戻す
+		}
+		else {
+			SetWalk();
+		}
 	}
 	//if (count % 60 <= 10) {
 	//	//Image = P_run_1;
@@ -91,8 +131,13 @@ int Princess::UpdataDamage(int count) {
 	return 0;
 }
 
-int Princess::Updata(int count) {
-	//UpdataRun(count);
+int Princess::Updata(int count,int Pstate) {
+	//set
+	if (Pstate == 8 && stateFlag == 0) {
+		SetJump(count);
+	}
+
+	//updata
 	switch (stateFlag)
 	{
 	case 0:
@@ -102,7 +147,8 @@ int Princess::Updata(int count) {
 		UpdataDamage(count - bodyClock);
 		break;
 	case 2:
-		//UpdataDash(count - bodyClock);
+		UpdataJump(count - bodyClock);
+		break;
 	default:
 		break;
 	}
@@ -146,7 +192,7 @@ int Princess::Draw() {
 	DrawBox(40, 40, 1040, 80, BLUE, false);
 	DrawBox(40, 40, 40 + HP * 10, 80, BLUE, true);
 
-	DrawFormatString(0, 40, RED, "HP:%d,state:%d", HP, stateFlag);
+	DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
 
 	return 0;
 }

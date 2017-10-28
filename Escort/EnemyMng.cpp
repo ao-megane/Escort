@@ -583,8 +583,7 @@ int EnemyMngUpdata(int count) {
 	return 0;
 }
 int EnemyMngJudge(Player* player, Princess* girl,int count) {
-	//DrawFormatString(0, 80, RED, "NONHIT");
-	if ((*player).GetStateFlag() == 6 && 
+	if (player->GetAttack() > 0 && 
 		(*girl).GetStateFlag() != 1 && 
 		(*player).GetAttackArea() & (*girl).GetWeekArea()) {
 		//frendly fire!

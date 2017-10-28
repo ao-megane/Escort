@@ -44,6 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//player.Set();
 	//girl.Set();
 	SetBack(1);
+	//PlayBGM();
 
 	flag = 0;
 	int down = 0;
@@ -57,6 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		UpdataBack(count);
 		DrawBack();
+		
 		
 		switch (flag){
 		case 0://OP
@@ -102,7 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		case 2://playing
 			EnemyMngSet(levelFlag, count, girl.GetCenter());
 			player.Updata(count,Key);
-			girl.Updata(count);
+			girl.Updata(count,player.GetStateFlag());
 			//UpdataBack(count);
 			EnemyMngUpdata(count);
 
@@ -126,18 +128,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			FpsTimeFanction();
 			break;
 		case 3://gameover
-			DrawLoseBord(count);
-			//PrincessMotion_lose();
-			/*if (B == 1 && LoserUpdata(count)) {
+			girl.Draw();
+			player.Draw();
+			LoserUpdata(count);
+			if(B == 1)
 				flag = 0;
-			}*/
-			if (B == 1) {
-				flag = 0;
-			}
 			break;
 		case 4://gameclear
 			player.Updata(count, Key);
-			girl.Updata(count);
+			girl.Updata(count,player.GetStateFlag());
 			//UpdataBack(count);
 
 			//DrawBack();

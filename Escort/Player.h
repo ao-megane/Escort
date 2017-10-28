@@ -20,6 +20,8 @@ public:/*
 	int UpdataGuard(int count);
 	int SetJump();
 	int UpdataJump(int count,int flag);
+	int SetPriJump();
+	int UpdataPriJump(int count);
 	int SetAttack_w();
 	int UpdataAttack_w(int count);
 	int SetAttack_s();
@@ -54,6 +56,7 @@ private:
 	5 attack_strong
 	6 attack_week
 	7 attack_long
+	8 princess_jump
 	*/
 	
 };

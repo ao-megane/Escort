@@ -43,6 +43,8 @@ private:
 
 int SystemInitialize();
 
+int PlayBGM();
+
 int DrawOP(int levelFlag);
 
 int DrawManual();

@@ -139,6 +139,7 @@ int Allow;
 int Logo;
 int Pause;
 
+int BGM;
 int nishiki;
 int SystemInitialize() {
 
@@ -155,6 +156,8 @@ int SystemInitialize() {
 	Credit = LoadGraph("images/System/Credit.png");
 	Pause = LoadGraph("images/System/Pause.png");
 
+	BGM = LoadSoundMem("music/opening2.wav");
+
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");
 	ground_far = LoadGraph("images/Back/Far.png");
@@ -169,6 +172,11 @@ int SystemInitialize() {
 		printfDx("CreateFontToHandle失敗\n");
 	}
 
+	return 0;
+}
+
+int PlayBGM() {
+	PlaySoundMem(BGM, DX_PLAYTYPE_LOOP);
 	return 0;
 }
 
@@ -288,7 +296,7 @@ int DrawData(int levelFlag) {
 int UpdataFile(std::string file, int levelFlag, int score) {
 	std::ofstream fout("koryosai2017.txt");
 	if (fout.fail()) {  // if(!fin)でもよい。
-		std::cout << "入力ファイルをオープンできません" << std::endl;
+		std::cout << "出力ファイルをオープンできません" << std::endl;
 		return 1;
 	}
 	fout << normalPlayers << "\n" << normalWinner << "\n" << normalHighScore << "\n";
@@ -300,23 +308,23 @@ int UpdataFile(std::string file, int levelFlag, int score) {
 int Keeper;
 int flag;
 int DrawLoseBord(int count) {
-	if ((count - Keeper) <= 30) {
+	if ((count - Keeper) <= 90) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 30 * 255);		//ブレンドモードを設定
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
 	}
-	else if (count >= 30) {
+	else if (count >= 90) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
 	}
 	return 0;
 }
 int DrawWinBord(int count) {
-	if ((count - Keeper) <= 60) {
+	if ((count - Keeper) <= 90) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 60.0 * 255.0);		//ブレンドモードを設定
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
 	}
-	else if (count >= 60) {
+	else if (count >= 90) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
 	}
 	return 0;
@@ -371,6 +379,15 @@ int WinnerUpdata(int count) {
 		return 1;
 	}
 	else return 0;
+}
+int LoserUpdata(int count) {
+	if (flag == 1) {
+		Keeper = count;
+		flag = 2;
+		return 1;
+	}else
+		DrawLoseBord(count);
+	return 1;
 }
 
 /*----------------------------------------------------------------------------------------------*/

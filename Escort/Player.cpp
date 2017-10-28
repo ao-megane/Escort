@@ -35,6 +35,7 @@ int Player::Initialize() {
 	acceptFlag = 1;
 	isRightFlag = 1;
 	stateFlag = 0;
+	bodyClock = 0;
 
 	return 0;
 }
@@ -163,6 +164,28 @@ int Player::UpdataJump(int count,int flag) {
 		bodyClock = count;
 	}
 	//DrawFormatString(0, 200, RED, "JUMPINGCOUNT : %d", count);
+	return 0;
+}
+int Player::SetPriJump() {
+	stateFlag = 8;
+	Image = P_walk_1;
+	acceptFlag = 0;
+	attack = 0;
+	return 0;
+}
+int Player::UpdataPriJump(int count) {
+	if (count >= 15) {
+		acceptFlag = 1;
+		if (IsJumping != 0) {
+			bodyClock = IsJumping;
+			IsJumping = 0;
+			stateFlag = 4;//–ß‚·
+		}
+		else {
+			SetStand();
+			//printfDx("SETSTAND!\n");
+		}
+	}
 	return 0;
 }
 
@@ -300,13 +323,13 @@ int Player::Updata(int count,int Key[]) {
 	if (acceptFlag) {//“ü—Íó•t‚Ìˆ—
 		//‚¾‚Ô‚è‚ ‚è‚İ‚½‚¢‚È‚Ì‚Íupdata‚Å‚â‚é‚Ì‚ª–³“ï‚©
 		if (A) {//‰“‹——£UŒ‚
-			if (stateFlag == 7) {
+			if (stateFlag == 4) {
 				IsJumping = bodyClock + 60;
 			}
 			else {
 				IsJumping = 0;
 			}
-			if (stateFlag != 6)
+			if (stateFlag != 7)
 				bodyClock = count;
 			SetAttack_l();
 		}
@@ -322,15 +345,26 @@ int Player::Updata(int count,int Key[]) {
 			SetAttack_w();
 		}
 		else if (Y) {//‚ˆĞ—Í¬”ÍˆÍUŒ‚
-			if (stateFlag == 5) {
+			if (stateFlag == 4) {
 				IsJumping = bodyClock + 90;
 			}
 			else {
 				IsJumping = 0;
 			}
-			if (stateFlag != 6)
+			if (stateFlag != 5)
 				bodyClock = count;
 			SetAttack_s();
+		}
+		else if (X) {//•PƒWƒƒƒ“ƒv
+			if (stateFlag == 4) {
+				IsJumping = bodyClock + 15;
+			}
+			else {
+				IsJumping = 0;
+			}
+			if (stateFlag != 8)
+				bodyClock = count;
+			SetPriJump();
 		}
 		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//—§‚¿
 			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
@@ -418,6 +452,9 @@ int Player::Updata(int count,int Key[]) {
 		break;
 	case 7:
 		UpdataAttack_l(count - bodyClock);
+		break;
+	case 8:
+		UpdataPriJump(count - bodyClock);
 		break;
 	default:
 		break;
