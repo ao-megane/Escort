@@ -62,7 +62,7 @@ int Player::SetStand() {
 }
 
 int Player::UpdataStand(int count) {
-	center.Set(center.Get_x() - 1, GROUND_HEIGHT - P_HEIGHT / 2);
+	center.Set(center.Get_x() - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	return 0;
 }
 
@@ -73,7 +73,7 @@ int Player::SetWalk() {
 	return 0;
 }
 int Player::UpdataWalk(int count) {
-	int speed = 1;
+	int speed = GROUND_SPEED;
 	if(isRightFlag)
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
@@ -102,7 +102,7 @@ int Player::SetDash() {
 	return 0;
 }
 int Player::UpdataDash(int count) {
-	int speed = 4;
+	int speed = 8;
 	if(isRightFlag)
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
@@ -133,23 +133,23 @@ int Player::SetJump() {
 }
 int Player::UpdataJump(int count,int flag) {
 	double height = DISP_HEIGHT * 0.3;//jumpの高さ
-	double sum = 60.0;	//モーションにかかるフレーム数
-	int num = 5;	//絵の枚数
+	double sum = 50.0;	//モーションにかかるフレーム数
+	int num = 5;		//絵の枚数
 	double a =  -sin((count / sum)*PI) * height;//ほしい山
 	if (a > 0) a *= -1;
 	switch (flag)
 	{
 	case 0://右ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED + 2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED + 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 1://右歩き
-		center.Set((center.Get_x()) - GROUND_SPEED + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED + 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break; 
 	case 2://左ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED - 2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED - 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 3://左歩き
-		center.Set((center.Get_x()) - GROUND_SPEED - 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED - 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 4://立ち
 		center.Set((center.Get_x()) - GROUND_SPEED + 0, a + GROUND_HEIGHT - P_HEIGHT / 2);
@@ -207,17 +207,17 @@ int Player::UpdataAttack_w(int count) {
 		RD.Set(center.Get_x() - P_WIDTH * 2, center.Get_y() + P_HEIGHT / 2);
 	}
 
-	if (count < 10) {
+	if (count < 2) {
 		acceptFlag = 0;
 	}
-	else if (count < 40) {
+	else if (count < 15) {
 		attack = 10;
 		attackArea.Set(LU, RD);
 	}
-	else if (count < 60) {
+	else if (count < 17) {
 		attack = 0;
 	}
-	else if (count >= 60) {//モーション終わり
+	else if (count >= 17) {//モーション終わり
 		acceptFlag = 1;
 		if (IsJumping != 0) {
 			bodyClock = IsJumping;
@@ -250,17 +250,17 @@ int Player::UpdataAttack_s(int count) {
 		RD.Set(center.Get_x() - P_WIDTH *3/2, center.Get_y() + P_HEIGHT / 4);
 	}
 
-	if (count < 35) {//待機
+	if (count < 17) {//待機
 		acceptFlag = 0;
 	}
-	else if (count < 40) {//出始め
+	else if (count < 20) {//攻撃
 		attack = 50;
 		attackArea.Set(LU, RD);
 	}
-	else if (count < 90) {//余韻
+	else if (count < 40) {//余韻
 		attack = 0;
 	}
-	else if (count >= 90) {//モーション終わり
+	else if (count >= 40) {//モーション終わり
 		acceptFlag = 1;
 		if (IsJumping != 0) {
 			bodyClock = IsJumping;
@@ -285,12 +285,12 @@ int Player::SetAttack_l() {
 int Player::UpdataAttack_l(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
-		LU.Set(center.Get_x() - P_WIDTH / 2 + (count - 10) * 40, center.Get_y() - P_WIDTH / 2 );
-		RD.Set(center.Get_x() + P_WIDTH / 2 + (count - 10) * 40, center.Get_y() + P_WIDTH / 2 );
+		LU.Set(center.Get_x() - P_HEIGHT / 2 + (count - 10) * 40, center.Get_y() - P_HEIGHT / 2 );
+		RD.Set(center.Get_x() + P_HEIGHT / 2 + (count - 10) * 40, center.Get_y() + P_HEIGHT / 2 );
 	}
 	else {
-		LU.Set(center.Get_x() - P_WIDTH / 2 - (count - 10) * 40, center.Get_y() - P_WIDTH / 2 );
-		RD.Set(center.Get_x() + P_WIDTH / 2 - (count - 10) * 40, center.Get_y() + P_WIDTH / 2);
+		LU.Set(center.Get_x() - P_HEIGHT / 2 - (count - 10) * 40, center.Get_y() - P_HEIGHT / 2 );
+		RD.Set(center.Get_x() + P_HEIGHT / 2 - (count - 10) * 40, center.Get_y() + P_HEIGHT / 2);
 	}
 
 	if (count < 10) {//待機
@@ -335,7 +335,7 @@ int Player::Updata(int count,int Key[]) {
 		}
 		else if (B) {//低威力広範囲攻撃
 			if (stateFlag == 4) {
-				IsJumping = bodyClock + 60;
+				IsJumping = bodyClock + 17;
 			}
 			else {
 				IsJumping = 0;
@@ -346,7 +346,7 @@ int Player::Updata(int count,int Key[]) {
 		}
 		else if (Y) {//高威力小範囲攻撃
 			if (stateFlag == 4) {
-				IsJumping = bodyClock + 90;
+				IsJumping = bodyClock + 40;
 			}
 			else {
 				IsJumping = 0;

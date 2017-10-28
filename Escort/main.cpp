@@ -15,13 +15,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowSizeExtendRate(0.6);
 	ChangeWindowMode(TRUE);
 	}
-	//SetBackgroundColor(34,145,253);
+
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
-
-	//DrawFormatString(0,0,RED,"LOADING!!!\n");
-	
-	//printfDx("succes\n");
 
 	XINPUT_STATE input;
 
@@ -41,10 +37,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SystemInitialize();
 	InputFile("koryosai2017.txt");
 
-	//player.Set();
-	//girl.Set();
 	SetBack(1);
-	//PlayBGM();
+	PlayBGM();
 
 	flag = 0;
 	int down = 0;
@@ -62,8 +56,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 		switch (flag){
 		case 0://OP
-			/*UpdataBack(count);
-			DrawBack();*/
 			DrawOP(levelFlag);
 			DrawData(levelFlag);
 			if (THUMB_Y >= 80) down++; else down = 0;
@@ -97,37 +89,35 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			player.Set(levelFlag);
 			girl.Set(levelFlag);
 			EnemyMngInitialize();
-			//ChoreSet(levelFlag);
-			//SetBack(stageFlag);
+			ChoreSet(levelFlag);
 			flag = 2;
 			break;
 		case 2://playing
 			EnemyMngSet(levelFlag, count, girl.GetCenter());
 			player.Updata(count,Key);
 			girl.Updata(count,player.GetStateFlag());
-			//UpdataBack(count);
 			EnemyMngUpdata(count);
 
 			EnemyMngJudge(&player, &girl, count);
 
 			if (girl.GetHP() <= 0) {
-				//UpdataFile("output.txt", 0, 0);
 				flag = 3;
 				SetLoser(levelFlag,count);
 			}
 			if (count >= 1*60*30) {
-				//UpdataFile("output.txt", 0, 0);
 				flag = 4;
 				SetWinner(levelFlag,count);
 			}
 
-			//DrawBack();
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
 			FpsTimeFanction();
 			break;
 		case 3://gameover
+			EnemyMngUpdata(count);
+			EnemyMngDraw();
+
 			girl.Draw();
 			player.Draw();
 			LoserUpdata(count);
@@ -137,9 +127,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		case 4://gameclear
 			player.Updata(count, Key);
 			girl.Updata(count,player.GetStateFlag());
-			//UpdataBack(count);
 
-			//DrawBack();
 			girl.Draw();
 			player.Draw();
 			WinnerUpdata(count);
@@ -164,7 +152,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	UpdataFile("koryosai2017.txt", 0, 0);
-	//UpdataFile("output.txt", 0, 0);
 	DxLib_End();
 
 	return 0;

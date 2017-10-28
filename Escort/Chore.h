@@ -43,6 +43,8 @@ private:
 
 int SystemInitialize();
 
+int ChoreSet(int levelFlag);
+
 int PlayBGM();
 
 int DrawOP(int levelFlag);
@@ -70,6 +72,8 @@ int SetLoser(int levelFlag,int count);
 int LoserUpdata(int count);
 
 int DrawLoseBord(int count);
+
+int DrawWinBord(int count);
 
 int SetWinner(int levelFlag,int count);
 

@@ -48,6 +48,7 @@ protected:
 	4 happen
 	5 damage
 	6 disappper
+	7 UŒ‚’†~(’¹)
 	*/
 };
 //
@@ -58,41 +59,6 @@ protected:
 //Enemy::~Enemy()
 //{
 //}
-
-//class Box :public Enemy
-//{
-//public:
-//	int Initialize();
-//	int Set(int count); //oŒ»ˆ—
-//	int Updata(int count);
-//	int SetStand();
-//	int UpdataStand();
-//	/*Box();
-//	~Box();*/
-//
-//private:
-//
-//};
-//
-////Box::Box()
-////{
-////}
-////
-////Box::~Box()
-////{
-////}
-//
-//class Fence : public Enemy
-//{
-//public:
-//	int Initialize();
-//	int Set(int count); //oŒ»ˆ—
-//	int Updata(int count);
-//	int SetStand();
-//	int UpdataStand();
-//private:
-//
-//};
 
 class Slime : public Enemy
 {
@@ -123,8 +89,9 @@ public:
 	int UpdataDisapper(int count);
 	int SetDamage(int count, int damage);
 	int UpdataDamage(int count);
+	int SetBack(int count);
+	int UpdataBack(int count);
 	int Updata(int count);
-	int UpdataStand();
 	double birdAttackHigh;
 	double birdAttackWidth;
 };

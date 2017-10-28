@@ -267,10 +267,10 @@ int Bird::Set(int count,int isright,int strength) {
 	bodyClock = count;
 	startClock = count;
 	existFlag = 1;
-	/*SetHP(20 * (strength + 1));
-	SetAttackval(10 * (strength + 1));*/
-	SetHP(20);
-	SetAttackval(10);
+	SetHP(20 * (strength + 1));
+	SetAttackval(10 * (strength + 1));
+	/*SetHP(20);
+	SetAttackval(10);*/
 	SetStand(count);
 	return 0;
 }
@@ -368,9 +368,9 @@ int Bird::UpdataDamage(int count) {
 	//int speed = -GROUND_SPEED;
 	center.Set(center.Get_x() + BIRD_DAMAGE_SPEED);
 	if (count >= 60) {
-		bodyClock = clockKeeper;
+		bodyClock = count;
 		clockKeeper = 0;
-		stateFlag = stateKeeper;
+		SetBack(count);
 	}
 	return 0;
 }
@@ -399,6 +399,35 @@ int Bird::UpdataDisapper(int count) {
 	//printfDx("DISAPPERUPDATA\n");
 	if (count >= BIRD_DISAP_SUM) {
 		existFlag = 0;
+	}
+	return 0;
+}
+int Bird::SetBack(int count) {
+	stateFlag = 7;
+	bodyClock = count;
+	(dirFlag == 0 ? dirFlag = 1 : dirFlag = 0);
+	//printfDx("DISAPPERSET\n");
+	return 0;
+}
+int Bird::UpdataBack(int count) {
+	//int sum = 5;	//モーションにかかるフレーム数
+	//int num = 1;	//絵の枚数
+	center.Set(center.Get_x() + (dirFlag == 0 ? -11 : 1) * BIRD_BACK_SPEED / 8, center.Get_y() - BIRD_BACK_SPEED);
+	/*if (count % sum <= sum / num * 1) {
+	Image = P_walk_1;
+	}
+	else if (count % sum <= sum / num * 2) {
+	Image = P_walk_2;
+	}
+	else if (count % sum <= sum / num * 3) {
+	Image = P_walk_3;
+	}
+	else if (count % sum <= sum) {
+	Image = P_walk_2;
+	}*/
+	//printfDx("DISAPPERUPDATA\n");
+	if (center.Get_y() <300 ) {
+		SetStand(count);
 	}
 	return 0;
 }
@@ -432,9 +461,9 @@ int Bird::Updata(int count) {
 	case 6:
 		UpdataDisapper(count - bodyClock);
 		break;
-	//case 7:
-	//	//UpdataAttack_l(count - bodyClock);
-	//	break;
+	case 7:
+		UpdataBack(count - bodyClock);
+		break;
 	default:
 		break;
 	}
@@ -501,13 +530,13 @@ int EnemyMngUpdata(int count) {
 	return 0;
 }
 int EnemyMngJudge(Player* player, Princess* girl,int count) {
-	if (player->GetAttack() > 0 && 
-		(*girl).GetStateFlag() != 1 && 
-		(*player).GetAttackArea() & (*girl).GetWeekArea()) {
-		//frendly fire!
-		//プレイヤーは殴るモード、姫は殴られるモードで実際に当たったら
-		(*girl).SetDamage((*player).GetAttack(), count);
-	}
+	//if (player->GetAttack() > 0 && 
+	//	(*girl).GetStateFlag() != 1 && 
+	//	(*player).GetAttackArea() & (*girl).GetWeekArea()) {
+	//	//frendly fire!
+	//	//プレイヤーは殴るモード、姫は殴られるモードで実際に当たったら
+	//	(*girl).SetDamage((*player).GetAttack(), count);
+	//}
 	for (int i = 0; i < 10; i++) {
 		//enemy is damaged!
 		if (slime[i].GetExistFlag() &&

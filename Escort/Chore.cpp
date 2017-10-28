@@ -139,6 +139,8 @@ int Allow;
 int Logo;
 int Pause;
 
+int Keeper;	//透過用カウントキーパー
+int flag;	//現状態フラグ 0 normal 1 ending 2 bord
 int BGM;
 int nishiki;
 int SystemInitialize() {
@@ -171,7 +173,15 @@ int SystemInitialize() {
 	if (nishiki == -1) {
 		printfDx("CreateFontToHandle失敗\n");
 	}
+	Keeper = 0;
+	flag = 0;
 
+	return 0;
+}
+
+int ChoreSet(int levelFlag) {
+	Keeper = 0;
+	flag = 0;
 	return 0;
 }
 
@@ -237,30 +247,6 @@ int hardWinner;
 int normalHighScore;
 int hardHighScore;
 
-//int InputFile(std::string file) {
-//	std::ifstream File(file);
-//	std::string j;
-//	int i;
-//
-//	getline(File, j, '\n');
-//	i = atoi(j.c_str());
-//	numOfPlayers = i;
-//
-//	getline(File, j, '\n');
-//	i = atoi(j.c_str());
-//	easyHighScore = i;
-//
-//	getline(File, j, '\n');
-//	i = atoi(j.c_str());
-//	easyAvgScore = i;
-//
-//	//remove(file);
-//	//DeleteFile(file);
-//	rename(file.c_str(), "koryosai2018");
-//
-//	return 0;
-//}
-
 int InputFile(std::string file) {
 	std::ifstream fin("koryosai2017.txt"); // ファイルを開く
 	normalPlayers = 0;
@@ -305,32 +291,7 @@ int UpdataFile(std::string file, int levelFlag, int score) {
 	return 0;
 }
 
-int Keeper;
-int flag;
-int DrawLoseBord(int count) {
-	if ((count - Keeper) <= 90) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 30 * 255);		//ブレンドモードを設定
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
-	}
-	else if (count >= 90) {
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
-	}
-	return 0;
-}
-int DrawWinBord(int count) {
-	if ((count - Keeper) <= 90) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 60.0 * 255.0);		//ブレンドモードを設定
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
-	}
-	else if (count >= 90) {
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
-	}
-	return 0;
-}
-
-int SetWinner(int levelFlag,int count) {
+int SetWinner(int levelFlag, int count) {
 	Keeper = count;
 	if (levelFlag == 0) {
 		normalPlayers++;
@@ -343,7 +304,7 @@ int SetWinner(int levelFlag,int count) {
 	flag = 1;
 	return 0;
 }
-int SetLoser(int levelFlag,int count) {
+int SetLoser(int levelFlag, int count) {
 	Keeper = count;
 	if (levelFlag == 0) {
 		normalPlayers++;
@@ -354,41 +315,61 @@ int SetLoser(int levelFlag,int count) {
 	flag = 1;
 	return 0;
 }
+int Keeper2;
 int WinnerUpdata(int count) {
-	if (flag == 1) {
-		DrawModiGraph(
-			DISP_WIDTH - (count - Keeper) * 4, 300,
-			DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
-			DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
-			DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
-			Credit, true);
-		DrawModiGraph(
-			DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-			DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-			DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
-			DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
-			Flower, true);
-	}
-	if ((DISP_WIDTH * 3/2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
-		Keeper = count;
+	DrawModiGraph(
+		DISP_WIDTH - (count - Keeper) * 4, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
+		DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
+		DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
+		Credit, true);
+	DrawModiGraph(
+		DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+		DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+		Flower, true);
+	if ((DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
+		Keeper2 = count;
 		flag = 2;
 		return 1;
 	}
-	else if (!flag) {
+	else if (flag == 2) {
 		DrawWinBord(count);
 		return 1;
 	}
 	else return 0;
 }
 int LoserUpdata(int count) {
-	if (flag == 1) {
-		Keeper = count;
-		flag = 2;
-		return 1;
-	}else
-		DrawLoseBord(count);
+	DrawLoseBord(count);
 	return 1;
 }
+int DrawWinBord(int count) {
+	if ((count - Keeper2) <= 90) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper2) / 60.0 * 255.0);		//ブレンドモードを設定
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	else if (count >= 90) {
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
+	}
+	return 0;
+}
+int DrawLoseBord(int count) {
+	if ((count - Keeper) <= 90) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 60.0 * 255);		//ブレンドモードを設定
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	else if (count >= 90) {
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+	}
+	return 0;
+}
+
+
+
+
 
 /*----------------------------------------------------------------------------------------------*/
 

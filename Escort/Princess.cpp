@@ -20,8 +20,8 @@ int Princess::Initialize() {
 
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
-	center.Set(DISP_WIDTH * 0.2, GROUND_HEIGHT - PRI_HEIGHT / 2);
-	week.Set(center, PRI_WIDTH * 0.7, PRI_HEIGHT * 0.7);
+	center.Set(DISP_WIDTH * 0.3, GROUND_HEIGHT - PRI_HEIGHT / 2);
+	week.Set(center, PRI_WIDTH * 0.5, PRI_HEIGHT * 0.5);
 	Image = walk1;
 	stateFlag = 0;
 	HP = 100; 
@@ -63,6 +63,7 @@ int Princess::UpdataWalk(int count) {
 int Princess::SetJump(int count) {
 	stateFlag = 2;
 	Image = walk1;
+	bodyClock = count;
 	//acceptFlag = 1;	//‹ó’†§“®
 	return 0;
 }
@@ -72,14 +73,14 @@ int Princess::UpdataJump(int count) {
 	int num = 5;	//ŠG‚Ì–‡”
 	double a = -sin((count / sum)*PI) * height;//‚Ù‚µ‚¢ŽR
 	
-	center.Set((center.Get_x()) - GROUND_SPEED + 1, a + GROUND_HEIGHT - P_HEIGHT / 2);
+	center.Set((center.Get_x()) - GROUND_SPEED + GROUND_SPEED, a + GROUND_HEIGHT - PRI_HEIGHT / 2);
 
 	if (count >= sum) {
 		stateFlag = 0;
 		//acceptFlag = 1;
 		bodyClock = 0;
+		SetWalk();
 	}
-	//DrawFormatString(0, 200, RED, "JUMPINGCOUNT : %d", count);
 	return 0;
 }
 
@@ -94,14 +95,13 @@ int Princess::SetDamage(int damage,int count) {
 	}
 	stateFlag = 1;
 	HP -= damage;
-	//printfDx("DAMAGE!");
 	//Image = P_run_1;
 	return 0;
 }
 int Princess::UpdataDamage(int count) {
 	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
 	if (count >= 60) {
-		if (Keeper != 0) {
+		if (Keeper != 0) {//jump
 			bodyClock = Keeper;
 			Keeper = 0;
 			stateFlag = 2;//–ß‚·
@@ -153,7 +153,7 @@ int Princess::Updata(int count,int Pstate) {
 		break;
 	}
 
-	week.Set(center, PRI_WIDTH*0.8, PRI_HEIGHT*0.8);
+	week.Set(center, PRI_WIDTH*0.5, PRI_HEIGHT*0.5);
 	return 0;
 }
 
@@ -196,24 +196,3 @@ int Princess::Draw() {
 
 	return 0;
 }
-//
-//Princess girl;
-//int PrincessInitialize() {
-//	girl.Initialize();
-//	return 0;
-//}
-//int SetPrincess() {
-//	girl.Set();
-//	return 0;
-//}
-//int UpdataPrincess(int count) {
-//	girl.Updata(count);
-//	return 0;
-//}
-//int DrawPrincess() {
-//	girl.Draw();
-//	return 0;
-//}
-//int EndPrincess() {
-//	return 0;
-//}

@@ -53,7 +53,7 @@ const int SLIME_STAMD_NUM = 4;	//一周の画像数
 const int SLIME_JUMP_SPEED = 1;
 const double SLIME_JUMP_SUM = 40;	//一周のフレーム数
 const int SLIME_JUMP_NUM = 5;	//一周の画像数
-const int SLIME_JUMP_HIGH = DISP_WIDTH * 0.3;//ジャンプの高さ
+const int SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
 const int SLIME_DISAP_SUM = 5;
 const int SLIME_DISAP_NUM = 1;
 
@@ -69,5 +69,8 @@ const int BIRD_ATTACK_NUM = 4;
 const int BIRD_DAMAGE_SPEED = -GROUND_SPEED;
 const int BIRD_DISAP_SUM = 5;
 const int BIRD_DISAP_NUM = 1;
+//const int BIRD_BACK_SUM = ;
+const int BIRD_BACK_NUM = 5;
+const int BIRD_BACK_SPEED = 8;
 
 #endif // !VALUE_H

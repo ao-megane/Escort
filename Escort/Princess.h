@@ -46,15 +46,5 @@ private:
 //Princess::~Princess()
 //{
 //}
-//
-//int PrincessInitialize();
-//
-//int SetPrincess();
-//
-//int UpdataPrincess(int count);
-//
-//int DrawPrincess();
-//
-//int EndPrincess();
 
 #endif // !PRINCESS_H
