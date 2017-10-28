@@ -192,7 +192,7 @@ int Princess::Draw() {
 	DrawBox(40, 40, 1040, 80, BLUE, false);
 	DrawBox(40, 40, 40 + HP * 10, 80, BLUE, true);
 
-	DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
+	//DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
 
 	return 0;
 }

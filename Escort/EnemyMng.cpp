@@ -496,13 +496,13 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 		slime[0].Set(count, 1, 0);
 		break;
 	case 100:
-		slime[1].Set(count, 1, 2);
+		slime[1].Set(count, 1, 1);
 		break;
 	case 200:
 		bird[0].Set(count, 1, 0);
 		break;
 	case 450:
-		bird[1].Set(count, 0, 2);
+		bird[1].Set(count, 0, 1);
 		break;
 	default:
 		break;
@@ -579,7 +579,7 @@ int EnemyMngDraw() {
 		if (bird[i].GetExistFlag()) bird[i].Draw();
 	}
 	//DrawFormatString(0, 280, RED, "SLIMEHP : %d,state : %d", slime[0].GetHP(),slime[0].GetStateFlag());
-	DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());
+	//DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());
 	return 0;
 }
 

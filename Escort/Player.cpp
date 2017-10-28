@@ -506,7 +506,7 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	DrawFormatString(0, 0, RED, "P_state : %2d ,accept : %2d,bodyClock : %5d,center.y : %5d",stateFlag,acceptFlag,bodyClock,center.Get_y());
+	//DrawFormatString(0, 0, RED, "P_state : %2d ,accept : %2d,bodyClock : %5d,center.y : %5d",stateFlag,acceptFlag,bodyClock,center.Get_y());
 
 	
 
