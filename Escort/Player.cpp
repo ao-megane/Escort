@@ -55,6 +55,7 @@ int Player::Set(int levelFlag) {
 
 int Player::SetStand() {
 	stateFlag = 0;
+	acceptFlag = 1;
 	Image = P_walk_1;
 	return 0;
 }
@@ -169,22 +170,117 @@ int Player::SetAttack_w() {
 	stateFlag = 6;
 	Image = P_walk_1;
 	acceptFlag = 0;
-	attack = 10;
-	Dot LU,RD;
-	if (isRightFlag) {
-		LU.Set(center.Get_x(), center.Get_y() - P_HEIGHT / 2);
-		RD.Set(center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT/2);
-	}
-	else {
-		LU.Set(center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2);
-		RD.Set(center.Get_x(), center.Get_y() + P_HEIGHT / 2);
-	}
-	attackArea.Set(LU, RD);
+	attack = 0;
 	return 0;
 }
 int Player::UpdataAttack_w(int count) {
-	if (count >= 10) {
-		stateFlag = 0;
+	Dot LU, RD;
+	if (isRightFlag) {
+		LU.Set(center.Get_x() - P_WIDTH, center.Get_y() - P_HEIGHT);
+		RD.Set(center.Get_x() + P_WIDTH * 2, center.Get_y() + P_HEIGHT / 2);
+	}
+	else {
+		LU.Set(center.Get_x() + P_WIDTH, center.Get_y() - P_HEIGHT);
+		RD.Set(center.Get_x() - P_WIDTH * 2, center.Get_y() + P_HEIGHT / 2);
+	}
+
+	if (count < 10) {
+		acceptFlag = 0;
+	}
+	else if (count < 40) {
+		attack = 10;
+		attackArea.Set(LU, RD);
+	}
+	else if (count < 60) {
+		attack = 0;
+	}
+	else if (count >= 60) {//モーション終わり
+		acceptFlag = 1;
+		if (IsJumping != 0) {
+			bodyClock = IsJumping;
+			IsJumping = 0;
+			stateFlag = 4;//戻す
+		}
+		else {
+			SetStand();
+			//printfDx("SETSTAND!\n");
+		}
+	}
+	return 0;
+}
+
+int Player::SetAttack_s() {
+	stateFlag = 5;
+	Image = P_walk_1;
+	acceptFlag = 0;
+	attack = 0;
+	return 0;
+}
+int Player::UpdataAttack_s(int count) {
+	Dot LU, RD;
+	if (isRightFlag) {
+		LU.Set(center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 4);
+		RD.Set(center.Get_x() + P_WIDTH *3/2, center.Get_y() + P_HEIGHT / 4);
+	}
+	else {
+		LU.Set(center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT/4);
+		RD.Set(center.Get_x() - P_WIDTH *3/2, center.Get_y() + P_HEIGHT / 4);
+	}
+
+	if (count < 35) {//待機
+		acceptFlag = 0;
+	}
+	else if (count < 40) {//出始め
+		attack = 50;
+		attackArea.Set(LU, RD);
+	}
+	else if (count < 90) {//余韻
+		attack = 0;
+	}
+	else if (count >= 90) {//モーション終わり
+		acceptFlag = 1;
+		if (IsJumping != 0) {
+			bodyClock = IsJumping;
+			IsJumping = 0;
+			stateFlag = 4;//戻す
+		}
+		else {
+			SetStand();
+			//printfDx("SETSTAND!\n");
+		}
+	}
+	return 0;
+}
+
+int Player::SetAttack_l() {
+	stateFlag = 7;
+	Image = P_walk_1;
+	acceptFlag = 0;
+	attack = 0;
+	return 0;
+}
+int Player::UpdataAttack_l(int count) {
+	Dot LU, RD;
+	if (isRightFlag) {
+		LU.Set(center.Get_x() - P_WIDTH / 2 + (count - 10) * 40, center.Get_y() - P_WIDTH / 2 );
+		RD.Set(center.Get_x() + P_WIDTH / 2 + (count - 10) * 40, center.Get_y() + P_WIDTH / 2 );
+	}
+	else {
+		LU.Set(center.Get_x() - P_WIDTH / 2 - (count - 10) * 40, center.Get_y() - P_WIDTH / 2 );
+		RD.Set(center.Get_x() + P_WIDTH / 2 - (count - 10) * 40, center.Get_y() + P_WIDTH / 2);
+	}
+
+	if (count < 10) {//待機
+		acceptFlag = 0;
+	}
+	else if (count < 40) {//攻撃
+		attack = 30;
+		attackArea.Set(LU, RD);
+	}
+	else if (count < 60) {//余韻
+		attack = 0;
+	}
+	else if (count >= 60) {//モーション終わり
 		acceptFlag = 1;
 		if (IsJumping != 0) {
 			bodyClock = IsJumping;
@@ -204,12 +300,19 @@ int Player::Updata(int count,int Key[]) {
 	if (acceptFlag) {//入力受付時の処理
 		//だぶりありみたいなのはupdataでやるのが無難か
 		if (A) {//遠距離攻撃
-			//if (stateFlag != 7)bodyClock = count;
-			//SetAttack_l();
+			if (stateFlag == 7) {
+				IsJumping = bodyClock + 60;
+			}
+			else {
+				IsJumping = 0;
+			}
+			if (stateFlag != 6)
+				bodyClock = count;
+			SetAttack_l();
 		}
 		else if (B) {//低威力広範囲攻撃
 			if (stateFlag == 4) {
-				IsJumping = bodyClock + 10;
+				IsJumping = bodyClock + 60;
 			}
 			else {
 				IsJumping = 0;
@@ -219,8 +322,15 @@ int Player::Updata(int count,int Key[]) {
 			SetAttack_w();
 		}
 		else if (Y) {//高威力小範囲攻撃
-			//if (stateFlag != 5)bodyClock = count;
-			//SetAttack_s();
+			if (stateFlag == 5) {
+				IsJumping = bodyClock + 90;
+			}
+			else {
+				IsJumping = 0;
+			}
+			if (stateFlag != 6)
+				bodyClock = count;
+			SetAttack_s();
 		}
 		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//立ち
 			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
@@ -301,13 +411,13 @@ int Player::Updata(int count,int Key[]) {
 		UpdataJump(count - bodyClock, flag);
 		break;
 	case 5:
-		//UpdataAttack_s(count - bodyClock);
+		UpdataAttack_s(count - bodyClock);
 		break;
 	case 6:
 		UpdataAttack_w(count - bodyClock);
 		break;
 	case 7:
-		//UpdataAttack_l(count - bodyClock);
+		UpdataAttack_l(count - bodyClock);
 		break;
 	default:
 		break;
@@ -353,7 +463,7 @@ int Player::Draw() {
 			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 			Image, true);
 
-	if(stateFlag == 6)
+	if(attack > 0)
 		DrawBox(
 			attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),

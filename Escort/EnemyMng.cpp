@@ -596,14 +596,14 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 		if (slime[i].GetExistFlag() &&
 			slime[i].GetStateFlag() != 5 &&
 			slime[i].GetStateFlag() != 6 &&
-			(*player).GetStateFlag() == 6 &&
+			player->GetAttack() &&
 			slime[i].GetWeekArea() & (*player).GetAttackArea()) {//slime
 			slime[i].SetDamage(count, player->GetAttack());
 		}	
 		if (bird[i].GetExistFlag() &&
 			bird[i].GetStateFlag() != 5 &&
 			bird[i].GetStateFlag() != 6 &&
-			player->GetStateFlag() == 6 &&
+			player->GetAttack() &&
 			bird[i].GetWeekArea() & (*player).GetAttackArea()) {//birds
 			bird[i].SetDamage(count, player->GetAttack());
 		}

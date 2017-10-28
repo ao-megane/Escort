@@ -137,6 +137,7 @@ int Result;
 int Tytle;
 int Allow;
 int Logo;
+int Pause;
 
 int nishiki;
 int SystemInitialize() {
@@ -152,6 +153,7 @@ int SystemInitialize() {
 	Allow = LoadGraph("images/System/Allow.png");
 	Flower = LoadGraph("images/System/Flower.png");
 	Credit = LoadGraph("images/System/Credit.png");
+	Pause = LoadGraph("images/System/Pause.png");
 
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");

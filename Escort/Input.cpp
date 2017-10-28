@@ -43,7 +43,7 @@ void InputUpdata(int Key[]) {
 	if (CheckHitKey(KEY_INPUT_D)) B++; else B = 0;
 	if (CheckHitKey(KEY_INPUT_S)) A++; else A = 0;
 	if (CheckHitKey(KEY_INPUT_W)) Y++; else Y = 0;
-
+	if (CheckHitKey(KEY_INPUT_A)) X++; else X = 0;
 
 }
 
