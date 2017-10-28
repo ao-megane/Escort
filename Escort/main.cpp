@@ -12,9 +12,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	
 	{
-	SetWindowSizeChangeEnableFlag(TRUE);
+	/*SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(TRUE);*/
 	}
 	//SetBackgroundColor(34,145,253);
 	DxLib_Init();
@@ -112,12 +112,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (girl.GetHP() <= 0) {
 				//UpdataFile("output.txt", 0, 0);
 				flag = 3;
-				SetLoser(count);
+				SetLoser(levelFlag,count);
 			}
 			if (count >= 1*5*30) {
 				//UpdataFile("output.txt", 0, 0);
 				flag = 4;
-				SetWinner(count);
+				SetWinner(levelFlag,count);
 			}
 
 			//DrawBack();
@@ -167,7 +167,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ScreenFlip();
 	}
 
-	//UpdataFile("koryosai2017.txt", 0, 0);
+	UpdataFile("koryosai2017.txt", 0, 0);
 	//UpdataFile("output.txt", 0, 0);
 	DxLib_End();
 
