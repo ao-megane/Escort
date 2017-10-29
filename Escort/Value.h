@@ -66,11 +66,11 @@ const double SLIME_DIFF_W = (100 + 700 / 2 - 1300 / 2) * SLIME_D_WIDTH / 1300;
 
 const int SLIME_STAND_SPEED = 2;
 const int SLIME_STAND_SUM = 40;	//一周のフレーム数
-const int SLIME_STAMD_NUM = 4;	//一周の画像数
+const int SLIME_STAND_NUM = 4;	//一周の画像数
 const int SLIME_JUMP_SPEED = 1;
-const double SLIME_JUMP_SUM = 40;	//一周のフレーム数
-const int SLIME_JUMP_NUM = 5;	//一周の画像数
-const int SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
+const double SLIME_JUMP_SUM = 40.0;	//一周のフレーム数
+const int SLIME_JUMP_NUM = 3;	//一周の画像数
+const double SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
 const int SLIME_DISAP_SUM = 5;
 const int SLIME_DISAP_NUM = 1;
 

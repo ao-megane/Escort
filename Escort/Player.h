@@ -11,6 +11,7 @@ public:/*
 	void Initialize();	//ゲーム開始時（画像ハンドル周辺）
 	void PlayAttack_s();
 	void PlayAttack_l();
+	void PlayAttack_w();
 	void PlayJump();
 	void Set(int levelFlag);			//プレイ開始時（座標周辺）
 	void SetStand();		//privateをいじる関数
@@ -33,6 +34,7 @@ public:/*
 	void UpdataAttack_l(int count);
 	void Updata(int count,int key[]);
 	int GetStateFlag();
+	int WeaponFlag;
 	Square GetAttackArea();
 	int GetAttack();
 	int Draw();

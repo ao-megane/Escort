@@ -138,6 +138,11 @@ int Tytle;
 int Allow;
 int Logo;
 int Pause;
+int Prologue1;
+int Prologue2;
+int Prologue3;
+int Prologue4;
+int ProBack;
 
 int Keeper;	//透過用カウントキーパー
 int flag;	//現状態フラグ 0 normal 1 ending 2 bord
@@ -145,6 +150,8 @@ int flag;	//現状態フラグ 0 normal 1 ending 2 bord
 int BGM;
 int Move;
 int Choice;
+
+int proFlag;
 
 int nishiki;
 int SystemInitialize() {
@@ -161,6 +168,12 @@ int SystemInitialize() {
 	Flower = LoadGraph("images/System/Flower.png");
 	Credit = LoadGraph("images/System/Credit.png");
 	Pause = LoadGraph("images/System/Pause.png");
+
+	Prologue1 = LoadGraph("images/Prologue/1.png");
+	Prologue2 = LoadGraph("images/Prologue/2.png");
+	Prologue3 = LoadGraph("images/Prologue/3.png");
+	Prologue4 = LoadGraph("images/Prologue/4.png");
+	ProBack = LoadGraph("images/Prologue/back.png");
 
 	BGM = LoadSoundMem("music/opening2.wav");
 	Choice = LoadSoundMem("music/choice3.wav");
@@ -181,6 +194,7 @@ int SystemInitialize() {
 	}
 	Keeper = 0;
 	flag = 0;
+	proFlag = 0;
 
 	return 0;
 }
@@ -198,6 +212,7 @@ int PlayChoice() {
 int ChoreSet(int levelFlag) {
 	Keeper = 0;
 	flag = 0;
+	proFlag = 0;
 	return 0;
 }
 
@@ -214,6 +229,41 @@ int DrawOP(int levelFlag) {
 		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
 		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
 		Allow, true);
+	return 0;
+}
+int DrawPrologue(int b) {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, ProBack, true);
+	switch (proFlag)
+	{
+	case 0:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
+		break;
+	case 1:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue2, true);
+		break;
+	case 2:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue2, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue3, true);
+		//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue4, true);
+		break;
+	case 3:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue2, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue3, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue4, true);
+		break;
+	default:
+		break;
+	}
+	if (b == 1) {
+		proFlag++;
+		if (proFlag == 4) {
+			proFlag = 0;
+			return 1;
+		}
+	}
 	return 0;
 }
 

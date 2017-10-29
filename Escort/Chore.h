@@ -53,6 +53,8 @@ int PlayBGM();
 
 int DrawOP(int levelFlag);
 
+int DrawPrologue(int b);
+
 int DrawManual();
 
 int DrawCredit();

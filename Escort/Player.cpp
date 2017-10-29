@@ -15,6 +15,18 @@ int PRun3;
 int PRun4;
 int PRun5;
 
+int PWalkW1;
+int PWalkW2;
+int PWalkW3;
+int PWalkW4;
+int PWalkW5;
+
+int PRunW1;
+int PRunW2;
+int PRunW3;
+int PRunW4;
+int PRunW5;
+
 int PAttacks1;
 int PAttacks2;
 int PAttacks3;
@@ -53,6 +65,18 @@ void Player::Initialize() {
 	PRun4 = LoadGraph("images/Player/run/Resize/4.png");
 	PRun5 = LoadGraph("images/Player/run/Resize/5.png");
 
+	PWalkW1 = LoadGraph("images/Player/walksword/Resize/1.png");
+	PWalkW2 = LoadGraph("images/Player/walksword/Resize/2.png");
+	PWalkW3 = LoadGraph("images/Player/walksword/Resize/3.png");
+	PWalkW4 = LoadGraph("images/Player/walksword/Resize/4.png");
+	PWalkW5 = LoadGraph("images/Player/walksword/Resize/5.png");
+
+	PRunW1 = LoadGraph("images/Player/runsword/Resize/1.png");
+	PRunW2 = LoadGraph("images/Player/runsword/Resize/2.png");
+	PRunW3 = LoadGraph("images/Player/runsword/Resize/3.png");
+	PRunW4 = LoadGraph("images/Player/runsword/Resize/4.png");
+	PRunW5 = LoadGraph("images/Player/runsword/Resize/5.png");
+
 	PAttacks1 = LoadGraph("images/Player/Attack_s/Resize/1.png");
 	PAttacks2 = LoadGraph("images/Player/Attack_s/Resize/2.png");
 	PAttacks3 = LoadGraph("images/Player/Attack_s/Resize/3.png");
@@ -67,6 +91,7 @@ void Player::Initialize() {
 
 	Attack_s = LoadSoundMem("music/knife2.wav");
 	Attack_l = LoadSoundMem("music/knife.wav");
+	Attack_w = LoadSoundMem("music/knife3.wav");
 	PJump = LoadSoundMem("music/jump1.wav");
 
 	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
@@ -76,6 +101,7 @@ void Player::Initialize() {
 	isRightFlag = 1;
 	stateFlag = 0;
 	bodyClock = 0;
+	WeaponFlag = 1;
 }
 
 void Player::PlayAttack_l() {
@@ -86,6 +112,9 @@ void Player::PlayAttack_s() {
 }
 void Player::PlayJump() {
 	PlaySoundMem(PJump, DX_PLAYTYPE_BACK);
+}
+void Player::PlayAttack_w() {
+	PlaySoundMem(Attack_w, DX_PLAYTYPE_BACK);
 }
 
 void Player::Set(int levelFlag) {
@@ -98,6 +127,7 @@ void Player::Set(int levelFlag) {
 	IsJumping = 0;
 	bodyClock = 0;
 	isRightFlag = 1;
+	WeaponFlag = 1;
 	SetStand();
 }
 
@@ -124,29 +154,57 @@ void Player::UpdataWalk(int count) {
 		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 40;	//àÍé¸ÇÃÉtÉåÅ[ÉÄêî
 	int num = 8;	//àÍé¸ÇÃâÊëúêî
-	if (count % sum <= sum / num * 1) {
-		Image = PWalk1;
+	if (WeaponFlag == 0) {
+		if (count % sum <= sum / num * 1) {
+			Image = PWalk1;
+		}
+		else if (count % sum <= sum / num * 2) {
+			Image = PWalk2;
+		}
+		else if (count % sum <= sum / num * 3) {
+			Image = PWalk3;
+		}
+		else if (count % sum <= sum / num * 4) {
+			Image = PWalk4;
+		}
+		else if (count % sum <= sum / num * 5) {
+			Image = PWalk5;
+		}
+		else if (count % sum <= sum / num * 6) {
+			Image = PWalk4;
+		}
+		else if (count % sum <= sum / num * 7) {
+			Image = PWalk3;
+		}
+		else if (count % sum <= sum / num * 8) {
+			Image = PWalk2;
+		}
 	}
-	else if (count % sum <= sum / num * 2) {
-		Image = PWalk2;
-	}
-	else if (count % sum <= sum / num * 3) {
-		Image = PWalk3;
-	}
-	else if (count % sum <= sum / num * 4) {
-		Image = PWalk4;
-	}
-	else if (count % sum <= sum / num * 5) {
-		Image = PWalk5;
-	}
-	else if (count % sum <= sum / num * 6) {
-		Image = PWalk4;
-	}
-	else if (count % sum <= sum / num * 7) {
-		Image = PWalk3;
-	}
-	else if (count % sum <= sum / num * 8) {
-		Image = PWalk2;
+	else {
+		if (count % sum <= sum / num * 1) {
+			Image = PWalkW1;
+		}
+		else if (count % sum <= sum / num * 2) {
+			Image = PWalkW2;
+		}
+		else if (count % sum <= sum / num * 3) {
+			Image = PWalkW3;
+		}
+		else if (count % sum <= sum / num * 4) {
+			Image = PWalkW4;
+		}
+		else if (count % sum <= sum / num * 5) {
+			Image = PWalkW5;
+		}
+		else if (count % sum <= sum / num * 6) {
+			Image = PWalkW4;
+		}
+		else if (count % sum <= sum / num * 7) {
+			Image = PWalkW3;
+		}
+		else if (count % sum <= sum / num * 8) {
+			Image = PWalkW2;
+		}
 	}
 }
 
@@ -163,29 +221,57 @@ void Player::UpdataDash(int count) {
 		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 40;	//àÍé¸ÇÃÉtÉåÅ[ÉÄêî
 	int num = 8;	//àÍé¸ÇÃâÊëúêî
-	if (count % sum <= sum / num * 1) {
-		Image = PRun1;
+	if (WeaponFlag == 0) {
+		if (count % sum <= sum / num * 1) {
+			Image = PRun1;
+		}
+		else if (count % sum <= sum / num * 2) {
+			Image = PRun2;
+		}
+		else if (count % sum <= sum / num * 3) {
+			Image = PRun3;
+		}
+		else if (count % sum <= sum / num * 4) {
+			Image = PRun4;
+		}
+		else if (count % sum <= sum / num * 5) {
+			Image = PRun5;
+		}
+		else if (count % sum <= sum / num * 6) {
+			Image = PRun4;
+		}
+		else if (count % sum <= sum / num * 7) {
+			Image = PRun3;
+		}
+		else if (count % sum <= sum / num * 8) {
+			Image = PRun2;
+		}
 	}
-	else if (count % sum <= sum / num * 2) {
-		Image = PRun2;
-	}
-	else if (count % sum <= sum / num * 3) {
-		Image = PRun3;
-	}
-	else if (count % sum <= sum / num * 4) {
-		Image = PRun4;
-	}
-	else if (count % sum <= sum / num * 5) {
-		Image = PRun5;
-	}
-	else if (count % sum <= sum / num * 6) {
-		Image = PRun4;
-	}
-	else if (count % sum <= sum / num * 7) {
-		Image = PRun3;
-	}
-	else if (count % sum <= sum / num * 8) {
-		Image = PRun2;
+	else {
+		if (count % sum <= sum / num * 1) {
+			Image = PRunW1;
+		}
+		else if (count % sum <= sum / num * 2) {
+			Image = PRunW2;
+		}
+		else if (count % sum <= sum / num * 3) {
+			Image = PRunW3;
+		}
+		else if (count % sum <= sum / num * 4) {
+			Image = PRunW4;
+		}
+		else if (count % sum <= sum / num * 5) {
+			Image = PRunW5;
+		}
+		else if (count % sum <= sum / num * 6) {
+			Image = PRunW4;
+		}
+		else if (count % sum <= sum / num * 7) {
+			Image = PRunW3;
+		}
+		else if (count % sum <= sum / num * 8) {
+			Image = PRunW2;
+		}
 	}
 }
 
@@ -290,7 +376,10 @@ void Player::UpdataAttack_w(int count) {
 	}
 
 	if (count == 0) Image = PAttackw1;
-	if (count == 2) Image = PAttackw2;
+	if (count == 2) {
+		Image = PAttackw2;
+		PlayAttack_w();
+	}
 	if (count == 5) Image = PAttackw3;
 
 }
@@ -346,6 +435,7 @@ void Player::SetAttack_l() {
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
+	WeaponFlag == 0 ? WeaponFlag = 1 : WeaponFlag = 0;
 }
 void Player::UpdataAttack_l(int count) {
 	Dot LU, RD;
@@ -400,7 +490,7 @@ void Player::Updata(int count,int Key[]) {
 				bodyClock = count;
 			SetAttack_l();
 		}
-		else if (B) {//í·à–óÕçLîÕàÕçUåÇ
+		else if (B == 1) {//í·à–óÕçLîÕàÕçUåÇ
 			if (stateFlag == 4) {
 				IsJumping = bodyClock + 17;
 			}
