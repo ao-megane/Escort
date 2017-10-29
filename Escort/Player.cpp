@@ -6,9 +6,14 @@
 int PWalk1;
 int PWalk2;
 int PWalk3;
+int PWalk4;
+int PWalk5;
 
 int PRun1;
 int PRun2;
+int PRun3;
+int PRun4;
+int PRun5;
 
 int PAttacks1;
 int PAttacks2;
@@ -32,27 +37,31 @@ int PJump;
 
 int Player::Initialize() {
 
-	PWalk1 = LoadGraph("images/Player/walk/1.png");
-	PWalk2 = LoadGraph("images/Player/walk/2.png");
-	PWalk3 = LoadGraph("images/Player/walk/3.png");
+	PWalk1 = LoadGraph("images/Player/walk/Resize/1.png");
+	PWalk2 = LoadGraph("images/Player/walk/Resize/2.png");
+	PWalk3 = LoadGraph("images/Player/walk/Resize/3.png");
+	PWalk4 = LoadGraph("images/Player/walk/Resize/4.png");
+	PWalk5 = LoadGraph("images/Player/walk/Resize/5.png");
 
-	PRun1 = LoadGraph("images/Player/run/1.png");
-	PRun2 = LoadGraph("images/Player/run/2.png");
-	//PRun3 = LoadGraph("images/Player/run/3.png");
+	PRun1 = LoadGraph("images/Player/run/Resize/1.png");
+	PRun2 = LoadGraph("images/Player/run/Resize/2.png");
+	PRun3 = LoadGraph("images/Player/run/Resize/3.png");
+	PRun4 = LoadGraph("images/Player/run/Resize/4.png");
+	PRun5 = LoadGraph("images/Player/run/Resize/5.png");
 
-	PAttacks1 = LoadGraph("images/Player/Attack_s/1.png");
-	PAttacks2 = LoadGraph("images/Player/Attack_s/2.png");
-	PAttacks3 = LoadGraph("images/Player/Attack_s/3.png");
+	PAttacks1 = LoadGraph("images/Player/Attack_s/Resize/1.png");
+	PAttacks2 = LoadGraph("images/Player/Attack_s/Resize/2.png");
+	PAttacks3 = LoadGraph("images/Player/Attack_s/Resize/3.png");
 
-	PAttackw1 = LoadGraph("images/Player/Attack_w/1.png");
-	PAttackw2 = LoadGraph("images/Player/Attack_w/2.png");
-	PAttackw3 = LoadGraph("images/Player/Attack_w/3.png");
+	PAttackw1 = LoadGraph("images/Player/Attack_w/Resize/1.png");
+	PAttackw2 = LoadGraph("images/Player/Attack_w/Resize/2.png");
+	PAttackw3 = LoadGraph("images/Player/Attack_w/Resize/3.png");
 
 	Attack_s = LoadSoundMem("music/knife2.wav");
 	Attack_l = LoadSoundMem("music/knife.wav");
 	PJump = LoadSoundMem("music/jump1.wav");
 
-	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+	center.Set(500, GROUND_HEIGHT - (P_HEIGHT + P_BOTTOM_MARGIN) / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	attack = 0;
 	Image = PWalk1;
@@ -79,7 +88,7 @@ int Player::PlayJump() {
 
 int Player::Set(int levelFlag) {
 	//if(levelFlag = 1)
-	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+	center.Set(500, GROUND_HEIGHT - (P_HEIGHT + P_BOTTOM_MARGIN) / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	attack = 0;
 	Image = PWalk1;
@@ -99,7 +108,7 @@ int Player::SetStand() {
 }
 
 int Player::UpdataStand(int count) {
-	center.Set(center.Get_x() - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+	center.Set(center.Get_x() - GROUND_SPEED, GROUND_HEIGHT -(P_HEIGHT + P_BOTTOM_MARGIN) / 2);
 	return 0;
 }
 
@@ -116,7 +125,7 @@ int Player::UpdataWalk(int count) {
 	else
 		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
 	int sum = 40;	//一周のフレーム数
-	int num = 4;	//一周の画像数
+	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
 		Image = PWalk1;
 	}
@@ -126,7 +135,19 @@ int Player::UpdataWalk(int count) {
 	else if (count % sum <= sum / num * 3) {
 		Image = PWalk3;
 	}
-	else if (count % sum <= sum) {
+	else if (count % sum <= sum / num * 4) {
+		Image = PWalk4;
+	}
+	else if (count % sum <= sum / num * 5) {
+		Image = PWalk5;
+	}
+	else if (count % sum <= sum / num * 6) {
+		Image = PWalk4;
+	}
+	else if (count % sum <= sum / num * 7) {
+		Image = PWalk3;
+	}
+	else if (count % sum <= sum / num * 8) {
 		Image = PWalk2;
 	}
 	return 0;
@@ -144,8 +165,8 @@ int Player::UpdataDash(int count) {
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
 	else
 		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
-	int sum = 20;	//一周のフレーム数
-	int num = 4;	//一周の画像数
+	int sum = 40;	//一周のフレーム数
+	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
 		Image = PRun1;
 	}
@@ -153,12 +174,23 @@ int Player::UpdataDash(int count) {
 		Image = PRun2;
 	}
 	else if (count % sum <= sum / num * 3) {
-		Image = PRun1;
+		Image = PRun3;
 	}
-	else if (count % sum <= sum) {
+	else if (count % sum <= sum / num * 4) {
+		Image = PRun4;
+	}
+	else if (count % sum <= sum / num * 5) {
+		Image = PRun5;
+	}
+	else if (count % sum <= sum / num * 6) {
+		Image = PRun4;
+	}
+	else if (count % sum <= sum / num * 7) {
+		Image = PRun3;
+	}
+	else if (count % sum <= sum / num * 8) {
 		Image = PRun2;
 	}
-
 	return 0;
 }
 

@@ -36,16 +36,13 @@ const int GROUND_SPEED = 1;
 
 const int P_WIDTH = 500;
 const int P_HEIGHT = 500;
-const int P_BOTTOM_MARGIN = 450 * 500 / 3000;
+const double P_RATIO = 1 / 4;
+const int P_REAL_WIDTH = 1000;
+const int P_REAL_HEIGHT = 1500;
+const int P_REAL_BOTTOM_MARGIN = 450;
 
 const int PRI_WIDTH = 180;
 const int PRI_HEIGHT = 300;
-
-const int BOX_WIDTH = 200;
-const int BOX_HEIGHT = 200;
-
-const int FENCE_WIDTH = 50;
-const int FENCE_HEIGHT = 200;
 
 const int SLIME_WIDTH = 100;
 const int SLIME_HEIGHT = 100;
