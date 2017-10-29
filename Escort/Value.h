@@ -34,8 +34,9 @@ const int DISP_HEIGHT = 1440;
 const int GROUND_HEIGHT = 1440 - 50;
 const int GROUND_SPEED = 1;
 
-const int P_WIDTH = 180;
-const int P_HEIGHT = 300;
+const int P_WIDTH = 500;
+const int P_HEIGHT = 500;
+const int P_BOTTOM_MARGIN = 450 * 500 / 3000;
 
 const int PRI_WIDTH = 180;
 const int PRI_HEIGHT = 300;
