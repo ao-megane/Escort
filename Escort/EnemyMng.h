@@ -19,6 +19,10 @@ public:
 	int GetStartClock();
 	int GetStateFlag();
 	int GetBodyClock();
+	int GetHeight();
+	int GetWidth();
+	int GetStrength();
+	Dot GetCenter();
 	Square GetWeekArea();
 	Square GetAttackArea();
 	//int End();

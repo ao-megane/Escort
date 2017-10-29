@@ -59,6 +59,18 @@ int Enemy::GetStateFlag() {
 int Enemy::GetBodyClock() {
 	return bodyClock;
 }
+int Enemy::GetHeight() {
+	return height;
+}
+int Enemy::GetWidth() {
+	return width;
+}
+int Enemy::GetStrength() {
+	return strength;
+}
+Dot Enemy::GetCenter() {
+	return center;
+}
 Square Enemy::GetWeekArea() {
 	return weekArea;
 }
@@ -76,7 +88,8 @@ int Slime::Initialize() {
 	bodyClock = 0;
 	return 0;
 }
-int Slime::Set(int count,int isright,int strength) {
+int Slime::Set(int count,int isright,int level) {
+	strength = level;
 	width = SLIME_WIDTH * (strength * 2 + 1);
 	height = SLIME_HEIGHT * (strength * 2 + 1);
 	weekArea.Set(center, width, height);
@@ -250,10 +263,11 @@ int Bird::Initialize() {
 	height = BIRD_HEIGHT;
 	return 0;
 }
-int Bird::Set(int count,int isright,int strength) {
+int Bird::Set(int count,int isright,int level) {
+	strength = level;
 	width = BIRD_WIDTH*(strength + 1);
 	height = BIRD_HEIGHT*(strength + 1);
-	if (isright) {
+	if (!isright) {
 		center.Set(0 - width / 2, 300 + height / 2);
 		dirFlag = 0;
 	}
@@ -285,7 +299,7 @@ int Bird::UpdataStand(int count) {
 	//int speed = 2 * ((dirFlag == 0 ? -1 : 1));
 	//double high = 10.0;
 	//double a = -sin(2 * PI * count / 30 * 1) * high;
-	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED, 300 + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
+	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED*(dirFlag == 0 ? -1 : 1), 300 + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
 	/*if (count % sum <= sum / num * 1) {
 	Image = P_walk_1;
 	}
@@ -351,6 +365,7 @@ int Bird::UpdataAttack(int count) {
 		//else 
 		if (count == BIRD_ATTACK_PRE + BIRD_ATTACK_SUM) {
 			//printfDx("SET!!\n");
+			//dirFlag == 0 ? dirFlag = 1 : dirFlag = 0;
 			SetStand(count);
 		}
 	}
@@ -494,15 +509,16 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 	{
 	case 10:
 		slime[0].Set(count, 1, 0);
+		slime[1].Set(count, 1, 1);
 		break;
 	case 100:
-		slime[1].Set(count, 1, 2);
+		slime[2].Set(count, 1, 1);
 		break;
 	case 200:
 		bird[0].Set(count, 1, 0);
 		break;
 	case 450:
-		bird[1].Set(count, 0, 2);
+		bird[1].Set(count, 1, 1);
 		break;
 	default:
 		break;
@@ -513,8 +529,10 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 			count != 0 && slime[i].GetStateFlag() == 0) {
 			if (slime[i].GetExistFlag())slime[i].SetJump(count);
 		}
-		if ((count - bird[i].GetStartClock()) % 100 == 90 &&
-			count != 0 && bird[i].GetStateFlag() == 0) {
+		if ((count - bird[i].GetStartClock()) % 200 == 90 &&
+			count != 0 && bird[i].GetStateFlag() == 0 &&
+			bird[i].GetCenter().Get_x() < DISP_WIDTH &&
+			bird[i].GetCenter().Get_x() > bird[i].GetWidth()) {
 			if (bird[i].GetExistFlag())bird[i].SetAttack(count, girl);
 		}
 	}
@@ -571,15 +589,19 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 	return 0;
 }
 int EnemyMngDraw() {
-	//slime[0].Draw();
 	for (int i = 0; i < 10; i++) {
-		//if (box[i].GetExistFlag()) box[i].Draw();
-		//if (fence[i].GetExistFlag()) fence[i].Draw();
-		if (slime[i].GetExistFlag()) slime[i].Draw();
-		if (bird[i].GetExistFlag()) bird[i].Draw();
+		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 2) slime[i].Draw();
+		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 2) bird[i].Draw();
+	}
+	for (int i = 0; i < 10; i++) {
+		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 1) slime[i].Draw();
+		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 1) bird[i].Draw();
+	}
+	for (int i = 0; i < 10; i++) {
+		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 0) slime[i].Draw();
+		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 0) bird[i].Draw();
 	}
 	//DrawFormatString(0, 280, RED, "SLIMEHP : %d,state : %d", slime[0].GetHP(),slime[0].GetStateFlag());
-	DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());
+	//DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());
 	return 0;
 }
-
