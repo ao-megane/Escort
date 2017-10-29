@@ -3,37 +3,37 @@
 #include "DxLib.h"
 
 int EDamage;
-int Enemy::Draw() {
-
-	DrawBox(
-		center.Get_x() - width / 2, center.Get_y() - height / 2,
-		center.Get_x() + width / 2, center.Get_y() + height / 2,
-		GREEN, false);
-	DrawBox(
-		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
-		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
-		BLUE, false);
-	DrawBox(
-		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
-		attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
-		RED, false);
-
-	if(dirFlag)
-		DrawModiGraph(
-			center.Get_x() - width / 2, center.Get_y() - height / 2,
-			center.Get_x() + width / 2, center.Get_y() - height / 2,
-			center.Get_x() + width / 2, center.Get_y() + height / 2,
-			center.Get_x() - width / 2, center.Get_y() + height / 2,
-			Image, true);
-	else
-		DrawModiGraph(
-			center.Get_x() + width / 2, center.Get_y() - height / 2,
-			center.Get_x() - width / 2, center.Get_y() - height / 2,
-			center.Get_x() - width / 2, center.Get_y() + height / 2,
-			center.Get_x() + width / 2, center.Get_y() + height / 2,
-			Image, true);
-	return 0;
-}
+//int Enemy::Draw() {
+//
+//	DrawBox(
+//		center.Get_x() - width / 2, center.Get_y() - height / 2,
+//		center.Get_x() + width / 2, center.Get_y() + height / 2,
+//		GREEN, false);
+//	DrawBox(
+//		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
+//		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+//		BLUE, false);
+//	DrawBox(
+//		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
+//		attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
+//		RED, false);
+//
+//	if(dirFlag)
+//		DrawModiGraph(
+//			center.Get_x() - width / 2, center.Get_y() - height / 2,
+//			center.Get_x() + width / 2, center.Get_y() - height / 2,
+//			center.Get_x() + width / 2, center.Get_y() + height / 2,
+//			center.Get_x() - width / 2, center.Get_y() + height / 2,
+//			Image, true);
+//	else
+//		DrawModiGraph(
+//			center.Get_x() + width / 2, center.Get_y() - height / 2,
+//			center.Get_x() - width / 2, center.Get_y() - height / 2,
+//			center.Get_x() - width / 2, center.Get_y() + height / 2,
+//			center.Get_x() + width / 2, center.Get_y() + height / 2,
+//			Image, true);
+//	return 0;
+//}
 int Enemy::GetExistFlag() {
 	return existFlag;
 }
@@ -84,16 +84,31 @@ int Enemy::PlayDamage() {
 }
 
 
-int SlimeStand1;
-int SlimeJump1;
-int Slime::Initialize() {
-	SlimeStand1 = LoadGraph("images/Slime/stand/1.png");
-	SlimeJump1 = LoadGraph("images/Slime/stand/1.png");
+int WeakSlimeStand1;
+int WeakSlimeStand2;
+int WeakSlimeStand3;
+int WeakSlimeJump1;
+int WeakSlimeJump2;
+int WeakSlimeJump3;
+
+Slime slime[10];
+void SlimeMngInitialize() {
+	WeakSlimeStand1 = LoadGraph("images/Slime/weak/stand/1.png");
+	WeakSlimeStand2 = LoadGraph("images/Slime/weak/stand/2.png");
+	WeakSlimeStand3 = LoadGraph("images/Slime/weak/stand/3.png");
+	WeakSlimeJump1 = LoadGraph("images/Slime/weak/stand/1.png");
+	WeakSlimeJump2 = LoadGraph("images/Slime/weak/stand/2.png");
+	WeakSlimeJump3 = LoadGraph("images/Slime/weak/stand/3.png");
 
 	EDamage = LoadSoundMem("music/damage.wav");
+
+	for (int i = 0; i < 10; i++) {
+		slime[i].Initialize();
+	}
+}
+void Slime::Initialize() {
 	existFlag = 0;
 	bodyClock = 0;
-	return 0;
 }
 int Slime::Set(int count,int isright,int level) {
 	strength = level;
@@ -105,7 +120,7 @@ int Slime::Set(int count,int isright,int level) {
 	SetAttackval(20 * (strength + 1));*/
 	SetHP(20);
 	SetAttackval(20);
-	Image = SlimeStand1;
+	Image = WeakSlimeStand1;
 	bodyClock = count;
 	startClock = count;
 	existFlag = 1;
@@ -259,17 +274,55 @@ int Slime::Updata(int count) {
 	attackArea.Set(center, width*0.7, height*0.7);
 	return 0;
 }
+int Slime::Draw() {
+
+	DrawBox(
+		center.Get_x() - width / 2, center.Get_y() - height / 2,
+		center.Get_x() + width / 2, center.Get_y() + height / 2,
+		GREEN, false);
+	DrawBox(
+		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
+		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+		BLUE, false);
+	DrawBox(
+		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
+		attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
+		RED, false);
+
+	if (dirFlag)
+		DrawModiGraph(
+			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
+			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
+			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			Image, true);
+	else
+		DrawModiGraph(
+			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
+			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
+			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			Image, true);
+	return 0;
+}
 
 /*------------------------------------------------------------------------------------------------------------------------*/
 
 int BirdStand1;
-int Bird::Initialize() {
+
+void BirdMngInitialize() {
+
 	BirdStand1 = LoadGraph("images/Bird/stand/1.png");
+	EDamage = LoadSoundMem("music/damage.wav");
+	for (int i = 0; i < 10; i++) {
+		bird[i].Initialize();
+	}
+}
+int Bird::Initialize() {
 	existFlag = 0;
 	bodyClock = 0;
 	width = BIRD_WIDTH;
 	height = BIRD_HEIGHT;
-	EDamage = LoadSoundMem("music/damage.wav");
 	return 0;
 }
 int Bird::Set(int count,int isright,int level) {
@@ -502,7 +555,7 @@ int Bird::Updata(int count) {
 /*---------------------------------------------------------------------------------------------------*/
 //Box box[2];
 //Fence fence[2];
-Slime slime[10];
+
 Bird bird[10];
 
 int SlimeMngSet(int count,int dirFlag,int level) {
@@ -526,6 +579,8 @@ int BirdMngSet(int count, int dirFlag, int level) {
 }
 
 int EnemyMngInitialize() {
+	SlimeMngInitialize();
+	BirdMngInitialize();
 	for (int i = 0; i < 10; i++) {
 		//box[i].Initialize();
 		//fence[i].Initialize();
@@ -622,15 +677,15 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 int EnemyMngDraw() {
 	for (int i = 0; i < 10; i++) {
 		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 2) slime[i].Draw();
-		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 2) bird[i].Draw();
+		//if (bird[i].GetExistFlag() && bird[i].GetStrength() == 2) bird[i].Draw();
 	}
 	for (int i = 0; i < 10; i++) {
 		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 1) slime[i].Draw();
-		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 1) bird[i].Draw();
+		//if (bird[i].GetExistFlag() && bird[i].GetStrength() == 1) bird[i].Draw();
 	}
 	for (int i = 0; i < 10; i++) {
 		if (slime[i].GetExistFlag() && slime[i].GetStrength() == 0) slime[i].Draw();
-		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 0) bird[i].Draw();
+		//if (bird[i].GetExistFlag() && bird[i].GetStrength() == 0) bird[i].Draw();
 	}
 	//DrawFormatString(0, 280, RED, "SLIMEHP : %d,state : %d", slime[0].GetHP(),slime[0].GetStateFlag());
 	//DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());

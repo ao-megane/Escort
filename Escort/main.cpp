@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InputFile("koryosai2017.txt");
 
 	SetBack(1);
-	PlayBGM();
+	//PlayBGM();
 
 	flag = 0;
 	int down = 0;
@@ -117,6 +117,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
+			DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
 			FpsTimeFanction();
 			break;
 		case 3://gameover

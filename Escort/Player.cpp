@@ -23,6 +23,10 @@ int PAttackw1;
 int PAttackw2;
 int PAttackw3;
 
+int PAttackl1;
+int PAttackl2;
+int PAttackl3;
+
 int backArm;
 int backLeg;
 int body;
@@ -35,7 +39,7 @@ int Attack_s;
 int Attack_l;
 int PJump;
 
-int Player::Initialize() {
+void Player::Initialize() {
 
 	PWalk1 = LoadGraph("images/Player/walk/Resize/1.png");
 	PWalk2 = LoadGraph("images/Player/walk/Resize/2.png");
@@ -57,39 +61,37 @@ int Player::Initialize() {
 	PAttackw2 = LoadGraph("images/Player/Attack_w/Resize/2.png");
 	PAttackw3 = LoadGraph("images/Player/Attack_w/Resize/3.png");
 
+	PAttackl1 = LoadGraph("images/Player/Attack_l/Resize/1.png");
+	PAttackl2 = LoadGraph("images/Player/Attack_l/Resize/2.png");
+	PAttackl3 = LoadGraph("images/Player/Attack_l/Resize/3.png");
+
 	Attack_s = LoadSoundMem("music/knife2.wav");
 	Attack_l = LoadSoundMem("music/knife.wav");
 	PJump = LoadSoundMem("music/jump1.wav");
 
-	center.Set(500, GROUND_HEIGHT - (P_HEIGHT + P_BOTTOM_MARGIN) / 2);
-	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
+	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
 	attack = 0;
 	Image = PWalk1;
 	acceptFlag = 1;
 	isRightFlag = 1;
 	stateFlag = 0;
 	bodyClock = 0;
-
-	return 0;
 }
 
-int Player::PlayAttack_l() {
+void Player::PlayAttack_l() {
 	PlaySoundMem(Attack_l, DX_PLAYTYPE_BACK);
-	return 0;
 }
-int Player::PlayAttack_s() {
+void Player::PlayAttack_s() {
 	PlaySoundMem(Attack_s, DX_PLAYTYPE_BACK);
-	return 0;
 }
-int Player::PlayJump() {
+void Player::PlayJump() {
 	PlaySoundMem(PJump, DX_PLAYTYPE_BACK);
-	return 0;
 }
 
-int Player::Set(int levelFlag) {
+void Player::Set(int levelFlag) {
 	//if(levelFlag = 1)
-	center.Set(500, GROUND_HEIGHT - (P_HEIGHT + P_BOTTOM_MARGIN) / 2);
-	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
+	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
+	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
 	attack = 0;
 	Image = PWalk1;
 	acceptFlag = 1;
@@ -97,33 +99,29 @@ int Player::Set(int levelFlag) {
 	bodyClock = 0;
 	isRightFlag = 1;
 	SetStand();
-	return 0;
 }
 
-int Player::SetStand() {
+void Player::SetStand() {
 	stateFlag = 0;
 	acceptFlag = 1;
 	Image = PWalk1;
-	return 0;
 }
 
-int Player::UpdataStand(int count) {
-	center.Set(center.Get_x() - GROUND_SPEED, GROUND_HEIGHT -(P_HEIGHT + P_BOTTOM_MARGIN) / 2);
-	return 0;
+void Player::UpdataStand(int count) {
+	center.Set(center.Get_x() - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 }
 
-int Player::SetWalk() {
+void Player::SetWalk() {
 	stateFlag = 1;
 	acceptFlag = 1;
 	Image = PWalk1;
-	return 0;
 }
-int Player::UpdataWalk(int count) {
+void Player::UpdataWalk(int count) {
 	int speed = GROUND_SPEED;
-	if(isRightFlag)
-		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+	if (isRightFlag)
+		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
-		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 40;	//一周のフレーム数
 	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -150,21 +148,19 @@ int Player::UpdataWalk(int count) {
 	else if (count % sum <= sum / num * 8) {
 		Image = PWalk2;
 	}
-	return 0;
 }
 
-int Player::SetDash() {
+void Player::SetDash() {
 	stateFlag = 2;
 	Image = PWalk1;
 	acceptFlag = 1;
-	return 0;
 }
-int Player::UpdataDash(int count) {
+void Player::UpdataDash(int count) {
 	int speed = 8;
 	if(isRightFlag)
-		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
-		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	int sum = 40;	//一周のフレーム数
 	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -191,17 +187,15 @@ int Player::UpdataDash(int count) {
 	else if (count % sum <= sum / num * 8) {
 		Image = PRun2;
 	}
-	return 0;
 }
 
-int Player::SetJump() {
+void Player::SetJump() {
 	stateFlag = 4;
 	Image = PWalk1;
 	acceptFlag = 1;	//空中制動
 	PlayJump();
-	return 0;
 }
-int Player::UpdataJump(int count,int flag) {
+void Player::UpdataJump(int count,int flag) {
 	double height = DISP_HEIGHT * 0.3;//jumpの高さ
 	double sum = 50.0;	//モーションにかかるフレーム数
 	int num = 5;		//絵の枚数
@@ -210,19 +204,19 @@ int Player::UpdataJump(int count,int flag) {
 	switch (flag)
 	{
 	case 0://右ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED + 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set((center.Get_x()) - GROUND_SPEED + 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 1://右歩き
-		center.Set((center.Get_x()) - GROUND_SPEED + 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set((center.Get_x()) - GROUND_SPEED + 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break; 
 	case 2://左ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED - 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set((center.Get_x()) - GROUND_SPEED - 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 3://左歩き
-		center.Set((center.Get_x()) - GROUND_SPEED - 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set((center.Get_x()) - GROUND_SPEED - 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 4://立ち
-		center.Set((center.Get_x()) - GROUND_SPEED + 0, a + GROUND_HEIGHT - P_HEIGHT / 2 + P_BOTTOM_MARGIN);
+		center.Set((center.Get_x()) - GROUND_SPEED + 0, a + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	default:
 		break;
@@ -233,17 +227,14 @@ int Player::UpdataJump(int count,int flag) {
 		acceptFlag = 1;
 		bodyClock = count;
 	}
-	//DrawFormatString(0, 200, RED, "JUMPINGCOUNT : %d", count);
-	return 0;
 }
-int Player::SetPriJump() {
+void Player::SetPriJump() {
 	stateFlag = 8;
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
-	return 0;
 }
-int Player::UpdataPriJump(int count) {
+void Player::UpdataPriJump(int count) {
 	if (count >= 15) {
 		acceptFlag = 1;
 		if (IsJumping != 0) {
@@ -256,17 +247,15 @@ int Player::UpdataPriJump(int count) {
 			//printfDx("SETSTAND!\n");
 		}
 	}
-	return 0;
 }
 
-int Player::SetAttack_w() {
+void Player::SetAttack_w() {
 	stateFlag = 6;
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
-	return 0;
 }
-int Player::UpdataAttack_w(int count) {
+void Player::UpdataAttack_w(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
 		LU.Set(center.Get_x() - P_WIDTH*0.3, center.Get_y() - P_HEIGHT*0.3);
@@ -304,17 +293,15 @@ int Player::UpdataAttack_w(int count) {
 	if (count == 2) Image = PAttackw2;
 	if (count == 5) Image = PAttackw3;
 
-	return 0;
 }
 
-int Player::SetAttack_s() {
+void Player::SetAttack_s() {
 	stateFlag = 5;
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
-	return 0;
 }
-int Player::UpdataAttack_s(int count) {
+void Player::UpdataAttack_s(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
 		LU.Set(center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 4);
@@ -352,17 +339,15 @@ int Player::UpdataAttack_s(int count) {
 	if (count == 19) Image = PAttacks3;
 	if (count == 17)
 		PlayAttack_s();
-	return 0;
 }
 
-int Player::SetAttack_l() {
+void Player::SetAttack_l() {
 	stateFlag = 7;
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
-	return 0;
 }
-int Player::UpdataAttack_l(int count) {
+void Player::UpdataAttack_l(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
 		LU.Set(center.Get_x() - P_HEIGHT / 2 + (count - 10) * 40, center.Get_y() - P_HEIGHT / 2 );
@@ -396,12 +381,11 @@ int Player::UpdataAttack_l(int count) {
 		}
 	}
 
-	if(count == 10)
+	if (count == 10)
 		PlayAttack_l();
-	return 0;
 }
 
-int Player::Updata(int count,int Key[]) {
+void Player::Updata(int count,int Key[]) {
 	int flag = 4;//空中制御用フラグ
 	if (acceptFlag) {//入力受付時の処理
 		//だぶりありみたいなのはupdataでやるのが無難か
@@ -543,8 +527,7 @@ int Player::Updata(int count,int Key[]) {
 		break;
 	}
 
-	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
-	return 0;
+	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
 }
 
 int Player::GetStateFlag() {
@@ -559,28 +542,32 @@ int Player::GetAttack() {
 
 int Player::Draw() {
 
+	/*DrawBox(
+		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
+		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+		GREEN, false);*/
 	DrawBox(
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		GREEN, false);
 	DrawBox(
-		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
-		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+		weakArea.Get_LU().Get_x(), weakArea.Get_LU().Get_y(),
+		weakArea.Get_RD().Get_x(), weakArea.Get_RD().Get_y(),
 		BLUE, false);
 
-	if(isRightFlag)
-		DrawModiGraph(
-			center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-			center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-			center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+	if (isRightFlag)
+		DrawModiGraph(//描画を少しずらす
+			center.Get_x() - P_D_WIDTH / 2, center.Get_y() - P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() + P_D_WIDTH / 2, center.Get_y() - P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() + P_D_WIDTH / 2, center.Get_y() + P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() - P_D_WIDTH / 2, center.Get_y() + P_D_HEIGHT / 2 + P_DIFF_H,
 			Image,true);
 	else
 		DrawModiGraph(
-			center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-			center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
-			center.Get_x() - P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
-			center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
+			center.Get_x() + P_D_WIDTH / 2, center.Get_y() - P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() - P_D_WIDTH / 2, center.Get_y() - P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() - P_D_WIDTH / 2, center.Get_y() + P_D_HEIGHT / 2 + P_DIFF_H,
+			center.Get_x() + P_D_WIDTH / 2, center.Get_y() + P_D_HEIGHT / 2 + P_DIFF_H,
 			Image, true);
 
 	if(attack > 0)

@@ -10,7 +10,7 @@ public:
 	/*Enemy();
 	~Enemy();*/
 	//int Updata(int count);	//ƒLƒƒƒ‰‚²‚Æ‚Éì‚é
-	int Draw();			//•`‰æ
+	//int Draw();			//•`‰æ
 	int GetExistFlag();
 	int SetHP(int a);
 	int SetAttackval(int a);
@@ -65,10 +65,11 @@ protected:
 //{
 //}
 
+void SlimeMngInitialize();
 class Slime : public Enemy
 {
 public:
-	int Initialize();
+	void Initialize();
 	int Set(int count,int position,int strength); //oŒ»ˆ—
 	int SetStand(int count);
 	int UpdataStand(int count);
@@ -79,9 +80,11 @@ public:
 	int SetDisapper(int count);
 	int UpdataDisapper(int count);
 	int Updata(int count);
+	int Draw();			//•`‰æ
 private:
 };
 
+void BirdMngInitialize();
 class Bird : public Enemy {
 public:
 	int Initialize();
@@ -97,6 +100,7 @@ public:
 	int SetBack(int count);
 	int UpdataBack(int count);
 	int Updata(int count);
+	int Draw();			//•`‰æ
 	double birdAttackHigh;
 	double birdAttackWidth;
 };
