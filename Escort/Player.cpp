@@ -14,6 +14,10 @@ int frontArm;
 int frontLeg;
 int head;
 
+int Attack_w;
+int Attack_s;
+int Attack_l;
+int PJump;
 
 int Player::Initialize() {
 
@@ -28,6 +32,10 @@ int Player::Initialize() {
 	frontLeg = LoadGraph("images/Player/characterChip/frontleg.png");
 	head = LoadGraph("images/Player/characterChip/head.png");*/
 
+	Attack_s = LoadSoundMem("music/knife2.wav");
+	Attack_l = LoadSoundMem("music/knife.wav");
+	PJump = LoadSoundMem("music/jump1.wav");
+
 	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
 	weekArea.Set(center, P_WIDTH*0.8, P_HEIGHT*0.8);
 	attack = 0;
@@ -37,6 +45,19 @@ int Player::Initialize() {
 	stateFlag = 0;
 	bodyClock = 0;
 
+	return 0;
+}
+
+int Player::PlayAttack_l() {
+	PlaySoundMem(Attack_l, DX_PLAYTYPE_BACK);
+	return 0;
+}
+int Player::PlayAttack_s() {
+	PlaySoundMem(Attack_s, DX_PLAYTYPE_BACK);
+	return 0;
+}
+int Player::PlayJump() {
+	PlaySoundMem(PJump, DX_PLAYTYPE_BACK);
 	return 0;
 }
 
@@ -129,6 +150,7 @@ int Player::SetJump() {
 	stateFlag = 4;
 	Image = P_walk_1;
 	acceptFlag = 1;	//ãÛíÜêßìÆ
+	PlayJump();
 	return 0;
 }
 int Player::UpdataJump(int count,int flag) {
@@ -272,6 +294,8 @@ int Player::UpdataAttack_s(int count) {
 			//printfDx("SETSTAND!\n");
 		}
 	}
+	if (count == 17)
+		PlayAttack_s();
 	return 0;
 }
 
@@ -315,6 +339,9 @@ int Player::UpdataAttack_l(int count) {
 			//printfDx("SETSTAND!\n");
 		}
 	}
+
+	if(count == 10)
+		PlayAttack_l();
 	return 0;
 }
 

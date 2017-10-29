@@ -141,7 +141,11 @@ int Pause;
 
 int Keeper;	//透過用カウントキーパー
 int flag;	//現状態フラグ 0 normal 1 ending 2 bord
+
 int BGM;
+int Move;
+int Choice;
+
 int nishiki;
 int SystemInitialize() {
 
@@ -159,6 +163,8 @@ int SystemInitialize() {
 	Pause = LoadGraph("images/System/Pause.png");
 
 	BGM = LoadSoundMem("music/opening2.wav");
+	Choice = LoadSoundMem("music/choice3.wav");
+	Move = LoadSoundMem("music/choice2.wav");
 
 	ground_color = LoadGraph("images/Back/Color.png");
 	ground_kumo = LoadGraph("images/Back/kumo.png");
@@ -176,6 +182,16 @@ int SystemInitialize() {
 	Keeper = 0;
 	flag = 0;
 
+	return 0;
+}
+
+int PlayMove() {
+	PlaySoundMem(Move, DX_PLAYTYPE_BACK);
+	return 0;
+}
+
+int PlayChoice() {
+	PlaySoundMem(Choice, DX_PLAYTYPE_BACK);
 	return 0;
 }
 
@@ -198,6 +214,11 @@ int DrawOP(int levelFlag) {
 		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
 		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
 		Allow, true);
+	return 0;
+}
+
+int DrawPause(int count) {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Pause, true);
 	return 0;
 }
 

@@ -9,6 +9,9 @@ public:/*
 	Player();
 	~Player();*/
 	int Initialize();	//ゲーム開始時（画像ハンドル周辺）
+	int PlayAttack_s();
+	int PlayAttack_l();
+	int PlayJump();
 	int Set(int levelFlag);			//プレイ開始時（座標周辺）
 	int SetStand();		//privateをいじる関数
 	int UpdataStand(int count);//ダッシュ中の座標やらをいじる関数

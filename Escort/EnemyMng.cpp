@@ -2,6 +2,7 @@
 #include "Value.h"
 #include "DxLib.h"
 
+int EDamage;
 int Enemy::Draw() {
 
 	DrawBox(
@@ -77,6 +78,10 @@ Square Enemy::GetWeekArea() {
 Square Enemy::GetAttackArea() {
 	return attackArea;
 }
+int Enemy::PlayDamage() {
+	PlaySoundMem(EDamage, DX_PLAYTYPE_BACK);
+	return 0;
+}
 
 
 int SlimeStand1;
@@ -84,6 +89,8 @@ int SlimeJump1;
 int Slime::Initialize() {
 	SlimeStand1 = LoadGraph("images/Slime/stand/1.png");
 	SlimeJump1 = LoadGraph("images/Slime/stand/1.png");
+
+	EDamage = LoadSoundMem("music/damage.wav");
 	existFlag = 0;
 	bodyClock = 0;
 	return 0;
@@ -175,6 +182,7 @@ int Slime::SetDamage(int count, int damage) {
 	clockKeeper = bodyClock + 60;
 	bodyClock = count;
 	SetHP(GetHP() - damage);
+	PlayDamage();
 	return 0;
 }
 int Slime::UpdataDamage(int count) {
@@ -261,6 +269,7 @@ int Bird::Initialize() {
 	bodyClock = 0;
 	width = BIRD_WIDTH;
 	height = BIRD_HEIGHT;
+	EDamage = LoadSoundMem("music/damage.wav");
 	return 0;
 }
 int Bird::Set(int count,int isright,int level) {
@@ -377,6 +386,7 @@ int Bird::SetDamage(int count, int damage) {
 	bodyClock = count;
 	clockKeeper = count + 60;
 	SetHP(GetHP() - damage);
+	PlayDamage();
 	return 0;
 }
 int Bird::UpdataDamage(int count) {
@@ -494,6 +504,27 @@ int Bird::Updata(int count) {
 //Fence fence[2];
 Slime slime[10];
 Bird bird[10];
+
+int SlimeMngSet(int count,int dirFlag,int level) {
+	for (int i = 0; i < 10; i++) {
+		if (!slime[i].GetExistFlag()) {
+			slime[i].Set(count, dirFlag, level);
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int BirdMngSet(int count, int dirFlag, int level) {
+	for (int i = 0; i < 10; i++) {
+		if (!bird[i].GetExistFlag()) {
+			bird[i].Set(count, dirFlag, level);
+			return 0;
+		}
+	}
+	return 1;
+}
+
 int EnemyMngInitialize() {
 	for (int i = 0; i < 10; i++) {
 		//box[i].Initialize();
@@ -508,17 +539,17 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 	switch (count)
 	{
 	case 10:
-		slime[0].Set(count, 1, 0);
-		slime[1].Set(count, 1, 1);
+		SlimeMngSet(count, 1, 0);
+		SlimeMngSet(count, 1, 1);
 		break;
 	case 100:
-		slime[2].Set(count, 1, 1);
+		SlimeMngSet(count, 1, 1);
 		break;
 	case 200:
-		bird[0].Set(count, 1, 0);
+		BirdMngSet(count, 1, 0);
 		break;
 	case 450:
-		bird[1].Set(count, 1, 1);
+		BirdMngSet(count, 1, 1);
 		break;
 	default:
 		break;

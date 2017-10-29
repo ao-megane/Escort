@@ -9,6 +9,8 @@ public:/*
 	Princess();
 	~Princess();*/
 	int Initialize();
+	int PlayDamage();
+	int PlayJump();
 	int Set(int levelFlag);
 	int SetWalk();
 	int UpdataWalk(int count);

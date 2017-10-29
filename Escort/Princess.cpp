@@ -7,6 +7,9 @@ int run2
 */
 int walk1;
 
+int Damage;
+int Jump;
+
 int Princess::Initialize() {
 	HP = 100;
 	/*
@@ -14,7 +17,18 @@ int Princess::Initialize() {
 	run1 = LoadGraph("");
 	*/
 	walk1 = LoadGraph("images/Princess/walk/1.png");
+	Damage = LoadSoundMem("music/damage2.wav");
+	Jump = LoadSoundMem("music/jump1.wav");
 
+	return 0;
+}
+
+int Princess::PlayDamage() {
+	PlaySoundMem(Damage, DX_PLAYTYPE_BACK);
+	return 0;
+}
+int Princess::PlayJump() {
+	PlaySoundMem(Jump, DX_PLAYTYPE_BACK);
 	return 0;
 }
 
@@ -64,6 +78,7 @@ int Princess::SetJump(int count) {
 	stateFlag = 2;
 	Image = walk1;
 	bodyClock = count;
+	PlayJump();
 	//acceptFlag = 1;	//ãÛíÜêßìÆ
 	return 0;
 }
@@ -93,6 +108,7 @@ int Princess::SetDamage(int damage,int count) {
 		Keeper = 0;
 		bodyClock = count;
 	}
+	PlayDamage();
 	stateFlag = 1;
 	HP -= damage;
 	//Image = P_run_1;
