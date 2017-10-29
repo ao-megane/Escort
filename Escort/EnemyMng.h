@@ -19,6 +19,11 @@ public:
 	int GetStartClock();
 	int GetStateFlag();
 	int GetBodyClock();
+	int GetHeight();
+	int GetWidth();
+	int GetStrength();
+	int PlayDamage();
+	Dot GetCenter();
 	Square GetWeekArea();
 	Square GetAttackArea();
 	//int End();
@@ -95,6 +100,10 @@ public:
 	double birdAttackHigh;
 	double birdAttackWidth;
 };
+
+int SlimeMngSet(int count,int dirFlag,int level);
+
+int BirdMngSet(int count,int dirFlag,int level);
 
 int EnemyMngInitialize();			//画像ハンドル周り
 int EnemyMngSet(int levelFlag, int count,Dot girl);	//ステージ、時間ごとに配置

@@ -50,6 +50,8 @@ void InputUpdata(int Key[]) {
 	if (CheckHitKey(KEY_INPUT_W)) Y++; else Y = 0;
 	if (CheckHitKey(KEY_INPUT_A)) X++; else X = 0;
 
+	if (CheckHitKey(KEY_INPUT_P)) PAUSE++; else PAUSE = 0;
+	
 }
 
 void PrintInput(int Key[]) {

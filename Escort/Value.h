@@ -23,6 +23,7 @@ const int BROWN = GetColor(46, 33, 13);
 #define L_TRIG (Key[7]) //Trigから加算を始める
 #define THUMB_Y (Key[8])//-100～+100 100が最大値
 #define THUMB_X (Key[9]) //-100～+100 100が最大値
+#define PAUSE (Key[10])
 
 const int Trig = 200; //R2L2のカウントを始めるしきい値
 const int ThumbTrig = 16383; //thumbの無視する範囲 ～32767

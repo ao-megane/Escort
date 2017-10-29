@@ -11,11 +11,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	SetWindowSizeChangeEnableFlag(TRUE);
+	/*SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(TRUE);*/
 	}
 
+	
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -62,14 +63,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (THUMB_Y <= -80) up++; else up = 0;
 
 			if(down == 1){
+				PlayMove();
 				if (levelFlag == 3) levelFlag = 0;
 				else levelFlag++;
 			}
 			if(up == 1){
+				PlayMove();
 				if (levelFlag == 0) levelFlag = 3;
 				else levelFlag--;
 			}
 			if (B == 1) {
+				PlayChoice();
 				switch (levelFlag)
 				{
 				case 0: 
@@ -108,6 +112,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				flag = 4;
 				SetWinner(levelFlag,count);
 			}
+			if (PAUSE == 1) flag = 7;
 
 			EnemyMngDraw();
 			girl.Draw();
@@ -136,11 +141,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 5://マニュアル
 			DrawManual();
-			if(B==1) flag = 0;
+			if (B == 1) {
+				PlayChoice();
+				flag = 0;
+			}
 			break;
 		case 6://クレジット
 			DrawCredit();
-			if(B==1) flag = 0;
+			if (B == 1) {
+				PlayChoice();
+				flag = 0;
+			}
+			break;
+		case 7://ポーズ
+			DrawPause(count);
+			count--;
+			if (B == 1) flag = 2;
+			if (A == 1) flag = 0;
+			break;
 		default:
 			break;
 		}

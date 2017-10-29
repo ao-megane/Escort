@@ -43,6 +43,10 @@ private:
 
 int SystemInitialize();
 
+int PlayMove();
+
+int PlayChoice();
+
 int ChoreSet(int levelFlag);
 
 int PlayBGM();
@@ -52,6 +56,8 @@ int DrawOP(int levelFlag);
 int DrawManual();
 
 int DrawCredit();
+
+int DrawPause(int count);
 
 int SetBack(int stageFlag);
 
