@@ -34,33 +34,66 @@ const int DISP_HEIGHT = 1440;
 const int GROUND_HEIGHT = 1440 - 50;
 const int GROUND_SPEED = 1;
 
-const int P_WIDTH = 500;
-const int P_HEIGHT = 500;
-const int P_BOTTOM_MARGIN = 450 * 500 / 3000;
+const int P_WIDTH = 200;	//プレイヤー自体の幅
+const int P_HEIGHT = 300;	//プレイヤー自体の高さ（2:3）
+const double P_W_WIDTH = P_WIDTH * 0.8;
+const double P_W_HEIGHT = P_HEIGHT * 0.8;//被ダメ判定の大きさ
+//↑判定系 ↓描画系
+const double P_D_WIDTH = 3000 / 1000 * P_WIDTH;//500
+const double P_D_HEIGHT = 3000 / 1500 * P_HEIGHT;// 500
+const double P_DIFF_H = (450 + 1500 / 2 - 3000 / 2) * P_D_WIDTH / 3000;//PH*大元の比率
 
-const int PRI_WIDTH = 180;
-const int PRI_HEIGHT = 300;
+const double PLAYER_JUMP_SUM = 50.0;
+const int PLAYER_JUMP_SUMI = (int)(PLAYER_JUMP_SUM);
+const int PLAYER_JUMP_NUM = 4;
+const double PLAYER_JUMP_HEIGHT = DISP_HEIGHT * 0.3;
+const int SWORD_HEIGHT = 140*1.4;//7:13
+const int SWORD_WIDTH =260*1.4;
+const int STUKSWORD_WIDTH = SWORD_WIDTH * 1.2;//2:3
+const int STUKSWORD_HEIGHT = STUKSWORD_WIDTH * 2 / 3;//2:3
 
-const int BOX_WIDTH = 200;
-const int BOX_HEIGHT = 200;
+const int PRI_WIDTH = 200;	//プレイヤー自体の幅
+const int PRI_HEIGHT = 300;	//プレイヤー自体の高さ（2:3）
+const double PRI_W_WIDTH = PRI_WIDTH * 0.8;
+const double PRI_W_HEIGHT = PRI_HEIGHT * 0.8;//被ダメ判定の大きさ
+//↑判定系 ↓描画系
+const double PRI_D_WIDTH = 1500 / 1000 * PRI_WIDTH * 1.3;//大本画像/大本の幅＊width
+const double PRI_D_HEIGHT = 2000 / 1500 * PRI_HEIGHT * 1.3;// 500
+const double PRI_DIFF_H = (400 + 1500 / 2 - 2000 / 2) * PRI_D_WIDTH / 1500;//PH*大元の比率
 
-const int FENCE_WIDTH = 50;
-const int FENCE_HEIGHT = 200;
+const int SLIME_WIDTH = 150;	//プレイヤー自体の幅
+const int SLIME_HEIGHT = 150;	//プレイヤー自体の高さ（2:3）
+//const double SLIME_W_WIDTH = SLIME_WIDTH * 0.8;
+//const double SLIME_W_HEIGHT = SLIME_HEIGHT * 0.8;//被ダメ判定の大きさ
+//↑判定系 ↓描画系
+const double SLIME_D_WIDTH = 1300 / 700 * SLIME_WIDTH;//500
+const double SLIME_D_HEIGHT = 1000 / 700 * SLIME_HEIGHT;// 500
+//const double SLIME_DIFF = (450 + 1500 / 2 - 3000 / 2) * SLIME_D_WIDTH / 3000;//PH*大元の比率
+const double SLIME_DIFF_H = 0;
+const double SLIME_DIFF_W = (100 + 700 / 2 - 1300 / 2) * SLIME_D_WIDTH / 1300;
 
-const int SLIME_WIDTH = 100;
-const int SLIME_HEIGHT = 100;
 const int SLIME_STAND_SPEED = 2;
 const int SLIME_STAND_SUM = 40;	//一周のフレーム数
-const int SLIME_STAMD_NUM = 4;	//一周の画像数
+const int SLIME_STAND_NUM = 4;	//一周の画像数
 const int SLIME_JUMP_SPEED = 1;
-const double SLIME_JUMP_SUM = 40;	//一周のフレーム数
-const int SLIME_JUMP_NUM = 5;	//一周の画像数
-const int SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
+const double SLIME_JUMP_SUM = 40.0;	//一周のフレーム数
+const int SLIME_JUMP_NUM = 3;	//一周の画像数
+const double SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
 const int SLIME_DISAP_SUM = 5;
 const int SLIME_DISAP_NUM = 1;
 
-const int BIRD_WIDTH = 300;//3:2
-const int BIRD_HEIGHT = 200;
+
+const int BIRD_WIDTH = 400 * 1.0;	//プレイヤー自体の幅
+const int BIRD_HEIGHT = 500 * 1.0;	//プレイヤー自体の高さ（4:5）
+//const double BIRD_W_WIDTH = BIRD_WIDTH * 0.8;
+//const double BIRD_W_HEIGHT = BIRD_HEIGHT * 0.8;//被ダメ判定の大きさ
+const int BIRD_HIGH = 300;//高度
+//↑判定系 ↓描画系
+const double BIRD_D_WIDTH = 1400 / 1100 * BIRD_WIDTH;//500
+const double BIRD_D_HEIGHT = 1500 / 1200 * BIRD_HEIGHT;// 500
+const double BIRD_DIFF_W = (200 + 1100 / 2 - 1400 / 2) * BIRD_D_WIDTH / 1400;//PH*大元の比率
+const double BIRD_DIFF_H = (200 + 1200 / 2 - 1500 / 2) * BIRD_D_HEIGHT / 1500;//PH*大元の比率
+
 const int BIRD_STAND_SUM = 90;
 const int BIRD_STAND_NUM = 4;
 const int BIRD_STAND_SPEED = 2;
@@ -74,5 +107,19 @@ const int BIRD_DISAP_NUM = 1;
 //const int BIRD_BACK_SUM = ;
 const int BIRD_BACK_NUM = 5;
 const int BIRD_BACK_SPEED = 8;
+
+const int NORMAL_COUNT = 2000;
+const int HARD_COUNT = 2000;
+
+const int UI_HEIGHT = 389 / 2;
+const int UI_WIDTH = 1701 / 2;
+const int UI_MARGIN_HEIGHT = -20;
+const int UI_MARGIN_WIDTH = DISP_WIDTH / 2 - UI_WIDTH / 2;
+const int UI_ICONBIG = 150;
+
+const int HPBAR_WIDTH = 1000;
+const int HPBAR_HEIGHT = 40;
+const int HPBAR_MARGIN_HEIGHT = 150;
+const int HPBAR_MARGIN_WIDTH = 10;
 
 #endif // !VALUE_H

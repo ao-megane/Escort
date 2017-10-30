@@ -11,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	/*SetWindowSizeChangeEnableFlag(TRUE);
+	SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);*/
+	ChangeWindowMode(TRUE);
 	}
 
 	
@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InputFile("koryosai2017.txt");
 
 	SetBack(1);
-	PlayBGM();
+	//PlayBGM();
 
 	flag = 0;
 	int down = 0;
@@ -92,14 +92,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			count = 0;
 			player.Set(levelFlag);
 			girl.Set(levelFlag);
-			EnemyMngInitialize();
+			EnemyMngInitialize(1);
 			ChoreSet(levelFlag);
-			flag = 2;
+			flag = 8;
 			break;
 		case 2://playing
 			EnemyMngSet(levelFlag, count, girl.GetCenter());
 			player.Updata(count,Key);
-			girl.Updata(count,player.GetStateFlag());
+			girl.Updata(count,player.PriJump);
 			EnemyMngUpdata(count);
 
 			EnemyMngJudge(&player, &girl, count);
@@ -108,16 +108,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				flag = 3;
 				SetLoser(levelFlag,count);
 			}
-			if (count >= 1*60*30) {
+			if (levelFlag == 0 && count >= NORMAL_COUNT) {
 				flag = 4;
 				SetWinner(levelFlag,count);
+			}
+			if (levelFlag == 1 && count >= HARD_COUNT) {
+				flag = 4;
+				SetWinner(levelFlag, count);
 			}
 			if (PAUSE == 1) flag = 7;
 
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
+			DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
+			DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 			FpsTimeFanction();
+			DrawChore(count, girl.GetHP(),levelFlag);
 			break;
 		case 3://gameover
 			EnemyMngUpdata(count);
@@ -158,6 +165,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			count--;
 			if (B == 1) flag = 2;
 			if (A == 1) flag = 0;
+			break;
+		case 8://prologue
+			if (DrawPrologue(B)) {
+				flag = 2;
+				count = 0;
+			}
 			break;
 		default:
 			break;

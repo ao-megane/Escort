@@ -6,6 +6,18 @@ int run1
 int run2
 */
 int walk1;
+int walk2;
+int walk3;
+int walk4;
+int walk5;
+
+int Dwalk1;
+int Dwalk2;
+int Dwalk3; 
+int Dwalk4;
+int Dwalk5;
+
+int PriDecoi;
 
 int Damage;
 int Jump;
@@ -16,7 +28,20 @@ int Princess::Initialize() {
 	run1 = LoadGraph("");
 	run1 = LoadGraph("");
 	*/
-	walk1 = LoadGraph("images/Princess/walk/1.png");
+	walk1 = LoadGraph("images/Princess/walk/Resize/1.png");
+	walk2 = LoadGraph("images/Princess/walk/Resize/2.png");
+	walk3 = LoadGraph("images/Princess/walk/Resize/3.png");
+	walk4 = LoadGraph("images/Princess/walk/Resize/4.png");
+	walk5 = LoadGraph("images/Princess/walk/Resize/5.png");
+
+	Dwalk1 = LoadGraph("images/Princess/damagewalk/Resize/1.png");
+	Dwalk2 = LoadGraph("images/Princess/damagewalk/Resize/2.png");
+	Dwalk3 = LoadGraph("images/Princess/damagewalk/Resize/3.png");
+	Dwalk4 = LoadGraph("images/Princess/damagewalk/Resize/4.png");
+	Dwalk5 = LoadGraph("images/Princess/damagewalk/Resize/5.png");
+
+	PriDecoi = LoadGraph("images/decoi.png");
+
 	Damage = LoadSoundMem("music/damage2.wav");
 	Jump = LoadSoundMem("music/jump1.wav");
 
@@ -35,10 +60,10 @@ int Princess::PlayJump() {
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
 	center.Set(DISP_WIDTH * 0.3, GROUND_HEIGHT - PRI_HEIGHT / 2);
-	week.Set(center, PRI_WIDTH * 0.5, PRI_HEIGHT * 0.5);
+	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	Image = walk1;
 	stateFlag = 0;
-	HP = 100; 
+	HP = 1000; 
 	Keeper = 0;
 	return 0;
 }
@@ -53,23 +78,31 @@ int Princess::UpdataWalk(int count) {
 	//int speed = GROUND_SPEED;
 	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
 
-	if (count % 60 <= 10) {
-		//Image = P_run_1;
+	int sum = 40;	//一周のフレーム数
+	int num = 8;	//一周の画像数
+	if (count % sum <= sum / num * 1) {
+		Image =walk1;
 	}
-	else if (count % 60 <= 20) {
-		//Image = P_run_2;
+	else if (count % sum <= sum / num * 2) {
+		Image = walk2;
 	}
-	else if (count % 60 <= 30) {
-		//Image = P_run_3;
+	else if (count % sum <= sum / num * 3) {
+		Image = walk3;
 	}
-	else if (count % 60 <= 40) {
-		//Image = P_run_4;
+	else if (count % sum <= sum / num * 4) {
+		Image = walk4;
 	}
-	else if (count % 60 <= 50) {
-		//Image = P_run_5;
+	else if (count % sum <= sum / num * 5) {
+		Image = walk5;
 	}
-	else if (count % 60 <= 60) {
-		//Image = P_run_6;
+	else if (count % sum <= sum / num * 6) {
+		Image = walk4;
+	}
+	else if (count % sum <= sum / num * 7) {
+		Image = walk3;
+	}
+	else if (count % sum <= sum / num * 8) {
+		Image = walk2;
 	}
 	return 0;
 }
@@ -126,30 +159,43 @@ int Princess::UpdataDamage(int count) {
 			SetWalk();
 		}
 	}
-	//if (count % 60 <= 10) {
-	//	//Image = P_run_1;
-	//}
-	//else if (count % 60 <= 20) {
-	//	//Image = P_run_2;
-	//}
-	//else if (count % 60 <= 30) {
-	//	//Image = P_run_3;
-	//}
-	//else if (count % 60 <= 40) {
-	//	//Image = P_run_4;
-	//}
-	//else if (count % 60 <= 50) {
-	//	//Image = P_run_5;
-	//}
-	//else if (count % 60 <= 60) {
-	//	//Image = P_run_6;
-	//}
+	int sum = 40;	//一周のフレーム数
+	int num = 8;	//一周の画像数
+	if (count % sum <= sum / num * 1) {
+		Image = Dwalk1;
+	}
+	else if (count % sum <= sum / num * 2) {
+		Image = Dwalk2;
+	}
+	else if (count % sum <= sum / num * 3) {
+		Image = Dwalk3;
+	}
+	else if (count % sum <= sum / num * 4) {
+		Image = Dwalk4;
+		//Image = PriDecoi;
+	}
+	else if (count % sum <= sum / num * 5) {
+		Image = Dwalk5;
+		//Image = PriDecoi;
+	}
+	else if (count % sum <= sum / num * 6) {
+		Image = Dwalk4;
+		//Image = PriDecoi;
+	}
+	else if (count % sum <= sum / num * 7) {
+		//Image = Dwalk3;
+		Image = PriDecoi;
+	}
+	else if (count % sum <= sum / num * 8) {
+		Image = Dwalk2;
+	}
+	if (count % 3 == 0) Image = PriDecoi;
 	return 0;
 }
 
-int Princess::Updata(int count,int Pstate) {
+int Princess::Updata(int count,int PriJump) {
 	//set
-	if (Pstate == 8 && stateFlag == 0) {
+	if (PriJump == 1 && stateFlag == 0) {
 		SetJump(count);
 	}
 
@@ -169,7 +215,7 @@ int Princess::Updata(int count,int Pstate) {
 		break;
 	}
 
-	week.Set(center, PRI_WIDTH*0.5, PRI_HEIGHT*0.5);
+	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	return 0;
 }
 
@@ -180,7 +226,7 @@ int Princess::GetHP() {
 	return HP;
 }
 Square Princess::GetWeekArea() {
-	return week;
+	return weak;
 }
 
 Dot Princess::GetCenter() {
@@ -194,19 +240,16 @@ int Princess::Draw() {
 		center.Get_x() + PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
 		GREEN, false);
 	DrawBox(
-		week.Get_LU().Get_x(), week.Get_LU().Get_y(),
-		week.Get_RD().Get_x(), week.Get_RD().Get_y(),
+		weak.Get_LU().Get_x(), weak.Get_LU().Get_y(),
+		weak.Get_RD().Get_x(), weak.Get_RD().Get_y(),
 		BLUE, false);
 
 	DrawModiGraph(
-		center.Get_x() - PRI_WIDTH / 2, center.Get_y() - PRI_HEIGHT / 2,
-		center.Get_x() + PRI_WIDTH / 2, center.Get_y() - PRI_HEIGHT / 2,
-		center.Get_x() + PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
-		center.Get_x() - PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
+		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() - PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() + PRI_D_WIDTH / 2, center.Get_y() - PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() + PRI_D_WIDTH / 2, center.Get_y() + PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() + PRI_D_HEIGHT / 2 + PRI_DIFF_H,
 		Image, true);
-
-	DrawBox(40, 40, 1040, 80, BLUE, false);
-	DrawBox(40, 40, 40 + HP * 10, 80, BLUE, true);
 
 	//DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
 

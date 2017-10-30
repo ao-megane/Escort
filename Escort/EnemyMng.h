@@ -10,7 +10,7 @@ public:
 	/*Enemy();
 	~Enemy();*/
 	//int Updata(int count);	//キャラごとに作る
-	int Draw();			//描画
+	//int Draw();			//描画
 	int GetExistFlag();
 	int SetHP(int a);
 	int SetAttackval(int a);
@@ -26,11 +26,12 @@ public:
 	Dot GetCenter();
 	Square GetWeekArea();
 	Square GetAttackArea();
+	void SetExistFlag(int i);
 	//int End();
 
 protected:
 	Dot center;			//中心座標
-	Square weekArea;	//被ダメ範囲
+	Square weakArea;	//被ダメ範囲
 	Square attackArea;	//与ダメ範囲
 	int HP;				//HP
 	int attack;			//現在の攻撃力
@@ -65,10 +66,11 @@ protected:
 //{
 //}
 
+void SlimeMngInitialize();
 class Slime : public Enemy
 {
 public:
-	int Initialize();
+	void Initialize();
 	int Set(int count,int position,int strength); //出現時処理
 	int SetStand(int count);
 	int UpdataStand(int count);
@@ -79,9 +81,11 @@ public:
 	int SetDisapper(int count);
 	int UpdataDisapper(int count);
 	int Updata(int count);
+	int Draw();			//描画
 private:
 };
 
+void BirdMngInitialize();
 class Bird : public Enemy {
 public:
 	int Initialize();
@@ -97,6 +101,7 @@ public:
 	int SetBack(int count);
 	int UpdataBack(int count);
 	int Updata(int count);
+	int Draw();			//描画
 	double birdAttackHigh;
 	double birdAttackWidth;
 };
@@ -106,6 +111,7 @@ int SlimeMngSet(int count,int dirFlag,int level);
 int BirdMngSet(int count,int dirFlag,int level);
 
 int EnemyMngInitialize();			//画像ハンドル周り
+void EnemyMngInitialize(int i);
 int EnemyMngSet(int levelFlag, int count,Dot girl);	//ステージ、時間ごとに配置
 int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
 int EnemyMngJudge(Player* player, Princess* girl,int count);	//判定、state、HP等の更新

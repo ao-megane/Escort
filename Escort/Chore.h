@@ -53,11 +53,15 @@ int PlayBGM();
 
 int DrawOP(int levelFlag);
 
+int DrawPrologue(int b);
+
 int DrawManual();
 
 int DrawCredit();
 
 int DrawPause(int count);
+
+void DrawChore(int count, int HP,int levelFlag);
 
 int SetBack(int stageFlag);
 
