@@ -43,6 +43,14 @@ const double P_D_WIDTH = 3000 / 1000 * P_WIDTH;//500
 const double P_D_HEIGHT = 3000 / 1500 * P_HEIGHT;// 500
 const double P_DIFF_H = (450 + 1500 / 2 - 3000 / 2) * P_D_WIDTH / 3000;//PH*大元の比率
 
+const double PLAYER_JUMP_SUM = 50.0;
+const int PLAYER_JUMP_SUMI = (int)(PLAYER_JUMP_SUM);
+const int PLAYER_JUMP_NUM = 4;
+const double PLAYER_JUMP_HEIGHT = DISP_HEIGHT * 0.3;
+const int SWORD_HEIGHT = 140*1.4;//7:13
+const int SWORD_WIDTH =260*1.4;
+const int STUKSWORD_WIDTH = SWORD_WIDTH * 1.2;//2:3
+const int STUKSWORD_HEIGHT = STUKSWORD_WIDTH * 2 / 3;//2:3
 
 const int PRI_WIDTH = 200;	//プレイヤー自体の幅
 const int PRI_HEIGHT = 300;	//プレイヤー自体の高さ（2:3）
@@ -78,7 +86,8 @@ const int BIRD_WIDTH = 200;	//プレイヤー自体の幅
 const int BIRD_HEIGHT = 300;	//プレイヤー自体の高さ（2:3）
 const double BIRD_W_WIDTH = BIRD_WIDTH * 0.8;
 const double BIRD_W_HEIGHT = BIRD_HEIGHT * 0.8;//被ダメ判定の大きさ
-												 //↑判定系 ↓描画系
+const int BIRD_HIGH = 300;//高度
+//↑判定系 ↓描画系
 const double BIRD_D_WIDTH = 3000 / 1000 * BIRD_WIDTH;//500
 const double BIRD_D_HEIGHT = 3000 / 1500 * BIRD_HEIGHT;// 500
 const double BIRD_DIFF = (450 + 1500 / 2 - 3000 / 2) * BIRD_D_WIDTH / 3000;//PH*大元の比率
@@ -96,5 +105,18 @@ const int BIRD_DISAP_NUM = 1;
 //const int BIRD_BACK_SUM = ;
 const int BIRD_BACK_NUM = 5;
 const int BIRD_BACK_SPEED = 8;
+
+const int NORMAL_COUNT = 3 * 60 * 30;
+
+const int UI_HEIGHT = 389 / 2;
+const int UI_WIDTH = 1701 / 2;
+const int UI_MARGIN_HEIGHT = 20;
+const int UI_MARGIN_WIDTH = DISP_WIDTH / 2 - UI_WIDTH / 2;
+const int UI_ICONBIG = 150;
+
+const int HPBAR_WIDTH = 1000;
+const int HPBAR_HEIGHT = 40;
+const int HPBAR_MARGIN_HEIGHT = 100;
+const int HPBAR_MARGIN_WIDTH = 40;
 
 #endif // !VALUE_H

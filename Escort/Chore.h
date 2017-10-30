@@ -61,6 +61,8 @@ int DrawCredit();
 
 int DrawPause(int count);
 
+void DrawChore(int count, int HP,int levelFlag);
+
 int SetBack(int stageFlag);
 
 int UpdataBack(int count);

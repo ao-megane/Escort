@@ -27,6 +27,11 @@ int PRunW3;
 int PRunW4;
 int PRunW5;
 
+int PJump1;
+int PJump2;
+int PJump3;
+int PJump4;
+
 int PAttacks1;
 int PAttacks2;
 int PAttacks3;
@@ -39,12 +44,8 @@ int PAttackl1;
 int PAttackl2;
 int PAttackl3;
 
-int backArm;
-int backLeg;
-int body;
-int frontArm;
-int frontLeg;
-int head;
+int FlyingSword;
+int StuckingSword;
 
 int Attack_w;
 int Attack_s;
@@ -77,6 +78,11 @@ void Player::Initialize() {
 	PRunW4 = LoadGraph("images/Player/runsword/Resize/4.png");
 	PRunW5 = LoadGraph("images/Player/runsword/Resize/5.png");
 
+	PJump1 = LoadGraph("images/Player/Jump/Resize/1.png");
+	PJump2 = LoadGraph("images/Player/Jump/Resize/2.png");
+	PJump3 = LoadGraph("images/Player/Jump/Resize/3.png");
+	PJump4 = LoadGraph("images/Player/Jump/Resize/4.png");
+
 	PAttacks1 = LoadGraph("images/Player/Attack_s/Resize/1.png");
 	PAttacks2 = LoadGraph("images/Player/Attack_s/Resize/2.png");
 	PAttacks3 = LoadGraph("images/Player/Attack_s/Resize/3.png");
@@ -85,9 +91,12 @@ void Player::Initialize() {
 	PAttackw2 = LoadGraph("images/Player/Attack_w/Resize/2.png");
 	PAttackw3 = LoadGraph("images/Player/Attack_w/Resize/3.png");
 
-	PAttackl1 = LoadGraph("images/Player/Attack_l/Resize/1.png");
-	PAttackl2 = LoadGraph("images/Player/Attack_l/Resize/2.png");
-	PAttackl3 = LoadGraph("images/Player/Attack_l/Resize/3.png");
+	PAttackl1 = LoadGraph("images/Player/attack_l/Resize/1.png");
+	PAttackl2 = LoadGraph("images/Player/attack_l/Resize/2.png");
+	PAttackl3 = LoadGraph("images/Player/attack_l/Resize/3.png");
+
+	FlyingSword = LoadGraph("images/Player/attack_l/Resize/sword.png");
+	StuckingSword = LoadGraph("images/Player/attack_l/Resize/sworddrop.png");;
 
 	Attack_s = LoadSoundMem("music/knife2.wav");
 	Attack_l = LoadSoundMem("music/knife.wav");
@@ -282,33 +291,46 @@ void Player::SetJump() {
 	PlayJump();
 }
 void Player::UpdataJump(int count,int flag) {
-	double height = DISP_HEIGHT * 0.3;//jumpの高さ
-	double sum = 50.0;	//モーションにかかるフレーム数
-	int num = 5;		//絵の枚数
-	double a =  -sin((count / sum)*PI) * height;//ほしい山
-	if (a > 0) a *= -1;
+	//double height = DISP_HEIGHT * 0.3;//jumpの高さ
+	//double sum = 50.0;	//モーションにかかるフレーム数
+	//int num = 5;		//絵の枚数
+	//double a =  -sin((count / PLAYER_JUMP_SUM)*PI) * height;//ほしい山
+	//if (a > 0) a *= -1;
 	switch (flag)
 	{
 	case 0://右ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED + 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED + 2*2, -sin((count / PLAYER_JUMP_SUM)*PI) * PLAYER_JUMP_HEIGHT + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 1://右歩き
-		center.Set((center.Get_x()) - GROUND_SPEED + 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED + 1*2, -sin((count / PLAYER_JUMP_SUM)*PI) * PLAYER_JUMP_HEIGHT + GROUND_HEIGHT - P_HEIGHT / 2);
 		break; 
 	case 2://左ダッシュ
-		center.Set((center.Get_x()) - GROUND_SPEED - 2*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED - 2*2, -sin((count / PLAYER_JUMP_SUM)*PI) * PLAYER_JUMP_HEIGHT + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 3://左歩き
-		center.Set((center.Get_x()) - GROUND_SPEED - 1*2, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED - 1*2, -sin((count / PLAYER_JUMP_SUM)*PI) * PLAYER_JUMP_HEIGHT + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	case 4://立ち
-		center.Set((center.Get_x()) - GROUND_SPEED + 0, a + GROUND_HEIGHT - P_HEIGHT / 2);
+		center.Set((center.Get_x()) - GROUND_SPEED + 0, -sin((count / PLAYER_JUMP_SUM)*PI) * PLAYER_JUMP_HEIGHT + GROUND_HEIGHT - P_HEIGHT / 2);
 		break;
 	default:
 		break;
 	}
+
+	if (count % PLAYER_JUMP_SUMI <= PLAYER_JUMP_SUMI / PLAYER_JUMP_NUM * 1) {
+		Image = PJump1;
+	}
+	else if (count % PLAYER_JUMP_SUMI <= PLAYER_JUMP_SUMI / PLAYER_JUMP_NUM * 2) {
+		Image = PJump2;
+	}
+	else if (count % PLAYER_JUMP_SUMI <= PLAYER_JUMP_SUMI / PLAYER_JUMP_NUM * 3) {
+		Image = PJump3;
+	}
+	else if (count % PLAYER_JUMP_SUMI <= PLAYER_JUMP_SUMI / PLAYER_JUMP_NUM * 4) {
+		Image = PJump4;
+	}
 	
-	if (count >= sum) {
+	if (count >= PLAYER_JUMP_SUM) {
 		stateFlag = 0;
 		acceptFlag = 1;
 		bodyClock = count;
@@ -344,12 +366,12 @@ void Player::SetAttack_w() {
 void Player::UpdataAttack_w(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
-		LU.Set(center.Get_x() - P_WIDTH*0.3, center.Get_y() - P_HEIGHT*0.3);
-		RD.Set(center.Get_x() + P_WIDTH*0.3 * 2, center.Get_y() + P_HEIGHT*0.3 / 2);
+		LU.Set(center.Get_x() - P_WIDTH*2.0/3, center.Get_y() - P_HEIGHT*2.0/2);
+		RD.Set(center.Get_x() + P_WIDTH*1.5, center.Get_y() + P_HEIGHT / 2);
 	}
 	else {
-		LU.Set(center.Get_x() + P_WIDTH*0.3, center.Get_y() - P_HEIGHT*0.3);
-		RD.Set(center.Get_x() - P_WIDTH*0.3 * 2, center.Get_y() + P_HEIGHT*0.3 / 2);
+		LU.Set(center.Get_x() - P_WIDTH*1.5, center.Get_y() - P_HEIGHT*2.0 / 2);
+		RD.Set(center.Get_x() + P_WIDTH*2.0 / 3, center.Get_y() + P_HEIGHT / 2);
 	}
 
 	if (count < 2) {
@@ -397,8 +419,8 @@ void Player::UpdataAttack_s(int count) {
 		RD.Set(center.Get_x() + P_WIDTH *3/2, center.Get_y() + P_HEIGHT / 4);
 	}
 	else {
-		LU.Set(center.Get_x() + P_WIDTH / 2, center.Get_y() - P_HEIGHT/4);
-		RD.Set(center.Get_x() - P_WIDTH *3/2, center.Get_y() + P_HEIGHT / 4);
+		LU.Set(center.Get_x() - P_WIDTH * 3 / 2, center.Get_y() - P_HEIGHT/4);
+		RD.Set(center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 4);
 	}
 
 	if (count < 17) {//待機
@@ -430,32 +452,39 @@ void Player::UpdataAttack_s(int count) {
 		PlayAttack_s();
 }
 
+int dirKeeper;
 void Player::SetAttack_l() {
 	stateFlag = 7;
 	Image = PWalk1;
 	acceptFlag = 0;
 	attack = 0;
-	WeaponFlag == 0 ? WeaponFlag = 1 : WeaponFlag = 0;
+	//WeaponFlag == 0 ? WeaponFlag = 1 : WeaponFlag = 0;
 }
 void Player::UpdataAttack_l(int count) {
 	Dot LU, RD;
 	if (isRightFlag) {
-		LU.Set(center.Get_x() - P_HEIGHT / 2 + (count - 10) * 40, center.Get_y() - P_HEIGHT / 2 );
-		RD.Set(center.Get_x() + P_HEIGHT / 2 + (count - 10) * 40, center.Get_y() + P_HEIGHT / 2 );
+		LU.Set(center.Get_x() - SWORD_WIDTH / 2 + (count - 10) * 40, center.Get_y() - SWORD_HEIGHT / 2 );
+		RD.Set(center.Get_x() + SWORD_WIDTH / 2 + (count - 10) * 40, center.Get_y() + SWORD_HEIGHT / 2 );
 	}
 	else {
-		LU.Set(center.Get_x() - P_HEIGHT / 2 - (count - 10) * 40, center.Get_y() - P_HEIGHT / 2 );
-		RD.Set(center.Get_x() + P_HEIGHT / 2 - (count - 10) * 40, center.Get_y() + P_HEIGHT / 2);
+		LU.Set(center.Get_x() - SWORD_WIDTH / 2 - (count - 10) * 40, center.Get_y() - SWORD_HEIGHT / 2 );
+		RD.Set(center.Get_x() + SWORD_WIDTH / 2 - (count - 10) * 40, center.Get_y() + SWORD_HEIGHT / 2 );
 	}
 
 	if (count < 10) {//待機
 		acceptFlag = 0;
+		attack = 0;
 	}
 	else if (count < 40) {//攻撃
 		attack = 30;
 		attackArea.Set(LU, RD);
+		weapon.Set((LU.Get_x() + RD.Get_x()) / 2, (LU.Get_y() + RD.Get_y()) / 2);
+		WeaponFlag = 0;
+		dirKeeper = isRightFlag;
 	}
 	else if (count < 60) {//余韻
+		
+		weapon.Set(weapon.Get_x(), GROUND_HEIGHT - SWORD_HEIGHT / 2);
 		attack = 0;
 	}
 	else if (count >= 60) {//モーション終わり
@@ -470,65 +499,92 @@ void Player::UpdataAttack_l(int count) {
 			//printfDx("SETSTAND!\n");
 		}
 	}
+	if (count < 7) Image = PAttackl1;
+	else if (count < 9) Image = PAttackl2;
+	else if (count < 10) Image = PAttackl3;
+	else if (count < 60) Image = PWalk1;
 
 	if (count == 10)
 		PlayAttack_l();
 }
-
+Square Splayer;
+Square Sweapon;
 void Player::Updata(int count,int Key[]) {
 	int flag = 4;//空中制御用フラグ
+	if (WeaponFlag == 0 && attack == 0) {
+		weapon.Set(weapon.Get_x() - GROUND_SPEED, weapon.Get_y());
+		Splayer.Set(center, P_WIDTH, P_HEIGHT);
+		Sweapon.Set(weapon, STUKSWORD_WIDTH, STUKSWORD_HEIGHT);
+		if (Splayer & Sweapon) {
+			//printfDx("PICK!");
+			WeaponFlag = 1;
+		}
+	}
+
+	if (X) {//姫ジャンプ
+		/*if (stateFlag == 4) {
+		IsJumping = bodyClock + 15;
+		}
+		else {
+		IsJumping = 0;
+		}
+		if (stateFlag != 8)
+		bodyClock = count;
+		SetPriJump();*/
+		PriJump = 1;
+	}
+	else {
+		PriJump = 0;
+	}
+	
 	if (acceptFlag) {//入力受付時の処理
 		//だぶりありみたいなのはupdataでやるのが無難か
 		if (A) {//遠距離攻撃
-			if (stateFlag == 4) {
-				IsJumping = bodyClock + 60;
+			if (WeaponFlag == 1) {
+				if (stateFlag == 4) {
+					IsJumping = bodyClock + 60;
+				}
+				else {
+					IsJumping = 0;
+				}
+				if (stateFlag != 7)
+					bodyClock = count;
+				SetAttack_l();
 			}
-			else {
-				IsJumping = 0;
-			}
-			if (stateFlag != 7)
-				bodyClock = count;
-			SetAttack_l();
 		}
 		else if (B == 1) {//低威力広範囲攻撃
-			if (stateFlag == 4) {
-				IsJumping = bodyClock + 17;
+			if (WeaponFlag == 1) {
+				if (stateFlag == 4) {
+					IsJumping = bodyClock + 17;
+				}
+				else {
+					IsJumping = 0;
+				}
+				if (stateFlag != 6)
+					bodyClock = count;
+				SetAttack_w();
 			}
-			else {
-				IsJumping = 0;
-			}
-			if (stateFlag != 6)
-				bodyClock = count;
-			SetAttack_w();
 		}
 		else if (Y) {//高威力小範囲攻撃
-			if (stateFlag == 4) {
-				IsJumping = bodyClock + 40;
+			if (WeaponFlag == 1) {
+				if (stateFlag == 4) {
+					IsJumping = bodyClock + 40;
+				}
+				else {
+					IsJumping = 0;
+				}
+				if (stateFlag != 5)
+					bodyClock = count;
+				SetAttack_s();
 			}
-			else {
-				IsJumping = 0;
-			}
-			if (stateFlag != 5)
-				bodyClock = count;
-			SetAttack_s();
-		}
-		else if (X) {//姫ジャンプ
-			if (stateFlag == 4) {
-				IsJumping = bodyClock + 15;
-			}
-			else {
-				IsJumping = 0;
-			}
-			if (stateFlag != 8)
-				bodyClock = count;
-			SetPriJump();
 		}
 		else if (abs(THUMB_Y) == 0 && abs(THUMB_X) == 0) {//立ち
 			if (stateFlag != 0 && stateFlag != 4)bodyClock = count;
 			flag = 4;
 			if (stateFlag != 4)//ジャンプ中でなければ
 				SetStand();
-		} else {//攻撃はなくて移動なら
+		}
+		else {//攻撃はなくて移動なら
 			if (THUMB_Y <= -80) {//ジャンプ
 				if (stateFlag != 4) {
 					bodyClock = count;
@@ -543,7 +599,7 @@ void Player::Updata(int count,int Key[]) {
 			//}
 			if (THUMB_X >= 80) {//右ダッシュ
 				if (stateFlag != 2 && stateFlag != 4) {
-					bodyClock = count; 
+					bodyClock = count;
 					SetDash();
 				}
 				flag = 0;
@@ -584,6 +640,7 @@ void Player::Updata(int count,int Key[]) {
 		}
 	}
 
+	//printfDx("INN!!!!!");
 	switch (stateFlag)
 	{
 	case 0:
@@ -666,8 +723,41 @@ int Player::Draw() {
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
 			RED, false);
 
-	//DrawFormatString(0, 0, RED, "P_state : %2d ,accept : %2d,bodyClock : %5d,center.y : %5d",stateFlag,acceptFlag,bodyClock,center.Get_y());
+	if (WeaponFlag == 0) {//武器を手放していたら剣を描画
+		if(weapon.Get_y() >= GROUND_HEIGHT - SWORD_HEIGHT / 2)//刺さってるなら
+			if(dirKeeper)
+				DrawModiGraph(
+					weapon.Get_x() - STUKSWORD_WIDTH / 2, weapon.Get_y() - STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + STUKSWORD_WIDTH / 2, weapon.Get_y() - STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + STUKSWORD_WIDTH / 2, weapon.Get_y() + STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - STUKSWORD_WIDTH / 2, weapon.Get_y() + STUKSWORD_HEIGHT / 2 + 0,
+					StuckingSword, true);
+			else
+				DrawModiGraph(
+					weapon.Get_x() + STUKSWORD_WIDTH / 2, weapon.Get_y() - STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - STUKSWORD_WIDTH / 2, weapon.Get_y() - STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - STUKSWORD_WIDTH / 2, weapon.Get_y() + STUKSWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + STUKSWORD_WIDTH / 2, weapon.Get_y() + STUKSWORD_HEIGHT / 2 + 0,
+					StuckingSword, true);
+		else
+			if (dirKeeper)
+				DrawModiGraph(
+					weapon.Get_x() - SWORD_WIDTH / 2, weapon.Get_y() - SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + SWORD_WIDTH / 2, weapon.Get_y() - SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + SWORD_WIDTH / 2, weapon.Get_y() + SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - SWORD_WIDTH / 2, weapon.Get_y() + SWORD_HEIGHT / 2 + 0,
+					FlyingSword, true);
+			else
+				DrawModiGraph(
+					weapon.Get_x() + SWORD_WIDTH / 2, weapon.Get_y() - SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - SWORD_WIDTH / 2, weapon.Get_y() - SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() - SWORD_WIDTH / 2, weapon.Get_y() + SWORD_HEIGHT / 2 + 0,
+					weapon.Get_x() + SWORD_WIDTH / 2, weapon.Get_y() + SWORD_HEIGHT / 2 + 0,
+					FlyingSword, true);
+	}
 
+	//DrawFormatString(0, 0, RED, "P_state : %2d ,accept : %2d,bodyClock : %5d,center.y : %5d",stateFlag,acceptFlag,bodyClock,center.Get_y());
+	//DrawFormatString(0, 0, RED, "P_state:%d,weaponFlag:%d,accept:%d", stateFlag, WeaponFlag,acceptFlag);
 	
 
 	return 0;

@@ -36,8 +36,10 @@ public:/*
 	int GetStateFlag();
 	int WeaponFlag;
 	Square GetAttackArea();
+	Dot weapon;
 	int GetAttack();
 	int Draw();
+	int PriJump;
 	//int height;			//•`‰æ‚ÌƒvƒŒƒCƒ„[©‘Ì‚Ì‚‚³ P_REAL_HEIGHT*P_RATIO
 	//int width;
 	int End();

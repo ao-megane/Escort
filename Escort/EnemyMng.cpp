@@ -83,6 +83,7 @@ int Enemy::PlayDamage() {
 	return 0;
 }
 
+int Decoi;
 
 int WeakSlimeStand1;
 int WeakSlimeStand2;
@@ -90,6 +91,20 @@ int WeakSlimeStand3;
 int WeakSlimeJump1;
 int WeakSlimeJump2;
 int WeakSlimeJump3;
+
+int MiddleSlimeStand1;
+int MiddleSlimeStand2;
+int MiddleSlimeStand3;
+int MiddleSlimeJump1;
+int MiddleSlimeJump2;
+int MiddleSlimeJump3;
+
+int ToughSlimeStand1;
+int ToughSlimeStand2;
+int ToughSlimeStand3;
+int ToughSlimeJump1;
+int ToughSlimeJump2;
+int ToughSlimeJump3;
 
 Slime slime[10];
 void SlimeMngInitialize() {
@@ -99,6 +114,20 @@ void SlimeMngInitialize() {
 	WeakSlimeJump1 = LoadGraph("images/Slime/weak/jump/1.png");
 	WeakSlimeJump2 = LoadGraph("images/Slime/weak/jump/2.png");
 	WeakSlimeJump3 = LoadGraph("images/Slime/weak/jump/3.png");
+
+	MiddleSlimeStand1 = LoadGraph("images/Slime/middle/stand/1.png");
+	MiddleSlimeStand2 = LoadGraph("images/Slime/middle/stand/2.png");
+	MiddleSlimeStand3 = LoadGraph("images/Slime/middle/stand/3.png");
+	MiddleSlimeJump1 = LoadGraph("images/Slime/middle/jump/1.png");
+	MiddleSlimeJump2 = LoadGraph("images/Slime/middle/jump/2.png");
+	MiddleSlimeJump3 = LoadGraph("images/Slime/middle/jump/3.png");
+
+	ToughSlimeStand1 = LoadGraph("images/Slime/tough/stand/1.png");
+	ToughSlimeStand2 = LoadGraph("images/Slime/tough/stand/2.png");
+	ToughSlimeStand3 = LoadGraph("images/Slime/tough/stand/3.png");
+	ToughSlimeJump1 = LoadGraph("images/Slime/tough/jump/1.png");
+	ToughSlimeJump2 = LoadGraph("images/Slime/tough/jump/2.png");
+	ToughSlimeJump3 = LoadGraph("images/Slime/tough/jump/3.png");
 
 	EDamage = LoadSoundMem("music/damage.wav");
 
@@ -121,7 +150,12 @@ int Slime::Set(int count,int isright,int level) {
 	SetAttackval(20 * (strength + 1));*/
 	SetHP(20);
 	SetAttackval(20);
-	Image = WeakSlimeStand1;
+	if (strength == 0)
+		Image = WeakSlimeStand1;
+	else if (strength == 1)
+		Image = MiddleSlimeStand1;
+	else if (strength == 2)
+		Image = ToughSlimeStand1;
 	bodyClock = count;
 	startClock = count;
 	existFlag = 1;
@@ -146,17 +180,47 @@ int Slime::UpdataStand(int count) {
 	center.Set(center.Get_x() - GROUND_SPEED + SLIME_STAND_SPEED * ((dirFlag == 1 ? 1 : -1)), center.Get_y());
 	//int sum = 40;	//àÍé¸ÇÃÉtÉåÅ[ÉÄêî
 	//int num = 4;	//àÍé¸ÇÃâÊëúêî
-	if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 1) {
-		Image = WeakSlimeStand1;
+	if (strength == 0) {
+		if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 1) {
+			Image = WeakSlimeStand1;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 2) {
+			Image = WeakSlimeStand2;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 3) {
+			Image = WeakSlimeStand3;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_NUM) {
+			Image = WeakSlimeStand2;
+		}
 	}
-	else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 2) {
-		Image = WeakSlimeStand2;
+	else if (strength == 1) {
+		if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 1) {
+			Image = MiddleSlimeStand1;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 2) {
+			Image = MiddleSlimeStand2;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 3) {
+			Image = MiddleSlimeStand3;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_NUM) {
+			Image = MiddleSlimeStand2;
+		}
 	}
-	else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 3) {
-		Image = WeakSlimeStand3;
-	}
-	else if (count % SLIME_STAND_SUM <= SLIME_STAND_NUM) {
-		Image = WeakSlimeStand2;
+	else if (strength == 2) {
+		if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 1) {
+			Image = ToughSlimeStand1;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 2) {
+			Image = ToughSlimeStand2;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_SUM / SLIME_STAND_NUM * 3) {
+			Image = ToughSlimeStand3;
+		}
+		else if (count % SLIME_STAND_SUM <= SLIME_STAND_NUM) {
+			Image = ToughSlimeStand2;
+		}
 	}
 	return 0;
 }
@@ -174,9 +238,21 @@ int Slime::UpdataJump(int count) {
 	double a = -sin((count / SLIME_JUMP_SUM)*PI) * SLIME_JUMP_HIGH;//ÇŸÇµÇ¢éR
 	center.Set((center.Get_x()) - GROUND_SPEED + SLIME_JUMP_SPEED * ((dirFlag == 1 ? 1 : -1)), a + GROUND_HEIGHT - height / 2);
 
-	if (count < 40 / 4 * 1) Image = WeakSlimeJump1;
-	else if (count < 40 / 4 * 2) Image = WeakSlimeJump2;
-	else if (count < 40 / 4 * 4) Image = WeakSlimeJump3;
+	if (strength == 0) {
+		if (count < 40 / 4 * 1) Image = WeakSlimeJump1;
+		else if (count < 40 / 4 * 2) Image = WeakSlimeJump2;
+		else if (count < 40 / 4 * 4) Image = WeakSlimeJump3;
+	}
+	else if (strength == 1) {
+		if (count < 40 / 4 * 1) Image = MiddleSlimeJump1;
+		else if (count < 40 / 4 * 2) Image = MiddleSlimeJump2;
+		else if (count < 40 / 4 * 4) Image = MiddleSlimeJump3;
+	}
+	else if (strength == 2) {
+		if (count < 40 / 4 * 1) Image = ToughSlimeJump1;
+		else if (count < 40 / 4 * 2) Image = ToughSlimeJump2;
+		else if (count < 40 / 4 * 4) Image = ToughSlimeJump3;
+	}
 
 	if (count >= SLIME_JUMP_SUM) {
 		stateFlag = 0;
@@ -224,6 +300,20 @@ int Slime::UpdataDisapper(int count) {
 	else if (count % sum <= sum) {
 	Image = P_walk_2;
 	}*/
+
+	if (count % 3 == 0) Image = Decoi;
+	else {
+		if (strength == 0) {
+			Image = WeakSlimeStand1;
+		}
+		else if (strength == 1) {
+			Image = MiddleSlimeStand1;
+		}
+		else if (strength == 2) {
+			Image = ToughSlimeStand1;
+		}
+	}
+
 	if (count >= SLIME_DISAP_SUM) {
 		existFlag = 0;
 	}
@@ -306,6 +396,19 @@ int WeakBirdStand1;
 int WeakBirdStand2;
 int WeakBirdStand3;
 int WeakBirdAttack1;
+int WeakBirdRunaway1;
+
+int MiddleBirdStand1;
+int MiddleBirdStand2;
+int MiddleBirdStand3;
+int MiddleBirdAttack1;
+int MiddleBirdRunaway1;
+
+int ToughBirdStand1;
+int ToughBirdStand2;
+int ToughBirdStand3;
+int ToughBirdAttack1;
+int ToughBirdRunaway1;
 
 
 Bird bird[10];
@@ -315,6 +418,20 @@ void BirdMngInitialize() {
 	WeakBirdStand2 = LoadGraph("images/Bird/weak/stand/2.png");
 	WeakBirdStand3 = LoadGraph("images/Bird/weak/stand/3.png");
 	WeakBirdAttack1 = LoadGraph("images/Bird/weak/attack/1.png");
+	WeakBirdRunaway1 = LoadGraph("images/Bird/weak/runaway/1.png");
+
+	MiddleBirdStand1 = LoadGraph("images/Bird/middle/stand/1.png");
+	MiddleBirdStand2 = LoadGraph("images/Bird/middle/stand/2.png");
+	MiddleBirdStand3 = LoadGraph("images/Bird/middle/stand/3.png");
+	MiddleBirdAttack1 = LoadGraph("images/Bird/middle/attack/1.png");
+	MiddleBirdRunaway1 = LoadGraph("images/Bird/middle/runaway/1.png");
+
+	ToughBirdStand1 = LoadGraph("images/Bird/tough/stand/1.png");
+	ToughBirdStand2 = LoadGraph("images/Bird/tough/stand/2.png");
+	ToughBirdStand3 = LoadGraph("images/Bird/tough/stand/3.png");
+	ToughBirdAttack1 = LoadGraph("images/Bird/tough/attack/1.png");
+	ToughBirdRunaway1 = LoadGraph("images/Bird/tough/runaway/1.png");
+
 	EDamage = LoadSoundMem("music/damage.wav");
 	for (int i = 0; i < 10; i++) {
 		bird[i].Initialize();
@@ -341,7 +458,12 @@ int Bird::Set(int count,int isright,int level) {
 	}
 	weekArea.Set(center, width * 0.8, height * 0.8);
 	attackArea.Set(center, width * 0.7, height * 0.7);
-	Image = WeakBirdStand1;
+	if(strength == 0)
+		Image = WeakBirdStand1;
+	else if (strength == 1)
+		Image = MiddleBirdStand1;
+	if (strength == 2)
+		Image = ToughBirdStand1;
 	bodyClock = count;
 	startClock = count;
 	existFlag = 1;
@@ -363,18 +485,48 @@ int Bird::UpdataStand(int count) {
 	//int speed = 2 * ((dirFlag == 0 ? -1 : 1));
 	//double high = 10.0;
 	//double a = -sin(2 * PI * count / 30 * 1) * high;
-	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED*(dirFlag == 0 ? -1 : 1), 300 + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
-	if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 1) {
-	Image = WeakBirdStand1;
+	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED*(dirFlag == 0 ? -1 : 1), BIRD_HIGH + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
+	if (strength == 0) {
+		if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 1) {
+			Image = WeakBirdStand1;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 2) {
+			Image = WeakBirdStand2;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 3) {
+			Image = WeakBirdStand3;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM) {
+			Image = WeakBirdStand2;
+		}
 	}
-	else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 2) {
-	Image = WeakBirdStand2;
+	else if (strength == 1) {
+		if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 1) {
+			Image = MiddleBirdStand1;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 2) {
+			Image = MiddleBirdStand2;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 3) {
+			Image = MiddleBirdStand3;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM) {
+			Image = MiddleBirdStand2;
+		}
 	}
-	else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 3) {
-	Image = WeakBirdStand3;
-	}
-	else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM) {
-		Image = WeakBirdStand2;
+	else if (strength == 2) {
+		if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 1) {
+			Image = ToughBirdStand1;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 2) {
+			Image = ToughBirdStand2;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 3) {
+			Image = ToughBirdStand3;
+		}
+		else if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM) {
+			Image = ToughBirdStand2;
+		}
 	}
 
 	return 0;
@@ -434,8 +586,12 @@ int Bird::UpdataAttack(int count) {
 			SetStand(count);
 		}
 	}
-	if (count <= BIRD_ATTACK_PRE + BIRD_ATTACK_SUM)
-		Image = WeakBirdAttack1;
+	if (count <= BIRD_ATTACK_PRE + BIRD_ATTACK_SUM) {
+		if (strength == 0)Image = WeakBirdAttack1;
+		else if (strength == 1)Image = MiddleBirdAttack1;
+		else if (strength == 2)Image = ToughBirdAttack1;
+	}
+		
 	return 0;
 }
 int Bird::SetDamage(int count, int damage) {
@@ -512,6 +668,12 @@ int Bird::UpdataBack(int count) {
 	if (center.Get_y() <300 ) {
 		SetStand(count);
 	}
+	if (strength == 0)
+		Image = WeakBirdRunaway1;
+	else if (strength == 1)
+		Image = MiddleBirdRunaway1;
+	else if (strength == 2)
+		Image = ToughBirdRunaway1;
 	return 0;
 }
 int Bird::Updata(int count) {
@@ -610,6 +772,7 @@ int BirdMngSet(int count, int dirFlag, int level) {
 }
 
 int EnemyMngInitialize() {
+	Decoi = LoadGraph("images/docoi.png");
 	SlimeMngInitialize();
 	BirdMngInitialize();
 	return 0;
@@ -718,7 +881,7 @@ int EnemyMngDraw() {
 		}
 		if (bird[i].GetExistFlag() && bird[i].GetStrength() == 0) bird[i].Draw();
 	}
-	DrawFormatString(0, 280, RED, "SLIMEHP : %d,state : %d;position : %d,exist:%d,strength:%d", slime[0].GetHP(),slime[0].GetStateFlag(),slime[0].GetCenter().Get_x(),slime[0].GetExistFlag(),slime[0].GetStrength());
+	//DrawFormatString(0, 280, RED, "SLIMEHP : %d,state : %d;position : %d,exist:%d,strength:%d", slime[0].GetHP(),slime[0].GetStateFlag(),slime[0].GetCenter().Get_x(),slime[0].GetExistFlag(),slime[0].GetStrength());
 	//DrawFormatString(0, 280, RED, "BIRDHP : %d,state : %d,attack : %d", bird[0].GetHP(), bird[0].GetStateFlag(),bird[0].GetAttack());
 	return 0;
 }

@@ -143,6 +143,8 @@ int Prologue2;
 int Prologue3;
 int Prologue4;
 int ProBack;
+int UIBack;
+int UIIcon;
 
 int Keeper;	//透過用カウントキーパー
 int flag;	//現状態フラグ 0 normal 1 ending 2 bord
@@ -174,6 +176,9 @@ int SystemInitialize() {
 	Prologue3 = LoadGraph("images/Prologue/3.png");
 	Prologue4 = LoadGraph("images/Prologue/4.png");
 	ProBack = LoadGraph("images/Prologue/back.png");
+
+	UIBack = LoadGraph("images/Back/map.png");
+	UIIcon = LoadGraph("images/Back/Icon.png");
 
 	BGM = LoadSoundMem("music/opening2.wav");
 	Choice = LoadSoundMem("music/choice3.wav");
@@ -279,6 +284,22 @@ int DrawManual() {
 int DrawCredit() {
 	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
 	return 0;
+}
+
+void DrawChore(int count, int HP,int levelFlag) {
+	DrawModiGraph(
+		0 + UI_MARGIN_WIDTH, 0 + UI_MARGIN_HEIGHT,
+		UI_WIDTH + UI_MARGIN_WIDTH, 0 + UI_MARGIN_HEIGHT,
+		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
+		0 + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
+	DrawModiGraph(
+		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
+		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH + UI_ICONBIG, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
+		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH + UI_ICONBIG, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2,
+		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2, UIIcon, true);
+
+	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH+HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, false);
+	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HP/1000 * HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, true);
 }
 
 int SetBack(int stage) {
