@@ -26,11 +26,12 @@ public:
 	Dot GetCenter();
 	Square GetWeekArea();
 	Square GetAttackArea();
+	void SetExistFlag(int i);
 	//int End();
 
 protected:
 	Dot center;			//中心座標
-	Square weekArea;	//被ダメ範囲
+	Square weakArea;	//被ダメ範囲
 	Square attackArea;	//与ダメ範囲
 	int HP;				//HP
 	int attack;			//現在の攻撃力
@@ -110,6 +111,7 @@ int SlimeMngSet(int count,int dirFlag,int level);
 int BirdMngSet(int count,int dirFlag,int level);
 
 int EnemyMngInitialize();			//画像ハンドル周り
+void EnemyMngInitialize(int i);
 int EnemyMngSet(int levelFlag, int count,Dot girl);	//ステージ、時間ごとに配置
 int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
 int EnemyMngJudge(Player* player, Princess* girl,int count);	//判定、state、HP等の更新

@@ -60,7 +60,7 @@ int Princess::PlayJump() {
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
 	center.Set(DISP_WIDTH * 0.3, GROUND_HEIGHT - PRI_HEIGHT / 2);
-	week.Set(center, PRI_WIDTH * 0.5, PRI_HEIGHT * 0.5);
+	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	Image = walk1;
 	stateFlag = 0;
 	HP = 1000; 
@@ -215,7 +215,7 @@ int Princess::Updata(int count,int PriJump) {
 		break;
 	}
 
-	week.Set(center, PRI_WIDTH*0.5, PRI_HEIGHT*0.5);
+	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	return 0;
 }
 
@@ -226,7 +226,7 @@ int Princess::GetHP() {
 	return HP;
 }
 Square Princess::GetWeekArea() {
-	return week;
+	return weak;
 }
 
 Dot Princess::GetCenter() {
@@ -240,15 +240,15 @@ int Princess::Draw() {
 		center.Get_x() + PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
 		GREEN, false);
 	DrawBox(
-		week.Get_LU().Get_x(), week.Get_LU().Get_y(),
-		week.Get_RD().Get_x(), week.Get_RD().Get_y(),
+		weak.Get_LU().Get_x(), weak.Get_LU().Get_y(),
+		weak.Get_RD().Get_x(), weak.Get_RD().Get_y(),
 		BLUE, false);
 
 	DrawModiGraph(
-		center.Get_x() - PRI_WIDTH / 2, center.Get_y() - PRI_HEIGHT / 2,
-		center.Get_x() + PRI_WIDTH / 2, center.Get_y() - PRI_HEIGHT / 2,
-		center.Get_x() + PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
-		center.Get_x() - PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
+		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() - PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() + PRI_D_WIDTH / 2, center.Get_y() - PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() + PRI_D_WIDTH / 2, center.Get_y() + PRI_D_HEIGHT / 2 + PRI_DIFF_H,
+		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() + PRI_D_HEIGHT / 2 + PRI_DIFF_H,
 		Image, true);
 
 	//DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);

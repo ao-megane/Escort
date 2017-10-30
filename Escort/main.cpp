@@ -92,7 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			count = 0;
 			player.Set(levelFlag);
 			girl.Set(levelFlag);
-			EnemyMngInitialize();
+			EnemyMngInitialize(1);
 			ChoreSet(levelFlag);
 			flag = 8;
 			break;

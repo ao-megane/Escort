@@ -299,7 +299,7 @@ void DrawChore(int count, int HP,int levelFlag) {
 		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2, UIIcon, true);
 
 	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH+HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, false);
-	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HP/1000 * HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, true);
+	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HP/1000.0 * HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, true);
 }
 
 int SetBack(int stage) {
@@ -416,12 +416,12 @@ int WinnerUpdata(int count) {
 		DISP_WIDTH - (count - Keeper) * 4, 700 + 300,
 		Credit, true);
 	DrawModiGraph(
-		DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-		DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
-		DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
-		DISP_WIDTH * 3 / 2 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+		DISP_WIDTH - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH + 750 - (count - Keeper) * 4, GROUND_HEIGHT - 125,
+		DISP_WIDTH + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
+		DISP_WIDTH - (count - Keeper) * 4, GROUND_HEIGHT + 125,
 		Flower, true);
-	if ((DISP_WIDTH * 3 / 2 + 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
+	if ((DISP_WIDTH - 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
 		Keeper2 = count;
 		flag = 2;
 		return 1;

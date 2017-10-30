@@ -38,7 +38,7 @@ private:
 	2 Jump
 	*/
 	Dot center;
-	Square week;
+	Square weak;
 };
 //
 //Princess::Princess()

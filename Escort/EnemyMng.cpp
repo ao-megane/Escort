@@ -10,8 +10,8 @@ int EDamage;
 //		center.Get_x() + width / 2, center.Get_y() + height / 2,
 //		GREEN, false);
 //	DrawBox(
-//		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
-//		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+//		weakArea.Get_LU().Get_x(), weakArea.Get_LU().Get_y(),
+//		weakArea.Get_RD().Get_x(), weakArea.Get_RD().Get_y(),
 //		BLUE, false);
 //	DrawBox(
 //		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
@@ -45,6 +45,9 @@ int Enemy::SetAttackval(int a) {
 	attack = a;
 	return 0;
 }
+void Enemy::SetExistFlag(int a) {
+	existFlag = a;
+}
 int Enemy::GetHP() {
 	return HP;
 }
@@ -73,7 +76,7 @@ Dot Enemy::GetCenter() {
 	return center;
 }
 Square Enemy::GetWeekArea() {
-	return weekArea;
+	return weakArea;
 }
 Square Enemy::GetAttackArea() {
 	return attackArea;
@@ -142,9 +145,9 @@ void Slime::Initialize() {
 }
 int Slime::Set(int count,int isright,int level) {
 	strength = level;
-	width = SLIME_WIDTH * (strength * 2 + 1);
-	height = SLIME_HEIGHT * (strength * 2 + 1);
-	weekArea.Set(center, width, height);
+	width = SLIME_WIDTH * (strength * 0.5 + 1);
+	height = SLIME_HEIGHT * (strength * 0.5 + 1);
+	weakArea.Set(center, width, height);
 	attackArea.Set(center, width, height);
 	/*SetHP(20 * (strength + 1));
 	SetAttackval(20 * (strength + 1));*/
@@ -354,7 +357,7 @@ int Slime::Updata(int count) {
 		break;
 	}
 
-	weekArea.Set(center, width*0.8, height*0.8);
+	weakArea.Set(center, width*0.8, height*0.8);
 	attackArea.Set(center, width*0.7, height*0.7);
 	return 0;
 }
@@ -365,8 +368,8 @@ int Slime::Draw() {
 		center.Get_x() + width / 2, center.Get_y() + height / 2,
 		GREEN, false);
 	DrawBox(
-		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
-		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+		weakArea.Get_LU().Get_x(), weakArea.Get_LU().Get_y(),
+		weakArea.Get_RD().Get_x(), weakArea.Get_RD().Get_y(),
 		BLUE, false);
 	DrawBox(
 		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
@@ -375,17 +378,17 @@ int Slime::Draw() {
 
 	if (dirFlag)
 		DrawModiGraph(
-			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
-			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
-			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
-			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			center.Get_x() - width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() - height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() + width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() - height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() + width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() + height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() - width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() + height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
 			Image, true);
 	else
 		DrawModiGraph(
-			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
-			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() - height / 2 + SLIME_DIFF_W,
-			center.Get_x() - width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
-			center.Get_x() + width / 2 + SLIME_DIFF_H, center.Get_y() + height / 2 + SLIME_DIFF_W,
+			center.Get_x() + width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() - height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() - width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() - height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() - width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() + height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
+			center.Get_x() + width / 2 + SLIME_DIFF_H* (strength * 0.5 + 1), center.Get_y() + height / 2 + SLIME_DIFF_W* (strength * 0.5 + 1),
 			Image, true);
 	return 0;
 }
@@ -446,17 +449,17 @@ int Bird::Initialize() {
 }
 int Bird::Set(int count,int isright,int level) {
 	strength = level;
-	width = BIRD_WIDTH*(strength + 1);
-	height = BIRD_HEIGHT*(strength + 1);
+	width = BIRD_WIDTH*(strength*0.5 + 1);
+	height = BIRD_HEIGHT*(strength*0.5 + 1);
 	if (!isright) {
-		center.Set(0 - width / 2, 300 + height / 2);
+		center.Set(0 - width / 2, BIRD_HIGH + height / 2);
 		dirFlag = 0;
 	}
 	else {
-		center.Set(DISP_WIDTH + width / 2, 300 + height / 2);
+		center.Set(DISP_WIDTH + width / 2, BIRD_HIGH + height / 2);
 		dirFlag = 1;
 	}
-	weekArea.Set(center, width * 0.8, height * 0.8);
+	weakArea.Set(center, width * 0.8, height * 0.8);
 	attackArea.Set(center, width * 0.7, height * 0.7);
 	if(strength == 0)
 		Image = WeakBirdStand1;
@@ -560,8 +563,8 @@ int Bird::UpdataAttack(int count) {
 	else {//çUåÇ
 		//double a = -sin(2 * PI * (1) * (count / 30)) * birdAttackHigh;
 		double a = sin(2 * PI*(15.0/BIRD_ATTACK_SUM)*((count-BIRD_ATTACK_PRE) / 30.0)) * birdAttackHigh;
-		center.Set(center.Get_x() - birdAttackWidth / BIRD_ATTACK_SUM, 300 + a);
-		//center.Set(center.Get_x(), 300 + width / 2 + a);
+		center.Set(center.Get_x() - birdAttackWidth / BIRD_ATTACK_SUM, BIRD_HIGH + a);
+		//center.Set(center.Get_x(), BIRD_HIGH + width / 2 + a);
 
 		//if ((count - prepare) % sum <= sum / num * 1) {
 		//	//printfDx("1!!");
@@ -665,7 +668,7 @@ int Bird::UpdataBack(int count) {
 	Image = P_walk_2;
 	}*/
 	//printfDx("DISAPPERUPDATA\n");
-	if (center.Get_y() <300 ) {
+	if (center.Get_y() <BIRD_HIGH ) {
 		SetStand(count);
 	}
 	if (strength == 0)
@@ -713,8 +716,8 @@ int Bird::Updata(int count) {
 		break;
 	}
 
-	//weekArea.Set(center, BIRD_WIDTH*0.8, BIRD_HEIGHT*0.8);
-	weekArea.Set(center, width * 0.8, height * 0.8);
+	//weakArea.Set(center, BIRD_WIDTH*0.8, BIRD_HEIGHT*0.8);
+	weakArea.Set(center, width * 0.8, height * 0.8);
 	attackArea.Set(center, width * 0.7, height * 0.7);
 	return 0;
 }
@@ -724,8 +727,8 @@ int Bird::Draw() {
 		center.Get_x() + width / 2, center.Get_y() + height / 2,
 		GREEN, false);
 	DrawBox(
-		weekArea.Get_LU().Get_x(), weekArea.Get_LU().Get_y(),
-		weekArea.Get_RD().Get_x(), weekArea.Get_RD().Get_y(),
+		weakArea.Get_LU().Get_x(), weakArea.Get_LU().Get_y(),
+		weakArea.Get_RD().Get_x(), weakArea.Get_RD().Get_y(),
 		BLUE, false);
 	DrawBox(
 		attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
@@ -776,6 +779,12 @@ int EnemyMngInitialize() {
 	SlimeMngInitialize();
 	BirdMngInitialize();
 	return 0;
+}
+void EnemyMngInitialize(int i) {
+	for (int i = 0; i < 10; i++) {
+		slime[i].SetExistFlag(0);
+		bird[i].SetExistFlag(0);
+	}
 }
 int EnemyMngSet(int levelFlag, int count, Dot girl) {
 
