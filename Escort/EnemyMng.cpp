@@ -274,11 +274,20 @@ int Slime::SetDamage(int count, int damage) {
 	return 0;
 }
 int Slime::UpdataDamage(int count) {
-	center.Set(center.Get_x() - GROUND_SPEED);
+	center.Set(center.Get_x() - GROUND_SPEED + 5);
 	if (count >= 60) {
 		bodyClock = clockKeeper;
 		clockKeeper = 0;
 		stateFlag = stateKeeper;
+	}
+	if (count % 3 == 0) Image = Decoi;
+	else {
+		if(strength == 0)
+			Image = WeakSlimeStand1;
+		else if (strength ==1)
+			Image = MiddleSlimeStand1;
+		else if (strength == 2)
+			Image = ToughSlimeStand1;
 	}
 	return 0;
 }
@@ -614,6 +623,18 @@ int Bird::UpdataDamage(int count) {
 		clockKeeper = 0;
 		SetBack(count);
 	}
+	if (count % 3 == 0) Image = Decoi;
+	else {
+		if (strength == 0) {
+			Image = WeakBirdStand1;
+		}
+		else if (strength == 1) {
+			Image = MiddleBirdStand1;
+		}
+		else if (strength == 2) {
+			Image = ToughBirdStand1;
+		}
+	}
 	return 0;
 }
 int Bird::SetDisapper(int count) {
@@ -788,24 +809,142 @@ void EnemyMngInitialize(int i) {
 }
 int EnemyMngSet(int levelFlag, int count, Dot girl) {
 
-	switch (count)
-	{
-	case 10:
-		SlimeMngSet(count, 1, 0);
-		SlimeMngSet(count, 1, 1);
-		break;
-	case 100:
-		SlimeMngSet(count, 1, 1);
-		break;
-	case 200:
-		BirdMngSet(count, 1, 0);
-		break;
-	case 450:
-		BirdMngSet(count, 1, 1);
-		break;
-	default:
-		break;
-	}
+	if(levelFlag == 0)//5400
+		switch (count)
+		{
+		case 20:
+			SlimeMngSet(count, 1, 0);
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 100:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 200:
+			BirdMngSet(count, 1, 0);
+			break;
+		case 450:
+			BirdMngSet(count, 1, 1);
+			break;
+		case 550:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 580:
+			SlimeMngSet(count, 1, 0);
+			SlimeMngSet(count, 0, 0);
+			break;
+		case 610:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 760:
+			BirdMngSet(count, 1, 0);
+			BirdMngSet(count, 0, 0);
+			break;
+		case 790:
+			BirdMngSet(count, 1, 0);
+			BirdMngSet(count, 0, 1);
+		case 850:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 1050:
+			SlimeMngSet(count, 0, 1);
+			BirdMngSet(count, 0, 1);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 1200:
+			SlimeMngSet(count, 0, 1);
+			BirdMngSet(count, 0, 1);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 1350:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 1450:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 1550:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 1650:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 1800:
+			SlimeMngSet(count, 1, 2);
+			break;
+		default:
+			break;
+		}
+	else if(levelFlag == 1)
+		switch (count)
+		{
+		case 20:
+			SlimeMngSet(count, 1, 1);
+			SlimeMngSet(count, 1, 2);
+			break;
+		case 100:
+			SlimeMngSet(count, 1, 2);
+			break;
+		case 200:
+			BirdMngSet(count, 1, 1);
+			break;
+		case 450:
+			BirdMngSet(count, 1, 2);
+			break;
+		case 550:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 580:
+			SlimeMngSet(count, 1, 1);
+			SlimeMngSet(count, 0, 1);
+			break;
+		case 610:
+			SlimeMngSet(count, 1, 2);
+			break;
+		case 760:
+			BirdMngSet(count, 1, 1);
+			BirdMngSet(count, 0, 1);
+			break;
+		case 790:
+			BirdMngSet(count, 1, 1);
+			BirdMngSet(count, 0, 2);
+		case 850:
+			SlimeMngSet(count, 1, 2);
+			break;
+		case 1050:
+			SlimeMngSet(count, 0, 2);
+			BirdMngSet(count, 0, 2);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 1200:
+			SlimeMngSet(count, 0, 2);
+			BirdMngSet(count, 0, 2);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 1350:
+			SlimeMngSet(count, 1, 2);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 1450:
+			SlimeMngSet(count, 1, 2);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 1550:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 1650:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 1800:
+			SlimeMngSet(count, 1, 2);
+			break;
+		default:
+			break;
+		}
 
 	for (int i = 0; i < 10; i++) {
 		if ((count - slime[i].GetStartClock()) % 150 == 0 &&

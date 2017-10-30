@@ -108,7 +108,8 @@ const int BIRD_DISAP_NUM = 1;
 const int BIRD_BACK_NUM = 5;
 const int BIRD_BACK_SPEED = 8;
 
-const int NORMAL_COUNT = 3 * 60 * 30;
+const int NORMAL_COUNT = 2000;
+const int HARD_COUNT = 2000;
 
 const int UI_HEIGHT = 389 / 2;
 const int UI_WIDTH = 1701 / 2;

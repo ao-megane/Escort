@@ -108,9 +108,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				flag = 3;
 				SetLoser(levelFlag,count);
 			}
-			if (count >= 1*60*30) {
+			if (levelFlag == 0 && count >= NORMAL_COUNT) {
 				flag = 4;
 				SetWinner(levelFlag,count);
+			}
+			if (levelFlag == 1 && count >= HARD_COUNT) {
+				flag = 4;
+				SetWinner(levelFlag, count);
 			}
 			if (PAUSE == 1) flag = 7;
 

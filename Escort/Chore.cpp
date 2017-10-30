@@ -421,7 +421,7 @@ int WinnerUpdata(int count) {
 		DISP_WIDTH + 750 - (count - Keeper) * 4, GROUND_HEIGHT + 125,
 		DISP_WIDTH - (count - Keeper) * 4, GROUND_HEIGHT + 125,
 		Flower, true);
-	if ((DISP_WIDTH - 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH / 2 && (flag == 1)) {
+	if ((DISP_WIDTH - 750 - (count - Keeper) * 4 + 300) < DISP_WIDTH * 4 / 3 && (flag == 1)) {
 		Keeper2 = count;
 		flag = 2;
 		return 1;
