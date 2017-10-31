@@ -11,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	SetWindowSizeChangeEnableFlag(TRUE);
+	/*SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(TRUE);*/
 	}
 
 	
@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InputFile("koryosai2017.txt");
 
 	SetBack(1);
-	//PlayBGM();
+	PlayBGM();
 
 	flag = 0;
 	int down = 0;
@@ -47,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		//InputUpdata(input, Key);
-		InputUpdata(Key);
+		InputUpdata(input, Key);
+		//InputUpdata(Key);
 		//PrintInput(Key);
 
 		UpdataBack(count);
@@ -121,9 +121,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngDraw();
 			girl.Draw();
 			player.Draw();
-			DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
-			DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
-			FpsTimeFanction();
+			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
+			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
+			
 			DrawChore(count, girl.GetHP(),levelFlag);
 			break;
 		case 3://gameover
@@ -133,7 +133,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			girl.Draw();
 			player.Draw();
 			LoserUpdata(count);
-			if(B == 1)
+			if(Y == 1)
 				flag = 0;
 			break;
 		case 4://gameclear
@@ -143,7 +143,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			girl.Draw();
 			player.Draw();
 			WinnerUpdata(count);
-			if(B == 1)
+			if(Y == 1)
 				flag = 0;
 			break;
 		case 5://ƒ}ƒjƒ…ƒAƒ‹
@@ -178,7 +178,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
-		
+		FpsTimeFanction();
 		ScreenFlip();
 	}
 

@@ -63,7 +63,7 @@ int Princess::Set(int levelFlag) {
 	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	Image = walk1;
 	stateFlag = 0;
-	HP = 1000; 
+	HP = 300; 
 	Keeper = 0;
 	return 0;
 }
@@ -122,7 +122,7 @@ int Princess::UpdataJump(int count) {
 	double a = -sin((count / sum)*PI) * height;//‚Ù‚µ‚¢ŽR
 	
 	center.Set((center.Get_x()) - GROUND_SPEED + GROUND_SPEED, a + GROUND_HEIGHT - PRI_HEIGHT / 2);
-
+	Image = walk1;
 	if (count >= sum) {
 		stateFlag = 0;
 		//acceptFlag = 1;
@@ -235,14 +235,14 @@ Dot Princess::GetCenter() {
 
 int Princess::Draw() {
 
-	DrawBox(
+	/*DrawBox(
 		center.Get_x() - PRI_WIDTH / 2, center.Get_y() - PRI_HEIGHT / 2,
 		center.Get_x() + PRI_WIDTH / 2, center.Get_y() + PRI_HEIGHT / 2,
 		GREEN, false);
 	DrawBox(
 		weak.Get_LU().Get_x(), weak.Get_LU().Get_y(),
 		weak.Get_RD().Get_x(), weak.Get_RD().Get_y(),
-		BLUE, false);
+		BLUE, false);*/
 
 	DrawModiGraph(
 		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() - PRI_D_HEIGHT / 2 + PRI_DIFF_H,

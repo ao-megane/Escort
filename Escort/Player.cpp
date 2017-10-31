@@ -128,7 +128,7 @@ void Player::PlayAttack_w() {
 
 void Player::Set(int levelFlag) {
 	//if(levelFlag = 1)
-	center.Set(500, GROUND_HEIGHT - P_HEIGHT / 2);
+	center.Set(100, GROUND_HEIGHT - P_HEIGHT / 2);
 	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
 	attack = 0;
 	Image = PWalk1;
@@ -143,7 +143,8 @@ void Player::Set(int levelFlag) {
 void Player::SetStand() {
 	stateFlag = 0;
 	acceptFlag = 1;
-	Image = PWalk1;
+	if(WeaponFlag == 0) Image = PWalk1;
+	else if (WeaponFlag == 1) Image = PWalkW1;
 }
 
 void Player::UpdataStand(int count) {
@@ -427,7 +428,7 @@ void Player::UpdataAttack_s(int count) {
 		acceptFlag = 0;
 	}
 	else if (count < 20) {//UŒ‚
-		attack = 50;
+		attack = 30;
 		attackArea.Set(LU, RD);
 	}
 	else if (count < 40) {//—]‰C
@@ -693,14 +694,14 @@ int Player::Draw() {
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		GREEN, false);*/
-	DrawBox(
+	/*DrawBox(
 		center.Get_x() - P_WIDTH / 2, center.Get_y() - P_HEIGHT / 2,
 		center.Get_x() + P_WIDTH / 2, center.Get_y() + P_HEIGHT / 2,
 		GREEN, false);
 	DrawBox(
 		weakArea.Get_LU().Get_x(), weakArea.Get_LU().Get_y(),
 		weakArea.Get_RD().Get_x(), weakArea.Get_RD().Get_y(),
-		BLUE, false);
+		BLUE, false);*/
 
 	if (isRightFlag)
 		DrawModiGraph(//•`‰æ‚ð­‚µ‚¸‚ç‚·
@@ -717,11 +718,11 @@ int Player::Draw() {
 			center.Get_x() + P_D_WIDTH / 2, center.Get_y() + P_D_HEIGHT / 2 + P_DIFF_H,
 			Image, true);
 
-	if(attack > 0)
+	/*if(attack > 0)
 		DrawBox(
 			attackArea.Get_LU().Get_x(), attackArea.Get_LU().Get_y(),
 			attackArea.Get_RD().Get_x(), attackArea.Get_RD().Get_y(),
-			RED, false);
+			RED, false);*/
 
 	if (WeaponFlag == 0) {//•Ší‚ðŽè•ú‚µ‚Ä‚¢‚½‚çŒ•‚ð•`‰æ
 		if(weapon.Get_y() >= GROUND_HEIGHT - SWORD_HEIGHT / 2)//Žh‚³‚Á‚Ä‚é‚È‚ç

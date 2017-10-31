@@ -21,6 +21,7 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 	if (input.Buttons[15]) Y++; else Y = 0;
 	if (input.Buttons[9]) RIGHT++; else RIGHT = 0;
 	if (input.Buttons[8]) LEFT++; else LEFT = 0;
+	if (input.Buttons[3]) PAUSE++; else PAUSE = 0;
 	if (input.LeftTrigger > Trig) L_TRIG++; else L_TRIG = 0;
 	if (input.RightTrigger > Trig) R_TRIG++; else R_TRIG = 0;
 
