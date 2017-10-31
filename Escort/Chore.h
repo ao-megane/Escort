@@ -49,13 +49,15 @@ int PlayChoice();
 
 int ChoreSet(int levelFlag);
 
+int* ScorePass();
+
 int PlayBGM();
 
 int DrawOP(int levelFlag);
 
 int DrawPrologue(int b);
 
-int DrawManual();
+void DrawManual();
 
 int DrawCredit();
 
@@ -85,7 +87,7 @@ int DrawLoseBord(int count);
 
 int DrawWinBord(int count);
 
-int SetWinner(int levelFlag,int count);
+int SetWinner(int levelFlag,int count,int* score);
 
 int WinnerUpdata(int count);
 

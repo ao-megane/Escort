@@ -60,6 +60,7 @@ const double PRI_W_HEIGHT = PRI_HEIGHT * 0.8;//被ダメ判定の大きさ
 const double PRI_D_WIDTH = 1500 / 1000 * PRI_WIDTH * 1.3;//大本画像/大本の幅＊width
 const double PRI_D_HEIGHT = 2000 / 1500 * PRI_HEIGHT * 1.3;// 500
 const double PRI_DIFF_H = (400 + 1500 / 2 - 2000 / 2) * PRI_D_WIDTH / 1500;//PH*大元の比率
+const int PRI_MAXHP = 300;
 
 const int SLIME_WIDTH = 150;	//プレイヤー自体の幅
 const int SLIME_HEIGHT = 150;	//プレイヤー自体の高さ（2:3）
@@ -116,14 +117,19 @@ const int HARD_COUNT = 2500;
 const int UI_HEIGHT = 389 / 2;
 const int UI_WIDTH = 1701 / 2;
 const int UI_MARGIN_HEIGHT = -20;
-//const int UI_MARGIN_WIDTH = DISP_WIDTH / 2 - UI_WIDTH / 2;
 const int UI_MARGIN_WIDTH = 10;
+const int UI_LINE_MARGIN_WIDTH = UI_MARGIN_WIDTH + 300 / 2;
+const int UI_LINE_WIDTH = 1200 / 2;
 const int UI_ICONBIG = 150;
 
-const int HPBAR_WIDTH = 1000;
-const int HPBAR_HEIGHT = 40;
-const int HPBAR_MARGIN_HEIGHT = 150;
-const int HPBAR_MARGIN_WIDTH = 10;
+const int HPBAR_WIDTH = 900 * 0.75;
+const int HPBAR_HEIGHT = 150 * 0.75;
+const int HPBAR_MARGIN_HEIGHT = 130;
+const int HPBAR_MARGIN_WIDTH = 10 * 3;
+const int HPSQU_WIDTH = 610 * 0.75;
+const int HPSQU_HEIGHT = 50 * 0.75;
+const int HPSQU_MARGIN_WIDTH = 190 * 0.75;
+const int HPSQU_MARGIN_HEIGHT = 50 * 0.75;
 
 const int FLOWER_HEIGHT = GROUND_HEIGHT + 0;
 

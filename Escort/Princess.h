@@ -21,6 +21,7 @@ public:/*
 	int Updata(int count,int Pstate);
 	int GetStateFlag();
 	int GetHP();
+	int SetHP(int a);
 	Square GetWeekArea();
 	Dot GetCenter();
 	int Draw();

@@ -138,11 +138,12 @@ int Tytle;
 int Allow;
 int Logo;
 int Pause;
+int Manual;
 int Prologue1;
 int Prologue2;
 int Prologue3;
 int Prologue4;
-int ProBack;
+//int ProBack;
 int UIBack;
 int UIIcon;
 
@@ -154,6 +155,8 @@ int Move;
 int Choice;
 
 int proFlag;
+
+int Score;
 
 int nishiki;
 int SystemInitialize() {
@@ -170,12 +173,13 @@ int SystemInitialize() {
 	Flower = LoadGraph("images/System/Flower.png");
 	Credit = LoadGraph("images/System/Credit.png");
 	Pause = LoadGraph("images/System/Pause.png");
+	Manual = LoadGraph("images/System/Manual.png");
 
 	Prologue1 = LoadGraph("images/Prologue/1.png");
 	Prologue2 = LoadGraph("images/Prologue/2.png");
 	Prologue3 = LoadGraph("images/Prologue/3.png");
 	Prologue4 = LoadGraph("images/Prologue/4.png");
-	ProBack = LoadGraph("images/Prologue/back.png");
+	//ProBack = LoadGraph("images/Prologue/back.png");
 
 	UIBack = LoadGraph("images/Back/map.png");
 	UIIcon = LoadGraph("images/Back/Icon.png");
@@ -215,10 +219,15 @@ int PlayChoice() {
 }
 
 int ChoreSet(int levelFlag) {
+	Score = 10000;
 	Keeper = 0;
 	flag = 0;
 	proFlag = 0;
 	return 0;
+}
+
+int* ScorePass() {
+	return &Score;
 }
 
 int PlayBGM() {
@@ -237,7 +246,7 @@ int DrawOP(int levelFlag) {
 	return 0;
 }
 int DrawPrologue(int b) {
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, ProBack, true);
+	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, ProBack, true);
 	switch (proFlag)
 	{
 	case 0:
@@ -251,7 +260,6 @@ int DrawPrologue(int b) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue2, true);
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue3, true);
-		//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue4, true);
 		break;
 	case 3:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue1, true);
@@ -277,9 +285,8 @@ int DrawPause(int count) {
 	return 0;
 }
 
-int DrawManual() {
-	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "MANUAL!");
-	return 0;
+void DrawManual() {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
 }
 int DrawCredit() {
 	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
@@ -287,19 +294,20 @@ int DrawCredit() {
 }
 
 void DrawChore(int count, int HP,int levelFlag) {
-	DrawModiGraph(
-		0 + UI_MARGIN_WIDTH, 0 + UI_MARGIN_HEIGHT,
-		UI_WIDTH + UI_MARGIN_WIDTH, 0 + UI_MARGIN_HEIGHT,
-		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
-		0 + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
-	DrawModiGraph(
-		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
-		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH + UI_ICONBIG, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
-		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH + UI_ICONBIG, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2,
-		UI_WIDTH * count / NORMAL_COUNT + UI_MARGIN_WIDTH, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2, UIIcon, true);
+	if (count < NORMAL_COUNT) {
+		DrawModiGraph(
+			UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+			UI_WIDTH + UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+			UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
+			UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
+		DrawModiGraph(
+			UI_LINE_WIDTH * count / NORMAL_COUNT + UI_LINE_MARGIN_WIDTH - UI_ICONBIG/2, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
+			UI_LINE_WIDTH * count / NORMAL_COUNT + UI_LINE_MARGIN_WIDTH + UI_ICONBIG/2, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT - UI_ICONBIG / 2,
+			UI_LINE_WIDTH * count / NORMAL_COUNT + UI_LINE_MARGIN_WIDTH + UI_ICONBIG/2, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2,
+			UI_LINE_WIDTH * count / NORMAL_COUNT + UI_LINE_MARGIN_WIDTH - UI_ICONBIG/2, UI_HEIGHT / 2 + UI_MARGIN_HEIGHT + UI_ICONBIG / 2, UIIcon, true);
+	}
 
-	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH+HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, false);
-	DrawBox(HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HP/1000.0 * HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT+HPBAR_HEIGHT, BLUE, true);
+	DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
 }
 
 int SetBack(int stage) {
@@ -383,15 +391,17 @@ int UpdataFile(std::string file, int levelFlag, int score) {
 	return 0;
 }
 
-int SetWinner(int levelFlag, int count) {
+int SetWinner(int levelFlag, int count,int* score) {
 	Keeper = count;
 	if (levelFlag == 0) {
 		normalPlayers++;
 		normalWinner++;
+		if (normalHighScore < *score) normalHighScore = *score;
 	}
 	else if (levelFlag == 1) {
 		hardPlayers++;
 		hardWinner++;
+		if (hardHighScore < *score) hardHighScore = *score;
 	}
 	flag = 1;
 	return 0;
@@ -458,10 +468,6 @@ int DrawLoseBord(int count) {
 	}
 	return 0;
 }
-
-
-
-
 
 /*----------------------------------------------------------------------------------------------*/
 

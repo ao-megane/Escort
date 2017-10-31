@@ -20,8 +20,8 @@ public:/*
 	void UpdataWalk(int count);
 	void SetDash();
 	void UpdataDash(int count);
-	void SetGuard();
-	void UpdataGuard(int count);
+	/*void SetGuard();
+	void UpdataGuard(int count);*/
 	void SetJump();
 	void UpdataJump(int count,int flag);
 	void SetPriJump();
@@ -34,6 +34,8 @@ public:/*
 	void UpdataAttack_l(int count);
 	void Updata(int count,int key[]);
 	int GetStateFlag();
+	int GetIsRightFlag();
+	Dot GetCenter();
 	int WeaponFlag;
 	Square GetAttackArea();
 	Dot weapon;

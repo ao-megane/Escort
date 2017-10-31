@@ -125,6 +125,12 @@ void Player::PlayJump() {
 void Player::PlayAttack_w() {
 	PlaySoundMem(Attack_w, DX_PLAYTYPE_BACK);
 }
+int Player::GetIsRightFlag() {
+	return isRightFlag;
+}
+Dot Player::GetCenter() {
+	return center;
+}
 
 void Player::Set(int levelFlag) {
 	//if(levelFlag = 1)

@@ -21,7 +21,7 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 	if (input.Buttons[15]) Y++; else Y = 0;
 	if (input.Buttons[9]) RIGHT++; else RIGHT = 0;
 	if (input.Buttons[8]) LEFT++; else LEFT = 0;
-	if (input.Buttons[3]) PAUSE++; else PAUSE = 0;
+	if (input.Buttons[4]) PAUSE++; else PAUSE = 0;
 	if (input.LeftTrigger > Trig) L_TRIG++; else L_TRIG = 0;
 	if (input.RightTrigger > Trig) R_TRIG++; else R_TRIG = 0;
 
@@ -67,5 +67,15 @@ void PrintInput(int Key[]) {
 	DrawFormatString(0, 280, WHITE, "L_TRIG:%d", L_TRIG);
 	DrawFormatString(0, 320, WHITE, "RATIO_X:%d", THUMB_X);
 	DrawFormatString(0, 360, WHITE, "RATIO_Y:%d", THUMB_Y);
+	DrawFormatString(0, 400, WHITE, "1:%d", Key[10]);
+	DrawFormatString(0, 440, WHITE, "2:%d", Key[11]);
+	DrawFormatString(0, 480, WHITE, "3:%d", Key[12]);
+	DrawFormatString(0, 520, WHITE, "4:%d", Key[13]);
+	DrawFormatString(0, 560, WHITE, "5:%d", Key[14]);
+	DrawFormatString(0, 600, WHITE, "6:%d", Key[15]);
+	DrawFormatString(0, 640, WHITE, "7:%d", Key[16]);
+	DrawFormatString(0, 680, WHITE, "8:%d", Key[17]);
+	DrawFormatString(0, 720, WHITE, "9:%d", Key[18]);
+	DrawFormatString(0, 760, WHITE, "10:%d", Key[19]);
 
 }

@@ -174,6 +174,7 @@ int Slime::Set(int count,int isright,int level) {
 	return 0;
 }
 int Slime::SetStand(int count) {
+	attack = 10 * (strength + 1);
 	stateFlag = 0;
 	bodyClock = count;
 	return 0;
@@ -228,6 +229,7 @@ int Slime::UpdataStand(int count) {
 	return 0;
 }
 int Slime::SetJump(int count) {
+	attack = 20 * (strength + 1);
 	stateFlag = 3;
 	bodyClock = count;
 	//startClock = count;
@@ -268,17 +270,18 @@ int Slime::UpdataJump(int count) {
 	return 0;
 }
 int Slime::SetDamage(int count, int damage) {
+	attack = 0;
 	stateKeeper = stateFlag;
 	stateFlag = 5;
-	clockKeeper = bodyClock + 60;
+	clockKeeper = bodyClock + 20;
 	bodyClock = count;
 	SetHP(GetHP() - damage);
 	PlayDamage();
 	return 0;
 }
 int Slime::UpdataDamage(int count) {
-	center.Set(center.Get_x() - GROUND_SPEED + 5);
-	if (count >= 60) {
+	center.Set(center.Get_x() - GROUND_SPEED + 7 * pDirFlag);
+	if (count >= 20) {
 		bodyClock = clockKeeper;
 		clockKeeper = 0;
 		stateFlag = stateKeeper;
@@ -297,25 +300,10 @@ int Slime::UpdataDamage(int count) {
 int Slime::SetDisapper(int count) {
 	stateFlag = 6;
 	bodyClock = count;
+	attack = 0;
 	return 0;
 }
 int Slime::UpdataDisapper(int count) {
-	//int sum = 5;	//モーションにかかるフレーム数
-	//int num = 1;	//絵の枚数
-	//center.Set((center.Get_x()) - GROUND_SPEED + 0, GROUND_HEIGHT - SLIME_HEIGHT / 2);
-	/*if (count % sum <= sum / num * 1) {
-	Image = P_walk_1;
-	}
-	else if (count % sum <= sum / num * 2) {
-	Image = P_walk_2;
-	}
-	else if (count % sum <= sum / num * 3) {
-	Image = P_walk_3;
-	}
-	else if (count % sum <= sum) {
-	Image = P_walk_2;
-	}*/
-
 	if (count % 3 == 0) Image = Decoi;
 	else {
 		if (strength == 0) {
@@ -370,7 +358,7 @@ int Slime::Updata(int count) {
 	}
 
 	weakArea.Set(center, width*0.8, height*0.8);
-	attackArea.Set(center, width*0.7, height*0.7);
+	attackArea.Set(center, width*0.5, height*0.5);
 	return 0;
 }
 int Slime::Draw() {
@@ -551,6 +539,7 @@ int Bird::SetAttack(int count,Dot princess) {
 	stateFlag = 2;
 	girl = princess;
 	bodyClock = count;
+	attack = 10 * (strength + 1);
 	if (center.Get_x() > princess.Get_x()) dirFlag = 0;
 	else dirFlag = 1;
 	return 0;
@@ -610,18 +599,19 @@ int Bird::UpdataAttack(int count) {
 	return 0;
 }
 int Bird::SetDamage(int count, int damage) {
+	attack = 0;
 	stateKeeper = stateFlag;
 	stateFlag = 5;
 	bodyClock = count;
-	clockKeeper = count + 60;
+	clockKeeper = count + 20;
 	SetHP(GetHP() - damage);
 	PlayDamage();
 	return 0;
 }
 int Bird::UpdataDamage(int count) {
 	//int speed = -GROUND_SPEED;
-	center.Set(center.Get_x() + BIRD_DAMAGE_SPEED);
-	if (count >= 60) {
+	center.Set(center.Get_x() + BIRD_DAMAGE_SPEED + 7*pDirFlag);
+	if (count >= 20) {
 		bodyClock = count;
 		clockKeeper = 0;
 		SetBack(count);
@@ -669,6 +659,7 @@ int Bird::UpdataDisapper(int count) {
 	return 0;
 }
 int Bird::SetBack(int count) {
+	attack = 0;
 	stateFlag = 7;
 	bodyClock = count;
 	(dirFlag == 0 ? dirFlag = 1 : dirFlag = 0);
@@ -741,8 +732,8 @@ int Bird::Updata(int count) {
 	}
 
 	//weakArea.Set(center, BIRD_WIDTH*0.8, BIRD_HEIGHT*0.8);
-	weakArea.Set(center, width * 0.6, height * 0.6);
-	attackArea.Set(center, width * 0.5, height * 0.5);
+	weakArea.Set(center, width * 0.5, height * 0.5);
+	attackArea.Set(center, width * 0.3, height * 0.3);
 	return 0;
 }
 int Bird::Draw() {
@@ -955,7 +946,6 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 		if ((count - slime[i].GetStartClock()) % 150 == 0 &&
 			count != 0 && slime[i].GetStateFlag() == 0) {
 			if (slime[i].GetExistFlag()) {
-				//printfDx("JUMP!!!");
 				slime[i].SetJump(count);
 			}
 		}
@@ -972,8 +962,6 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 }
 int EnemyMngUpdata(int count) {
 	for (int i = 0; i < 10; i++) {
-		//if (box[i].GetExistFlag()) box[i].Draw();
-		//if (fence[i].GetExistFlag()) fence[i].Draw();
 		if (slime[i].GetExistFlag()) slime[i].Updata(count);
 	}
 	for (int i = 0; i < BIRD_NUM; i++) {
@@ -981,14 +969,22 @@ int EnemyMngUpdata(int count) {
 	}
 	return 0;
 }
-int EnemyMngJudge(Player* player, Princess* girl,int count) {
+int EnemyMngJudge(Player* player, Princess* girl,int count,int* score,int levelFlag) {
 	if (player->GetAttack() > 0 && 
 		(*girl).GetStateFlag() != 1 && 
 		(*player).GetAttackArea() & (*girl).GetWeekArea()) {
 		//frendly fire!
 		//プレイヤーは殴るモード、姫は殴られるモードで実際に当たったら
 		(*girl).SetDamage((*player).GetAttack(), count);
+		*score -= player->GetAttack()*10;
 	}
+
+	if(levelFlag == 1)
+		if (player->GetCenter().Get_x() > girl->GetCenter().Get_x() && count % 2 == 0)
+			girl->SetHP(girl->GetHP() - 1);
+
+
+
 	for (int i = 0; i < 10; i++) {
 		//enemy is damaged!
 		if (slime[i].GetExistFlag() &&
@@ -996,15 +992,18 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 			slime[i].GetStateFlag() != 6 &&
 			player->GetAttack() &&
 			slime[i].GetWeekArea() & (*player).GetAttackArea()) {//slime
+			if (player->GetIsRightFlag() == 1) slime[i].pDirFlag = 1;
+			else if (player->GetIsRightFlag() == 0) slime[i].pDirFlag = -1;
 			slime[i].SetDamage(count, player->GetAttack());
 		}
 		//Princess is damaged!
 		if (slime[i].GetExistFlag() &&
-			slime[i].GetStateFlag() != 5 &&
-			(*girl).GetStateFlag() != 1 &&
+			slime[i].GetAttack() > 0 &&
+			//(*girl).GetStateFlag() != 1 &&
 			slime[i].GetAttackArea() & (*girl).GetWeekArea()) {//slime
-															   //printfDx("HIT!!!!!\n");
 			girl->SetDamage(slime[i].GetAttack(), count);
+			*score -= slime[i].GetAttack()*10;
+			slime[i].SetAttackval(0);
 		}
 	}
 	for (int i = 0; i < BIRD_NUM; i++) {
@@ -1013,14 +1012,18 @@ int EnemyMngJudge(Player* player, Princess* girl,int count) {
 			bird[i].GetStateFlag() != 6 &&
 			player->GetAttack() &&
 			bird[i].GetWeekArea() & (*player).GetAttackArea()) {//birds
+			if (player->GetIsRightFlag() == 1) bird[i].pDirFlag = 1;
+			else if (player->GetIsRightFlag() == 0) bird[i].pDirFlag = -1;
 			bird[i].SetDamage(count, player->GetAttack());
 		}
 
 		if (bird[i].GetExistFlag() &&
-			bird[i].GetStateFlag() != 5 &&
-			girl->GetStateFlag() != 1 &&
+			bird[i].GetAttack() > 0 &&
+			//girl->GetStateFlag() != 1 &&
 			bird[i].GetAttackArea() & girl->GetWeekArea()) {//birds
 			girl->SetDamage(bird[i].GetAttack(), count);
+			*score -= bird[i].GetAttack()*10;
+			bird[i].SetAttackval(0);
 		}
 	}
 	return 0;

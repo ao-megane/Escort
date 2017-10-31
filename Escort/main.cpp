@@ -11,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	/*SetWindowSizeChangeEnableFlag(TRUE);
+	SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);*/
+	ChangeWindowMode(TRUE);
 	}
 
 	
@@ -102,19 +102,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			girl.Updata(count,player.PriJump);
 			EnemyMngUpdata(count);
 
-			EnemyMngJudge(&player, &girl, count);
+			EnemyMngJudge(&player, &girl, count,ScorePass(),levelFlag);
 
 			if (girl.GetHP() <= 0) {
 				flag = 3;
+				girl.SetWalk();
 				SetLoser(levelFlag,count);
 			}
 			if (levelFlag == 0 && count >= NORMAL_COUNT) {
 				flag = 4;
-				SetWinner(levelFlag,count);
+				girl.SetWalk();
+				SetWinner(levelFlag,count,ScorePass());
 			}
 			if (levelFlag == 1 && count >= HARD_COUNT) {
+				girl.SetWalk();
 				flag = 4;
-				SetWinner(levelFlag, count);
+				SetWinner(levelFlag, count,ScorePass());
 			}
 			if (PAUSE == 1) flag = 7;
 
@@ -130,8 +133,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngUpdata(count);
 			EnemyMngDraw();
 
+
 			girl.Draw();
 			player.Draw();
+			DrawChore(count, girl.GetHP(), levelFlag);
 			LoserUpdata(count);
 			if(Y == 1)
 				flag = 0;
@@ -142,6 +147,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			girl.Draw();
 			player.Draw();
+			DrawChore(count, girl.GetHP(), levelFlag);
 			WinnerUpdata(count);
 			if(Y == 1)
 				flag = 0;

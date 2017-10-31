@@ -23,6 +23,7 @@ public:
 	int GetWidth();
 	int GetStrength();
 	int PlayDamage();
+	int pDirFlag;
 	Dot GetCenter();
 	Square GetWeekArea();
 	Square GetAttackArea();
@@ -114,7 +115,7 @@ int EnemyMngInitialize();			//画像ハンドル周り
 void EnemyMngInitialize(int i);
 int EnemyMngSet(int levelFlag, int count,Dot girl);	//ステージ、時間ごとに配置
 int EnemyMngUpdata(int count);		//移動やらアニメやら、攻撃に入るのはJudgeで行う
-int EnemyMngJudge(Player* player, Princess* girl,int count);	//判定、state、HP等の更新
+int EnemyMngJudge(Player* player, Princess* girl,int count,int* score,int levelFlag);	//判定、state、HP等の更新
 int EnemyMngDraw();
 
 #endif // !ENEMYMNG_H

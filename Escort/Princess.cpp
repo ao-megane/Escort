@@ -19,8 +19,12 @@ int Dwalk5;
 
 int PriDecoi;
 
+int HPImage;
+
 int Damage;
 int Jump;
+
+int DamageCount;
 
 int Princess::Initialize() {
 	HP = 100;
@@ -40,6 +44,8 @@ int Princess::Initialize() {
 	Dwalk4 = LoadGraph("images/Princess/damagewalk/Resize/4.png");
 	Dwalk5 = LoadGraph("images/Princess/damagewalk/Resize/5.png");
 
+	HPImage = LoadGraph("images/Princess/HP.png");
+
 	PriDecoi = LoadGraph("images/decoi.png");
 
 	Damage = LoadSoundMem("music/damage2.wav");
@@ -57,14 +63,20 @@ int Princess::PlayJump() {
 	return 0;
 }
 
+int Princess::SetHP(int a) {
+	HP = a;
+	return 0;
+}
+
 int Princess::Set(int levelFlag) {
 	//if(levelFlag == 0)
 	center.Set(DISP_WIDTH * 0.3, GROUND_HEIGHT - PRI_HEIGHT / 2);
 	weak.Set(center, PRI_W_WIDTH, PRI_W_HEIGHT);
 	Image = walk1;
 	stateFlag = 0;
-	HP = 300; 
+	HP = PRI_MAXHP; 
 	Keeper = 0;
+	DamageCount = 0;
 	return 0;
 }
 
@@ -77,7 +89,6 @@ int Princess::SetWalk() {
 int Princess::UpdataWalk(int count) {
 	//int speed = GROUND_SPEED;
 	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
-
 	int sum = 40;	//一周のフレーム数
 	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
@@ -112,7 +123,6 @@ int Princess::SetJump(int count) {
 	Image = walk1;
 	bodyClock = count;
 	PlayJump();
-	//acceptFlag = 1;	//空中制動
 	return 0;
 }
 int Princess::UpdataJump(int count) {
@@ -126,15 +136,16 @@ int Princess::UpdataJump(int count) {
 	if (count >= sum) {
 		stateFlag = 0;
 		//acceptFlag = 1;
-		bodyClock = 0;
+		bodyClock = count;
 		SetWalk();
 	}
 	return 0;
 }
 
 int Princess::SetDamage(int damage,int count) {
+	DamageCount = 0;
 	if (stateFlag == 2) {
-		Keeper = count + 60;
+		Keeper = count + 30;
 		bodyClock = count;
 	}
 	else {
@@ -149,7 +160,7 @@ int Princess::SetDamage(int damage,int count) {
 }
 int Princess::UpdataDamage(int count) {
 	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
-	if (count >= 60) {
+	if (count >= 30) {
 		if (Keeper != 0) {//jump
 			bodyClock = Keeper;
 			Keeper = 0;
@@ -159,7 +170,7 @@ int Princess::UpdataDamage(int count) {
 			SetWalk();
 		}
 	}
-	int sum = 40;	//一周のフレーム数
+	int sum = 30;	//一周のフレーム数
 	int num = 8;	//一周の画像数
 	if (count % sum <= sum / num * 1) {
 		Image = Dwalk1;
@@ -172,19 +183,15 @@ int Princess::UpdataDamage(int count) {
 	}
 	else if (count % sum <= sum / num * 4) {
 		Image = Dwalk4;
-		//Image = PriDecoi;
 	}
 	else if (count % sum <= sum / num * 5) {
 		Image = Dwalk5;
-		//Image = PriDecoi;
 	}
 	else if (count % sum <= sum / num * 6) {
 		Image = Dwalk4;
-		//Image = PriDecoi;
 	}
 	else if (count % sum <= sum / num * 7) {
-		//Image = Dwalk3;
-		Image = PriDecoi;
+		Image = Dwalk3;
 	}
 	else if (count % sum <= sum / num * 8) {
 		Image = Dwalk2;
@@ -195,8 +202,12 @@ int Princess::UpdataDamage(int count) {
 
 int Princess::Updata(int count,int PriJump) {
 	//set
-	if (PriJump == 1 && stateFlag == 0) {
+	DamageCount++;
+	if (PriJump == 1 && stateFlag == 0 /*&& (center.Get_y() == GROUND_HEIGHT - PRI_HEIGHT / 2)*/) {
 		SetJump(count);
+	}
+	if (DamageCount >= 120 && count % 2 == 0) {
+		if (HP < PRI_MAXHP)HP++;
 	}
 
 	//updata
@@ -251,6 +262,13 @@ int Princess::Draw() {
 		center.Get_x() - PRI_D_WIDTH / 2, center.Get_y() + PRI_D_HEIGHT / 2 + PRI_DIFF_H,
 		Image, true);
 
+	DrawModiGraph(
+		HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT,
+		HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPImage, true);
+	if(HP > 0)
+		DrawBox(
+		HPSQU_MARGIN_WIDTH+HPBAR_MARGIN_WIDTH							, HPSQU_MARGIN_HEIGHT + HPBAR_MARGIN_HEIGHT, 
+		HPSQU_MARGIN_WIDTH+HPBAR_MARGIN_WIDTH + HP / (double)(PRI_MAXHP) * HPSQU_WIDTH, HPSQU_MARGIN_HEIGHT + HPBAR_MARGIN_HEIGHT + HPSQU_HEIGHT, BLUE, true);
 	//DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
 
 	return 0;
