@@ -32,7 +32,7 @@ const int DISP_WIDTH = 2160;
 const int DISP_HEIGHT = 1440;
 
 const int GROUND_HEIGHT = 1440 - 100;
-const int GROUND_SPEED = 1;
+const int GROUND_SPEED = 2;
 
 const int P_WIDTH = 200;	//プレイヤー自体の幅
 const int P_HEIGHT = 300;	//プレイヤー自体の高さ（2:3）
@@ -73,10 +73,10 @@ const double SLIME_D_HEIGHT = 1000 / 700 * SLIME_HEIGHT;// 500
 const double SLIME_DIFF_H = (350 + 700 / 2 - 1000 / 2) * SLIME_D_HEIGHT / 1000;
 const double SLIME_DIFF_W = (100 + 700 / 2 - 1300 / 2) * SLIME_D_WIDTH / 1300;
 
-const int SLIME_STAND_SPEED = 2;
+const int SLIME_STAND_SPEED = GROUND_SPEED + 1;
 const int SLIME_STAND_SUM = 20;	//一周のフレーム数
 const int SLIME_STAND_NUM = 4;	//一周の画像数
-const int SLIME_JUMP_SPEED = 1;
+const int SLIME_JUMP_SPEED = GROUND_SPEED + 1;
 const double SLIME_JUMP_SUM = 40.0;	//一周のフレーム数
 const int SLIME_JUMP_SUMI = (int)(SLIME_JUMP_SUM);
 const int SLIME_JUMP_NUM = 4;	//一周の画像数
@@ -84,8 +84,7 @@ const double SLIME_JUMP_HIGH = DISP_HEIGHT * 0.3;//ジャンプの高さ
 const int SLIME_DISAP_SUM = 5;
 const int SLIME_DISAP_NUM = 1;
 
-
-const int BIRD_NUM = 3;
+const int BIRD_NUM = 4;
 const int BIRD_WIDTH = 400 * 1.0;	//プレイヤー自体の幅
 const int BIRD_HEIGHT = 500 * 1.0;	//プレイヤー自体の高さ（4:5）
 //const double BIRD_W_WIDTH = BIRD_WIDTH * 0.8;
@@ -99,20 +98,20 @@ const double BIRD_DIFF_H = (200 + 1200 / 2 - 1500 / 2) * BIRD_D_HEIGHT / 1500;//
 
 const int BIRD_STAND_SUM = 20;
 const int BIRD_STAND_NUM = 4;
-const int BIRD_STAND_SPEED = 2;
+const int BIRD_STAND_SPEED = GROUND_SPEED + 1;
 const double BIRD_STAND_HIGH = 10.0;
 const double BIRD_ATTACK_PRE = 15.0;
 const double BIRD_ATTACK_SUM = 60.0;
 const int BIRD_ATTACK_NUM = 4;
-const int BIRD_DAMAGE_SPEED = 6;
+const int BIRD_DAMAGE_SPEED = 7;
 const int BIRD_DISAP_SUM = 5;
 const int BIRD_DISAP_NUM = 1;
 //const int BIRD_BACK_SUM = ;
 const int BIRD_BACK_NUM = 5;
 const int BIRD_BACK_SPEED = 8;
 
-const int NORMAL_COUNT = 2500;
-const int HARD_COUNT = 2500;
+const int NORMAL_COUNT = 5500;
+const int HARD_COUNT = 5500;
 
 const int UI_HEIGHT = 389 / 2;
 const int UI_WIDTH = 1701 / 2;
@@ -126,10 +125,11 @@ const int HPBAR_WIDTH = 900 * 0.75;
 const int HPBAR_HEIGHT = 150 * 0.75;
 const int HPBAR_MARGIN_HEIGHT = 130;
 const int HPBAR_MARGIN_WIDTH = 10 * 3;
-const int HPSQU_WIDTH = 610 * 0.75;
+
+const int HPSQU_WIDTH = 610 * 0.75 + 10;
 const int HPSQU_HEIGHT = 50 * 0.75;
 const int HPSQU_MARGIN_WIDTH = 190 * 0.75;
-const int HPSQU_MARGIN_HEIGHT = 50 * 0.75;
+const int HPSQU_MARGIN_HEIGHT = 50 * 0.75 + 5;
 
 const int FLOWER_HEIGHT = GROUND_HEIGHT + 0;
 
