@@ -47,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, Key);
-		//InputUpdata(Key);
+		//InputUpdata(input, Key);
+		InputUpdata(Key);
 		//PrintInput(Key);
 
 		UpdataBack(count);
@@ -143,14 +143,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 4://gameclear
 			player.Updata(count, Key);
-			girl.Updata(count,player.GetStateFlag());
+			girl.Updata(count,player.PriJump);
 
 			girl.Draw();
 			player.Draw();
-			DrawChore(count, girl.GetHP(), levelFlag);
 			WinnerUpdata(count);
 			if(Y == 1)
 				flag = 0;
+			DrawChore(count, girl.GetHP(), levelFlag);
 			break;
 		case 5://ƒ}ƒjƒ…ƒAƒ‹
 			DrawManual();
@@ -184,7 +184,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
-		FpsTimeFanction();
+		//FpsTimeFanction();
 		ScreenFlip();
 	}
 

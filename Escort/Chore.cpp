@@ -43,10 +43,10 @@ int Back::SetClose(int a) {
 int Back::Updata(int count) {
 	if (count % 2 == 0) {
 		for (int i = 0; i < 2; i++) {
-			Kumo[i] - 1;
-			Far[i] - 2;
+			Kumo[i] - (GROUND_SPEED * 2 - 2);
+			Far[i] - (GROUND_SPEED + 2 - 1);
 			//Middle[i] - 3;
-			Close[i] - 4;
+			Close[i] - GROUND_SPEED * 2;
 		}
 	}
 	/*if (Color[0].Get_RD().Get_x() == 0) {

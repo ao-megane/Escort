@@ -20,6 +20,7 @@ int Dwalk5;
 int PriDecoi;
 
 int HPImage;
+int HPBackImage;
 
 int Damage;
 int Jump;
@@ -45,6 +46,7 @@ int Princess::Initialize() {
 	Dwalk5 = LoadGraph("images/Princess/damagewalk/Resize/5.png");
 
 	HPImage = LoadGraph("images/Princess/HP.png");
+	HPBackImage = LoadGraph("images/Princess/HPBack.png");
 
 	PriDecoi = LoadGraph("images/decoi.png");
 
@@ -82,7 +84,7 @@ int Princess::Set(int levelFlag) {
 
 int Princess::SetWalk() {
 	stateFlag = 0;
-	Image = walk1;
+	//Image = walk1;
 	Keeper = 0;
 	return 0;
 }
@@ -137,7 +139,7 @@ int Princess::UpdataJump(int count) {
 		stateFlag = 0;
 		//acceptFlag = 1;
 		bodyClock = count;
-		SetWalk();
+		//SetWalk();
 	}
 	return 0;
 }
@@ -145,7 +147,7 @@ int Princess::UpdataJump(int count) {
 int Princess::SetDamage(int damage,int count) {
 	DamageCount = 0;
 	if (stateFlag == 2) {
-		Keeper = count + 30;
+		Keeper = bodyClock + 30;//ƒ_ƒ[ƒW‚É‚©‚©‚éŽžŠÔ
 		bodyClock = count;
 	}
 	else {
@@ -264,12 +266,15 @@ int Princess::Draw() {
 
 	DrawModiGraph(
 		HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT,
-		HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPImage, true);
+		HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBackImage, true);
 	if(HP > 0)
 		DrawBox(
 		HPSQU_MARGIN_WIDTH+HPBAR_MARGIN_WIDTH							, HPSQU_MARGIN_HEIGHT + HPBAR_MARGIN_HEIGHT, 
 		HPSQU_MARGIN_WIDTH+HPBAR_MARGIN_WIDTH + HP / (double)(PRI_MAXHP) * HPSQU_WIDTH, HPSQU_MARGIN_HEIGHT + HPBAR_MARGIN_HEIGHT + HPSQU_HEIGHT, BLUE, true);
-	//DrawFormatString(0, 40, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
+	DrawModiGraph(
+		HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT,
+		HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPImage, true);
+	//DrawFormatString(0, 300, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
 
 	return 0;
 }

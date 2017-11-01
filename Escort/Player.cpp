@@ -230,7 +230,7 @@ void Player::SetDash() {
 	acceptFlag = 1;
 }
 void Player::UpdataDash(int count) {
-	int speed = 8;
+	int speed = GROUND_SPEED + 7;
 	if(isRightFlag)
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
@@ -384,7 +384,7 @@ void Player::UpdataAttack_w(int count) {
 	if (count < 2) {
 		acceptFlag = 0;
 	}
-	else if (count < 15) {
+	else if (count < 7) {//15‚Í‹­‚·‚¬
 		attack = 10;
 		attackArea.Set(LU, RD);
 	}

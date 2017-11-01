@@ -472,8 +472,6 @@ int Bird::Set(int count,int isright,int level) {
 	existFlag = 1;
 	SetHP(20 * (strength + 1));
 	SetAttackval(10 * (strength + 1));
-	/*SetHP(20);
-	SetAttackval(10);*/
 	SetStand(count);
 	return 0;
 }
@@ -488,7 +486,7 @@ int Bird::UpdataStand(int count) {
 	//int speed = 2 * ((dirFlag == 0 ? -1 : 1));
 	//double high = 10.0;
 	//double a = -sin(2 * PI * count / 30 * 1) * high;
-	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED*(dirFlag == 0 ? -1 : 1), BIRD_HIGH + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
+	center.Set(center.Get_x() - GROUND_SPEED + BIRD_STAND_SPEED*(dirFlag == 0 ? -1 : 2), BIRD_HIGH + -sin(2 * PI * count / 30 * 1) * BIRD_STAND_HIGH);
 	if (strength == 0) {
 		if (count % BIRD_STAND_SUM <= BIRD_STAND_SUM / BIRD_STAND_NUM * 1) {
 			Image = WeakBirdStand1;
@@ -610,7 +608,7 @@ int Bird::SetDamage(int count, int damage) {
 }
 int Bird::UpdataDamage(int count) {
 	//int speed = -GROUND_SPEED;
-	center.Set(center.Get_x() + BIRD_DAMAGE_SPEED + 7*pDirFlag);
+	center.Set(center.Get_x() + BIRD_DAMAGE_SPEED * pDirFlag);
 	if (count >= 20) {
 		bodyClock = count;
 		clockKeeper = 0;
@@ -668,13 +666,14 @@ int Bird::UpdataDisapper(int count) {
 	if (count >= BIRD_DISAP_SUM) {
 		existFlag = 0;
 	}
+
 	return 0;
 }
 int Bird::SetBack(int count) {
 	attack = 0;
 	stateFlag = 7;
 	bodyClock = count;
-	(dirFlag == 0 ? dirFlag = 1 : dirFlag = 0);
+	(pDirFlag == 1 ? dirFlag = 1 : dirFlag = 0);
 	//printfDx("DISAPPERSET\n");
 	return 0;
 }
@@ -820,67 +819,142 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 	if(levelFlag == 0)//5400
 		switch (count)
 		{
-		case 20:
+		case 20://敵とシステムの紹介
 			SlimeMngSet(count, 1, 0);
-			SlimeMngSet(count, 1, 1);
 			break;
-		case 100:
-			SlimeMngSet(count, 1, 1);
-			break;
-		case 200:
+		case 150 * 2:
 			BirdMngSet(count, 1, 0);
 			break;
-		case 450:
-			BirdMngSet(count, 1, 1);
+		case 150 * 3:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
 			break;
-		case 550:
+		case 150 * 4:
 			SlimeMngSet(count, 1, 0);
 			break;
-		case 580:
+		case 150 * 4 + 60:
 			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 4 + 60 * 2:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+		case 150*5:
+			break;
+		case 150*6:
 			SlimeMngSet(count, 0, 0);
 			break;
-		case 610:
-			SlimeMngSet(count, 1, 1);
-			break;
-		case 760:
-			BirdMngSet(count, 1, 0);
-			//BirdMngSet(count, 0, 0);
-			break;
-		case 790:
-			BirdMngSet(count, 1, 0);
-			//BirdMngSet(count, 0, 1);
-		case 850:
-			SlimeMngSet(count, 1, 1);
-			break;
-		case 1050:
-			SlimeMngSet(count, 0, 1);
-			BirdMngSet(count, 0, 1);
-			BirdMngSet(count, 1, 1);
-			break;
-		case 1200:
-			SlimeMngSet(count, 0, 1);
-			//BirdMngSet(count, 0, 1);
-			BirdMngSet(count, 1, 1);
-			break;
-		case 1350:
-			SlimeMngSet(count, 1, 0);
-			BirdMngSet(count, 1, 0);
-			break;
-		case 1450:
-			SlimeMngSet(count, 1, 0);
-			BirdMngSet(count, 1, 0);
-			break;
-		case 1550:
-			SlimeMngSet(count, 1, 0);
-			BirdMngSet(count, 1, 0);
-			break;
-		case 1650:
+		case 150 * 7:
 			SlimeMngSet(count, 1, 0);
 			//BirdMngSet(count, 1, 0);
 			break;
-		case 1800:
-			SlimeMngSet(count, 1, 2);
+		case 150 * 8:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150*9:
+			break;
+		case 150 * 10:
+			//SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 150*11://スライムラッシュ
+			break;
+		case 150 * 12 + 30 * 0:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 1:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 2:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 12 + 60 * 3:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 4:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 12 + 60 * 5:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 6:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 7:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 8:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 9:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 12 + 60 * 10:
+			SlimeMngSet(count, 0, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 11:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 60 * 12://2520
+			SlimeMngSet(count, 0, 1);
+			break;
+		case 150* 17://2550:
+			break;
+		case 150*18:
+			BirdMngSet(count, 0, 1);
+			break;
+		case 150 * 19:
+			break;
+		case 150 * 20://詰め
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 21:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 22:
+			SlimeMngSet(count, 1, 0);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 23:
+			SlimeMngSet(count, 0, 0);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 24:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 25:
+			SlimeMngSet(count, 1, 0);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 26:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 1);
+			break;
+		case 150 * 27:
+			//SlimeMngSet(count, 1, 0);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 28:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 0, 0);
+			break;
+		case 150 * 29:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 30:
+			SlimeMngSet(count, 0, 0);
+			BirdMngSet(count, 0, 0);
+			break;
+		case 150 * 31:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 1);
 			break;
 		default:
 			break;
@@ -888,67 +962,180 @@ int EnemyMngSet(int levelFlag, int count, Dot girl) {
 	else if(levelFlag == 1)
 		switch (count)
 		{
-		case 20:
+		case 20://敵とシステムの紹介
 			SlimeMngSet(count, 1, 1);
-			SlimeMngSet(count, 1, 2);
 			break;
-		case 100:
-			SlimeMngSet(count, 1, 2);
-			break;
-		case 200:
+		case 150 * 2:
 			BirdMngSet(count, 1, 1);
 			break;
-		case 450:
-			BirdMngSet(count, 1, 2);
+		case 150 * 3:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 1);
 			break;
-		case 550:
+		case 150 * 4:
 			SlimeMngSet(count, 1, 1);
 			break;
-		case 580:
+		case 150 * 4 + 60:
 			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 4 + 60 * 2:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 1);
+		case 150 * 5:
+			break;
+		case 150 * 6:
 			SlimeMngSet(count, 0, 1);
 			break;
-		case 610:
+		case 150 * 7:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 8:
+			SlimeMngSet(count, 1, 2);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 9:
+			break;
+		case 150 * 10:
+			//SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 150 * 11://スライムラッシュ
+			break;
+		case 150 * 12 + 30 * 0://1800
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 1:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 2:
 			SlimeMngSet(count, 1, 2);
 			break;
-		case 760:
-			BirdMngSet(count, 1, 1);
+		case 150 * 12 + 30 * 3:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 4:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 12 + 30 * 5:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 6:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 7:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 8:
+			SlimeMngSet(count, 1, 2);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 9:
+			SlimeMngSet(count, 1, 1);
+			break;
+		case 150 * 12 + 30 * 10:
+			SlimeMngSet(count, 0, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 11:
+			SlimeMngSet(count, 1, 0);
+			break;
+		case 150 * 12 + 30 * 12://2160//スライムは終わり
+			SlimeMngSet(count, 0, 1);
+			break;
+		case 150 * 15 * 0://2250//バードラッシュ
+			break;
+		case 150 * 15 + 30 * 1:
+			//SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 15 + 30 * 2:
+			SlimeMngSet(count, 1, 0);
 			BirdMngSet(count, 0, 1);
 			break;
-		case 790:
+		case 150 * 15 + 30 * 3:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 15 + 30 * 4:
+			//SlimeMngSet(count, 1, 1);
 			BirdMngSet(count, 1, 1);
-			BirdMngSet(count, 0, 2);
-		case 850:
+			break;
+		case 150 * 15 + 30 * 5:
+			//SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 0, 0);
+			break;
+		case 150 * 15 + 30 * 6:
+			SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 15 + 30 * 7:
+			//SlimeMngSet(count, 1, 0);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 15 + 30 * 8:
 			SlimeMngSet(count, 1, 2);
+			BirdMngSet(count, 0, 1);
 			break;
-		case 1050:
-			SlimeMngSet(count, 0, 2);
-			BirdMngSet(count, 0, 2);
+		case 150 * 15 + 30 * 9://2520
+			//SlimeMngSet(count, 1, 1);
 			BirdMngSet(count, 1, 2);
 			break;
-		case 1200:
-			SlimeMngSet(count, 0, 2);
-			BirdMngSet(count, 0, 2);
-			BirdMngSet(count, 1, 2);
+		case 150 * 17://2550:
 			break;
-		case 1350:
-			SlimeMngSet(count, 1, 2);
-			BirdMngSet(count, 1, 2);
+		case 150 * 18:
+			//BirdMngSet(count, 0, 1);
 			break;
-		case 1450:
-			SlimeMngSet(count, 1, 2);
-			BirdMngSet(count, 1, 2);
+		case 150 * 19:
 			break;
-		case 1550:
+		case 150 * 20://詰め
 			SlimeMngSet(count, 1, 1);
 			BirdMngSet(count, 1, 1);
 			break;
-		case 1650:
-			SlimeMngSet(count, 1, 1);
-			BirdMngSet(count, 1, 1);
-			break;
-		case 1800:
+		case 150 * 21:
 			SlimeMngSet(count, 1, 2);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 22:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 23:
+			SlimeMngSet(count, 0, 1);
+			BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 24:
+			SlimeMngSet(count, 1, 2);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 25:
+			SlimeMngSet(count, 1, 1);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 26:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 2);
+			break;
+		case 150 * 27:
+			SlimeMngSet(count, 1, 0);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 28:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 0, 1);
+			break;
+		case 150 * 29:
+			SlimeMngSet(count, 1, 2);
+			//BirdMngSet(count, 1, 0);
+			break;
+		case 150 * 30:
+			SlimeMngSet(count, 0, 1);
+			BirdMngSet(count, 0, 1);
+			break;
+		case 150 * 31:
+			SlimeMngSet(count, 1, 1);
+			BirdMngSet(count, 1, 2);
 			break;
 		default:
 			break;
