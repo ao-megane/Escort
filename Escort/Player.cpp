@@ -235,7 +235,7 @@ void Player::UpdataDash(int count) {
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
 		center.Set(center.Get_x() - speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
-	int sum = 40;	//一周のフレーム数
+	int sum = 19;	//一周のフレーム数
 	int num = 8;	//一周の画像数
 	if (WeaponFlag == 0) {
 		if (count % sum <= sum / num * 1) {

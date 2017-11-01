@@ -653,6 +653,18 @@ int Bird::UpdataDisapper(int count) {
 	Image = P_walk_2;
 	}*/
 	//printfDx("DISAPPERUPDATA\n");
+	if (count % 3 == 0) Image = Decoi;
+	else {
+		if (strength == 0) {
+			Image = WeakBirdStand1;
+		}
+		else if (strength == 1) {
+			Image = MiddleBirdStand1;
+		}
+		else if (strength == 2) {
+			Image = ToughBirdStand1;
+		}
+	}
 	if (count >= BIRD_DISAP_SUM) {
 		existFlag = 0;
 	}
@@ -1002,7 +1014,7 @@ int EnemyMngJudge(Player* player, Princess* girl,int count,int* score,int levelF
 			//(*girl).GetStateFlag() != 1 &&
 			slime[i].GetAttackArea() & (*girl).GetWeekArea()) {//slime
 			girl->SetDamage(slime[i].GetAttack(), count);
-			*score -= slime[i].GetAttack()*10;
+			*score -= slime[i].GetAttack()*30;
 			slime[i].SetAttackval(0);
 		}
 	}
@@ -1022,7 +1034,7 @@ int EnemyMngJudge(Player* player, Princess* girl,int count,int* score,int levelF
 			//girl->GetStateFlag() != 1 &&
 			bird[i].GetAttackArea() & girl->GetWeekArea()) {//birds
 			girl->SetDamage(bird[i].GetAttack(), count);
-			*score -= bird[i].GetAttack()*10;
+			*score -= bird[i].GetAttack()*30;
 			bird[i].SetAttackval(0);
 		}
 	}
