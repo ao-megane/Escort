@@ -219,7 +219,7 @@ int PlayChoice() {
 }
 
 int ChoreSet(int levelFlag) {
-	Score = 10000;
+	Score = 20000;
 	Keeper = 0;
 	flag = 0;
 	proFlag = 0;

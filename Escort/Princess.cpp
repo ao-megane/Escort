@@ -90,7 +90,7 @@ int Princess::SetWalk() {
 }
 int Princess::UpdataWalk(int count) {
 	//int speed = GROUND_SPEED;
-	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED);
+	center.Set(center.Get_x() + GROUND_SPEED - GROUND_SPEED,GROUND_HEIGHT - PRI_HEIGHT/2);
 	int sum = 40;	//ˆêü‚ÌƒtƒŒ[ƒ€”
 	int num = 8;	//ˆêü‚Ì‰æ‘œ”
 	if (count % sum <= sum / num * 1) {

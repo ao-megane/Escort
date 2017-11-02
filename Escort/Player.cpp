@@ -230,7 +230,7 @@ void Player::SetDash() {
 	acceptFlag = 1;
 }
 void Player::UpdataDash(int count) {
-	int speed = GROUND_SPEED + 7;
+	int speed = GROUND_SPEED + 9;
 	if(isRightFlag)
 		center.Set(center.Get_x() + speed - GROUND_SPEED, GROUND_HEIGHT - P_HEIGHT / 2);
 	else
@@ -434,7 +434,7 @@ void Player::UpdataAttack_s(int count) {
 		acceptFlag = 0;
 	}
 	else if (count < 20) {//UŒ‚
-		attack = 30;
+		attack = 40;
 		attackArea.Set(LU, RD);
 	}
 	else if (count < 40) {//—]‰C
@@ -483,7 +483,7 @@ void Player::UpdataAttack_l(int count) {
 		attack = 0;
 	}
 	else if (count < 40) {//UŒ‚
-		attack = 30;
+		attack = 60;
 		attackArea.Set(LU, RD);
 		weapon.Set((LU.Get_x() + RD.Get_x()) / 2, (LU.Get_y() + RD.Get_y()) / 2);
 		WeaponFlag = 0;
