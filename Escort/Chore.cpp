@@ -139,6 +139,7 @@ int Allow;
 int Logo;
 int Pause;
 int Manual;
+int Manual2;
 int Prologue1;
 int Prologue2;
 int Prologue3;
@@ -175,6 +176,7 @@ int SystemInitialize() {
 	Credit = LoadGraph("images/System/Credit.png");
 	Pause = LoadGraph("images/System/Pause.png");
 	Manual = LoadGraph("images/System/Manual.png");
+	Manual2 = LoadGraph("images/System/Manual2.png");
 
 	Prologue1 = LoadGraph("images/Prologue/1.png");
 	Prologue2 = LoadGraph("images/Prologue/2.png");
@@ -289,19 +291,21 @@ int DrawPause(int count) {
 
 //int manFlag;
 int DrawManual(int b) {
-	switch (proFlag)
+	switch (manFlag)
 	{
 	case 0:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
+		//DrawFormatString(0, 0, RED, "1");
 		break;
 	case 1:
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual2, true);
+		//DrawFormatString(0, 0, RED, "2");
 		break;
 	}
 
 	if (b == 1) {
 		manFlag++;
-		if (manFlag == 1) {
+		if (manFlag == 2) {
 			manFlag = 0;
 			return 1;
 		}
