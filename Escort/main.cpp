@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	{
 	/*SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.6);
+	SetWindowSizeExtendRate(0.9);
 	ChangeWindowMode(TRUE);*/
 	}
 
