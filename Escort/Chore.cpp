@@ -155,6 +155,7 @@ int Move;
 int Choice;
 
 int proFlag;
+int manFlag;
 
 int Score;
 
@@ -204,6 +205,7 @@ int SystemInitialize() {
 	Keeper = 0;
 	flag = 0;
 	proFlag = 0;
+	manFlag = 0;
 
 	return 0;
 }
@@ -285,8 +287,26 @@ int DrawPause(int count) {
 	return 0;
 }
 
-void DrawManual() {
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
+//int manFlag;
+int DrawManual(int b) {
+	switch (proFlag)
+	{
+	case 0:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
+		break;
+	case 1:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
+		break;
+	}
+
+	if (b == 1) {
+		manFlag++;
+		if (manFlag == 1) {
+			manFlag = 0;
+			return 1;
+		}
+	}
+	return 0;
 }
 int DrawCredit() {
 	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
@@ -454,6 +474,7 @@ int DrawWinBord(int count) {
 	}
 	else if (count >= 90) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear1, true);
+		return 1;
 	}
 	return 0;
 }
@@ -465,6 +486,7 @@ int DrawLoseBord(int count) {
 	}
 	else if (count >= 90) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
+		return 1;
 	}
 	return 0;
 }

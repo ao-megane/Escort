@@ -21,6 +21,8 @@ int PriDecoi;
 
 int HPImage;
 int HPBackImage;
+int HealImage;
+int DamageImage;
 
 int Damage;
 int Jump;
@@ -47,6 +49,8 @@ int Princess::Initialize() {
 
 	HPImage = LoadGraph("images/Princess/HP.png");
 	HPBackImage = LoadGraph("images/Princess/HPBack.png");
+	HealImage = LoadGraph("images/Princess/Heal.png");
+	DamageImage = LoadGraph("images/Princess/Damage.png");
 
 	PriDecoi = LoadGraph("images/decoi.png");
 
@@ -79,6 +83,7 @@ int Princess::Set(int levelFlag) {
 	HP = PRI_MAXHP; 
 	Keeper = 0;
 	DamageCount = 0;
+	HPstate = 0;
 	return 0;
 }
 
@@ -208,9 +213,13 @@ int Princess::Updata(int count,int PriJump) {
 	if (PriJump == 1 && stateFlag == 0 /*&& (center.Get_y() == GROUND_HEIGHT - PRI_HEIGHT / 2)*/) {
 		SetJump(count);
 	}
-	if (DamageCount >= 120 && count % 2 == 0) {
-		if (HP < PRI_MAXHP)HP++;
+	if (DamageCount >= 120) {//‰ñ•œ
+		if (HP < PRI_MAXHP && count % 2 == 0)HP++;
+		if (HPstate == 2 || HPstate == 3) HPstate = 3;
+		else HPstate = 1;
 	}
+	else if (HPstate == 2 || HPstate == 3) HPstate = 2;//‰ñ•œ‚µ‚Ä‚È‚¢
+	else HPstate = 0;
 
 	//updata
 	switch (stateFlag)
@@ -275,7 +284,22 @@ int Princess::Draw() {
 		HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT, HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT,
 		HPBAR_MARGIN_WIDTH + HPBAR_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPBAR_MARGIN_WIDTH, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, HPImage, true);
 
-	//DrawFormatString(0, 300, RED, "PRIHP:%d,PRIstate:%d", HP, stateFlag);
+	if (HPstate == 1 || HPstate == 3) {
+		DrawModiGraph(
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 60 * -1				, HPBAR_MARGIN_HEIGHT,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 60 * -1 + HPBAR_HEIGHT , HPBAR_MARGIN_HEIGHT,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 60 * -1 + HPBAR_HEIGHT , HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT ,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 60 * -1, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT , HealImage, true);
+	}
+	if (HPstate == 2 || HPstate == 3) {
+		DrawModiGraph(
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 80 * -1 + HPBAR_HEIGHT, HPBAR_MARGIN_HEIGHT,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 80 * -1 + HPBAR_HEIGHT *2, HPBAR_MARGIN_HEIGHT,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 80 * -1 + HPBAR_HEIGHT *2, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT,
+			HPBAR_MARGIN_WIDTH + HPBAR_WIDTH + 80 * -1 + HPBAR_HEIGHT, HPBAR_MARGIN_HEIGHT + HPBAR_HEIGHT, DamageImage, true);
+	}
+
+	//DrawFormatString(0, 300, RED, "PRIHPstate:%d,PRIstate:%d", HPstate, stateFlag);
 
 	return 0;
 }
