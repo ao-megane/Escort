@@ -27,6 +27,8 @@ public:/*
 	int Draw();
 	int End();
 	int Keeper;
+	int HPstate;
+	//0 nothing 1 heal 2 damage 3 both
 
 private:
 	int HP;

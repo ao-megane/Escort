@@ -57,7 +57,7 @@ int DrawOP(int levelFlag);
 
 int DrawPrologue(int b);
 
-void DrawManual();
+int DrawManual(int b);
 
 int DrawCredit();
 

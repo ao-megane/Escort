@@ -1178,10 +1178,15 @@ int EnemyMngJudge(Player* player, Princess* girl,int count,int* score,int levelF
 		*score -= player->GetAttack()*10;
 	}
 
-	if(levelFlag == 1)
-		if (player->GetCenter().Get_x() > girl->GetCenter().Get_x() && count % 2 == 0)
-			girl->SetHP(girl->GetHP() - 1);
-
+	if (levelFlag == 1) {
+		if (player->GetCenter().Get_x() > girl->GetCenter().Get_x()) {//右にいたら
+			if (count % 2 == 0)girl->SetHP(girl->GetHP() - 1);//1/2でダメージ
+			if (girl->HPstate == 1 || girl->HPstate == 3) girl->HPstate = 3;//ダメージうけてる処理
+			else girl->HPstate = 2;
+		}
+		else if (girl->HPstate == 1|| girl->HPstate == 3) girl->HPstate = 1;
+		else girl->HPstate = 0;
+	}
 
 
 	for (int i = 0; i < 10; i++) {

@@ -11,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	/*SetWindowSizeChangeEnableFlag(TRUE);
-	SetWindowSizeExtendRate(0.9);
-	ChangeWindowMode(TRUE);*/
+	SetWindowSizeChangeEnableFlag(TRUE);
+	SetWindowSizeExtendRate(0.6);
+	ChangeWindowMode(TRUE);
 	}
 
 	
@@ -47,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, Key);
-		//InputUpdata(Key);
+		//InputUpdata(input, Key);
+		InputUpdata(Key);
 		//PrintInput(Key);
 
 		UpdataBack(count);
@@ -133,30 +133,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			EnemyMngUpdata(count);
 			EnemyMngDraw();
 
-
 			girl.Draw();
 			player.Draw();
 			DrawChore(count, girl.GetHP(), levelFlag);
-			LoserUpdata(count);
-			if(Y == 1)
-				flag = 0;
+			if(LoserUpdata(count))
+				if(B == 1)
+					flag = 0;
 			break;
 		case 4://gameclear
 			player.Updata(count, Key);
 			girl.Updata(count,player.PriJump);
-
 			girl.Draw();
 			player.Draw();
-			WinnerUpdata(count);
-			if(Y == 1)
-				flag = 0;
+			if(WinnerUpdata(count))
+				if(B == 1)
+					flag = 0;
 			DrawChore(count, girl.GetHP(), levelFlag);
 			break;
 		case 5://マニュアル
-			DrawManual();
-			if (B == 1) {
-				PlayChoice();
+			/*if (B == 1)
+				PlayChoice;*/
+			if(DrawManual(B)){
 				flag = 0;
+				count = 0;
 			}
 			break;
 		case 6://クレジット
@@ -173,6 +172,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (A == 1) flag = 0;
 			break;
 		case 8://prologue
+			//if (B == 1) PlayChoice();
 			if (DrawPrologue(B)) {
 				flag = 2;
 				count = 0;
