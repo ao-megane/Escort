@@ -323,7 +323,7 @@ int Slime::UpdataDisapper(int count) {
 	return 0;
 }
 int Slime::Updata(int count) {
-	if (HP <= 0 && stateFlag != 6) {
+	if (HP <= 0 && stateFlag != 6 || center.Get_x() < -width*2 || center.Get_x() > (DISP_WIDTH + width*2)) {
 		bodyClock = count;
 		SetDisapper(count);
 	}

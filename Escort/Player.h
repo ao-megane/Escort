@@ -12,6 +12,7 @@ public:/*
 	void PlayAttack_s();
 	void PlayAttack_l();
 	void PlayAttack_w();
+	void PlayGet();
 	void PlayJump();
 	void Set(int levelFlag);			//プレイ開始時（座標周辺）
 	void SetStand();		//privateをいじる関数

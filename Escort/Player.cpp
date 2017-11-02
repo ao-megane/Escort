@@ -51,6 +51,7 @@ int Attack_w;
 int Attack_s;
 int Attack_l;
 int PJump;
+int PGet;
 
 void Player::Initialize() {
 
@@ -102,6 +103,7 @@ void Player::Initialize() {
 	Attack_l = LoadSoundMem("music/knife.wav");
 	Attack_w = LoadSoundMem("music/knife3.wav");
 	PJump = LoadSoundMem("music/jump1.wav");
+	PGet = LoadSoundMem("music/choice1.wav");
 
 	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);
 	attack = 0;
@@ -124,6 +126,9 @@ void Player::PlayJump() {
 }
 void Player::PlayAttack_w() {
 	PlaySoundMem(Attack_w, DX_PLAYTYPE_BACK);
+}
+void Player::PlayGet() {
+	PlaySoundMem(PGet, DX_PLAYTYPE_BACK);
 }
 int Player::GetIsRightFlag() {
 	return isRightFlag;
@@ -524,6 +529,7 @@ void Player::Updata(int count,int Key[]) {
 		Sweapon.Set(weapon, STUKSWORD_WIDTH, STUKSWORD_HEIGHT);
 		if (Splayer & Sweapon) {
 			//printfDx("PICK!");
+			PlayGet();
 			WeaponFlag = 1;
 		}
 	}
