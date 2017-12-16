@@ -133,6 +133,7 @@ int Flower;
 int GameOver;
 int Loading1;
 int Credit;
+int Credit2;
 int Result;
 int Tytle;
 int Allow;
@@ -169,6 +170,7 @@ int SystemInitialize() {
 	Loading1 = LoadGraph("images/System/Loading.png");
 	Result = LoadGraph("images/System/Result.png");
 	Credit = LoadGraph("images/System/Credit.png");
+	Credit2 = LoadGraph("images/System/Credit2.png");
 	Tytle = LoadGraph("images/System/Tytle.png");
 	Logo = LoadGraph("images/System/Logo.png");
 	Allow = LoadGraph("images/System/Allow.png");
@@ -313,7 +315,8 @@ int DrawManual(int b) {
 	return 0;
 }
 int DrawCredit() {
-	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
+	//DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Credit2, true);
 	return 0;
 }
 
