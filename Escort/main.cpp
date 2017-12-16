@@ -11,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 	
 	{
-	SetWindowSizeChangeEnableFlag(TRUE);
+	/*SetWindowSizeChangeEnableFlag(TRUE);
 	SetWindowSizeExtendRate(0.6);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(TRUE);*/
 	}
 
 	
@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	girl.Initialize();
 	EnemyMngInitialize();
 	SystemInitialize();
-	InputFile("koryosai2017.txt");
+	InputFile("kanuma2017.txt");
 
 	SetBack(1);
 	PlayBGM();
@@ -47,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		InputUpdata(input, Key);
-		//InputUpdata(Key);
+		//InputUpdata(input, Key);
+		InputUpdata(Key);
 		//PrintInput(Key);
 
 		UpdataBack(count);
@@ -188,7 +188,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ScreenFlip();
 	}
 
-	UpdataFile("koryosai2017.txt", 0, 0);
+	UpdataFile("kanuma2017.txt", 0, 0);
 	DxLib_End();
 
 	return 0;

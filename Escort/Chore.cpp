@@ -313,7 +313,8 @@ int DrawManual(int b) {
 	return 0;
 }
 int DrawCredit() {
-	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
+	//DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
+
 	return 0;
 }
 
@@ -372,7 +373,7 @@ int normalHighScore;
 int hardHighScore;
 
 int InputFile(std::string file) {
-	std::ifstream fin("koryosai2017.txt"); // ファイルを開く
+	std::ifstream fin("kanuma2017.txt"); // ファイルを開く
 	normalPlayers = 0;
 	hardPlayers = 0;
 	normalWinner = 0;
@@ -404,7 +405,7 @@ int DrawData(int levelFlag) {
 }
 
 int UpdataFile(std::string file, int levelFlag, int score) {
-	std::ofstream fout("koryosai2017.txt");
+	std::ofstream fout("kanuma2017.txt");
 	if (fout.fail()) {  // if(!fin)でもよい。
 		std::cout << "出力ファイルをオープンできません" << std::endl;
 		return 1;
